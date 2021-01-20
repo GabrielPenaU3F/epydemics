@@ -1,13 +1,13 @@
-import numpy as np
-
 import matplotlib
 from matplotlib import pyplot as plt
+
+from statistics.goodness_of_fit_meter import calculate_coefficient_of_determination
+
 matplotlib.rcParams['pdf.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
 
 from src.analyzers.contagion_fitter import ContagionFitter
 from src.io.url_data_manager import URLDataManager
-from src.statistics.goodness_of_fit_meter import GoodnessOfFitMeter
 
 url = 'https://covid.ourworldindata.org/data/ecdc/total_cases.csv'
 manager = URLDataManager(url)
@@ -21,7 +21,7 @@ bc = ContagionFitter()
 
 a, b = bc.fit(uruguay_times, uruguay_ci)
 mean_values = bc.mean_value_function(uruguay_times, a, b)
-coef_r2 = GoodnessOfFitMeter().calculate_coefficient_of_determination(mean_values, uruguay_ci)
+coef_r2 = calculate_coefficient_of_determination(mean_values, uruguay_ci)
 
 print("rho: ", a)
 print("gamma: ", b * a)

@@ -1,5 +1,4 @@
-from src.io.spreadsheet_data_manager import SpreadsheetDataManager
-from matplotlib import pyplot as plt
+from data_io.spreadsheet_data_manager import SpreadsheetDataManager
 import numpy as np
 from scipy import stats
 

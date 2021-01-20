@@ -1,6 +1,6 @@
-from src.analyzers.parameter_analyzer import ParameterAnalyzer
-from src.io.url_data_manager import URLDataManager
-from src.plotter import Plotter
+from analyzers.parameter_analyzer import ParameterAnalyzer
+from data_io.url_data_manager import URLDataManager
+from plotter import Plotter
 
 url = 'https://covid.ourworldindata.org/data/ecdc/total_cases.csv'
 

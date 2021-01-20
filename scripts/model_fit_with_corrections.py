@@ -1,6 +1,6 @@
-from src.analyzers.contagion_fitter import ContagionFitter
-from src.io.url_data_manager import URLDataManager
-from src.plotter import Plotter
+from analyzers.contagion_fitter import ContagionFitter
+from data_io.url_data_manager import URLDataManager
+from plotter import Plotter
 from matplotlib import pyplot as plt
 
 url = 'https://covid.ourworldindata.org/data/ecdc/total_cases.csv'

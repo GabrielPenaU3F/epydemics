@@ -1,4 +1,4 @@
-from src.io.spreadsheet_data_manager import SpreadsheetDataManager
+from data_io.spreadsheet_data_manager import SpreadsheetDataManager
 from matplotlib import pyplot as plt
 import numpy as np
 

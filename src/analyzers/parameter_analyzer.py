@@ -1,4 +1,4 @@
-from src.analyzers.contagion_fitter import ContagionFitter
+from analyzers.contagion_fitter import ContagionFitter
 
 
 class ParameterAnalyzer:

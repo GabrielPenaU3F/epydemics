@@ -1,6 +1,6 @@
 from matplotlib import pyplot as plt
 
-from src.analyzers.contagion_fitter import ContagionFitter
+from analyzers.contagion_fitter import ContagionFitter
 
 
 class Plotter:

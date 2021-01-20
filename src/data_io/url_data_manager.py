@@ -1,6 +1,6 @@
 import pandas
 
-from src.domain.country_data import CountryData
+from domain.country_data import CountryData
 
 
 class URLDataManager:

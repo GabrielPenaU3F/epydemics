@@ -1,6 +1,6 @@
 from numpy.core.defchararray import strip
 
-from src.domain.sheet import Sheet
+from domain.sheet import Sheet
 
 
 class MTBIMinSheet(Sheet):

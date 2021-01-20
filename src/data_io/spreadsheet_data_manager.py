@@ -1,10 +1,10 @@
 import pyexcel_io
 
-from src.domain.mtbi_min_sheet import MTBIMinSheet
-from src.domain.sheet import Sheet
+from domain.mtbi_min_sheet import MTBIMinSheet
+from domain.sheet import Sheet
 
 
-class SpreadsheetDataManager():
+class SpreadsheetDataManager:
 
     def __init__(self, path, **kwargs):
         self.file = pyexcel_io.get_data(path)

@@ -1,4 +1,5 @@
-class Displayer:
+
+class ConsoleDisplayer:
 
     def __init__(self, country_title):
         self.country_title = country_title

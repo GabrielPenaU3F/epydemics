@@ -1,8 +1,9 @@
 import numpy as np
 
-from src.correctors.relative_difference_corrector import RelativeDifferenceCorrector
-from src.displayer import Displayer
-from src.string_formater import StringFormater
+from correctors.relative_difference_corrector import RelativeDifferenceCorrector
+from console_displayer import ConsoleDisplayer
+
+from string_formater import format_title
 
 
 class CountryData:
@@ -22,8 +23,8 @@ class CountryData:
             self.rows[days[i]] = values[i]
         self.rows_backup = self.rows.copy()
 
-        self.country_name = StringFormater().format_title(country_id)
-        self.displayer = Displayer(self.get_country_name())
+        self.country_name = format_title(country_id)
+        self.console_displayer = ConsoleDisplayer(self.get_country_name())
 
     def get_value(self, day):
         return self.rows.get(day)
@@ -45,7 +46,7 @@ class CountryData:
         self.rows = self.rows_backup.copy()
 
     def print(self):
-        self.displayer.print(list(self.rows.keys()), list(self.rows.values()))
+        self.console_displayer.print(list(self.rows.keys()), list(self.rows.values()))
 
     def get_days(self):
         return np.array(list(self.rows.keys()))

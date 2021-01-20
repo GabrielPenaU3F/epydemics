@@ -2,7 +2,7 @@ import pandas
 from scipy.stats import expon
 from collections import Counter
 
-from src.io.spreadsheet_data_manager import SpreadsheetDataManager
+from data_io.spreadsheet_data_manager import SpreadsheetDataManager
 from matplotlib import pyplot as plt
 import numpy as np
 
