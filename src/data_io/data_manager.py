@@ -22,5 +22,5 @@ class DataManager:
         return cls.data['location'].unique()
 
     @classmethod
-    def load_dataset(cls, rel_path):
+    def load_dataset(cls, rel_path=default_path + default_filename):
         cls.data = pandas.read_csv(rel_path)
