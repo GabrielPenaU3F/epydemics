@@ -18,12 +18,8 @@ class DataManager:
         DataWriter.write_to_csv(cls.data, full_path)
 
     @classmethod
-    def get_raw_data(cls):
-        return cls.data
-
-    @classmethod
     def get_country_list(cls):
-        return cls.data['location']
+        return cls.data['location'].unique()
 
     @classmethod
     def load_dataset(cls, rel_path):
