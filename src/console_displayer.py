@@ -1,3 +1,7 @@
+def show_data_from_country(country_name):
+    manager = DataManager(data_source_url)
+    cases = manager.get_cases_from_country(country_name)
+    print(cases)
 
 class ConsoleDisplayer:
 

@@ -1,9 +1,9 @@
 import numpy as np
 
-from correctors.relative_difference_corrector import RelativeDifferenceCorrector
-from console_displayer import ConsoleDisplayer
+from src.correctors.relative_difference_corrector import RelativeDifferenceCorrector
+from src.console_displayer import ConsoleDisplayer
 
-from string_formater import format_title
+from src.string_formater import format_title
 
 
 class CountryData:
