@@ -1,13 +1,14 @@
 import pandas
 
 from src.data_io.data_writer import DataWriter
+from src.data_io.path_utils import get_project_root
 
 
 class DataManager:
 
     data_source = None
     data = None
-    default_path = '../../resources/data/'
+    default_path = str(get_project_root() + '\\resources\\data\\')
     default_filename = 'full_dataset.csv'
 
     @classmethod
