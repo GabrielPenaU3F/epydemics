@@ -1,5 +1,7 @@
 import pandas
 
+from resources.strings import StringManager
+
 
 class ConsoleManager:
 
@@ -21,9 +23,10 @@ class ConsoleManager:
         print(data_frame)
 
     def show_fit_results(self, fit):
-        print('\n----------------------\n')
-        print('Cases in Argentina')
+        print('\n-----------------------')
+        print(StringManager.get_dataset_title(fit.get_dataset_type()) + fit.get_country())
         print('-----------------------')
+        print('Model parameters:')
         print('\u03C1 (1/day):  ' + str(fit.get_params()[0]))
         print('\u03B3 / \u03C1:  ' + str(fit.get_params()[1]))
         print('-----------------------')
