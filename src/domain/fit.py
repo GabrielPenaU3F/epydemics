@@ -12,11 +12,14 @@ class Fit:
     def get_dataset_type(self):
         return self.dataset_type
 
+    def get_explained_data(self):
+        return self.explained
+
     def get_x_data(self):
         return self.x_data
 
     def get_y_data(self):
-        return self.x_data
+        return self.y_data
 
     def get_params(self):
         return self.params

@@ -1,9 +1,10 @@
 from src.data_io.console_manager import ConsoleManager
 from src.data_io.data_manager import DataManager
+from src.data_io.plot_manager import PlotManager
 from src.fitters.fitter import Fitter
 
 console = ConsoleManager.get_instance()
-
+plotter = PlotManager.get_instance()
 
 def show_available_countries():
     countries = DataManager.get_country_list()
@@ -22,4 +23,4 @@ def fit_contagion_model(country_name, dataset='total_cases', output=True, plot=T
         console.show_fit_results(fit)
         
     if plot is True:
-        pass
+        plotter.plot_fit_results(fit)

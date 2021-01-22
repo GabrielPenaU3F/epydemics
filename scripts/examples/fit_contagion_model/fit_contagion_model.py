@@ -4,4 +4,7 @@ from src.interface import pyepidemics_interface as pyepidemics
 DataManager.load_dataset()
 
 # This will fit the data from the indicated country, show the results via console and plot the lines
-pyepidemics.fit_contagion_model('Argentina')
+# pyepidemics.fit_contagion_model('Argentina')
+
+# You can also fit the number of deaths
+pyepidemics.fit_contagion_model('Argentina', dataset='total_deaths')

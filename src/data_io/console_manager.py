@@ -1,6 +1,6 @@
 import pandas
 
-from resources.strings import StringManager
+from src.strings_manager import StringManager
 
 
 class ConsoleManager:
