@@ -1,9 +1,9 @@
 from src.data_io.data_manager import DataManager
-from src.interface import data_displayer as ds
+from src.interface import pyepidemics_interface as pyepidemics
 
 
 DataManager.load_dataset()
 
 # Show the data from a given country
 
-ds.show_data_from_country('Argentina')
+pyepidemics.show_data_from_country('Argentina')

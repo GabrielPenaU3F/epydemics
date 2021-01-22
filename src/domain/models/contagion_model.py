@@ -1,7 +1,7 @@
 import scipy.optimize as opt
 
 
-class ContagionFitter:
+class ContagionModel:
 
     def fit(self, x, y):
         params, cov = opt.curve_fit(self.mean_value_function, x, y, p0=(0.1, 1), method='lm')
