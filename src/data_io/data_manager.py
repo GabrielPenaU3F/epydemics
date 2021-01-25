@@ -28,13 +28,13 @@ class DataManager:
         return cls.data['location'].unique()
 
     @classmethod
-    def get_country_data(cls, country_id, dataset='total_cases'):
+    def get_country_data(cls, country_id, dataset, start, end):
         country_data = cls.data[cls.data['location'] == country_id]
         requested_dataset = country_data[['date', dataset]]
-        return cls.prepare_dataset(requested_dataset, dataset)
+        return cls.prepare_dataset(requested_dataset, dataset, start, end)
 
     @classmethod
-    def prepare_dataset(cls, data, dataset_column):
+    def prepare_dataset(cls, data, dataset_column, start, end):
         nonnan_dataset = data.dropna()
-        correctly_indexed_dataset = nonnan_dataset.reset_index(drop=True)
+        correctly_indexed_dataset = nonnan_dataset.set_index(np.arange(1, len(nonnan_dataset) + 1), drop=True)
         return correctly_indexed_dataset.astype({dataset_column: 'int32'})

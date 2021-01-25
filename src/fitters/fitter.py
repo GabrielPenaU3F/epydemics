@@ -9,8 +9,8 @@ from src.domain.models.contagion_model import ContagionModel
 class Fitter:
 
     @classmethod
-    def fit(cls, country_name, dataset):
-        data = DataManager.get_country_data(country_name, dataset)
+    def fit(cls, country_name, dataset, start, end):
+        data = DataManager.get_country_data(country_name, dataset, start, end)
         fitter = ContagionModel()
         x = np.arange(0, len(data))
         y = data[dataset].to_numpy()
