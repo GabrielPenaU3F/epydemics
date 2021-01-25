@@ -1,4 +1,3 @@
-import numpy as np
 from sklearn.metrics import r2_score
 
 from src.data_io.data_manager import DataManager
@@ -12,7 +11,7 @@ class Fitter:
     def fit(cls, country_name, dataset, start, end):
         data = DataManager.get_country_data(country_name, dataset, start, end)
         fitter = ContagionModel()
-        x = np.arange(0, len(data))
+        x = data.index.to_numpy()
         y = data[dataset].to_numpy()
         params = fitter.fit(x, y)
         explained = fitter.mean_value_function(x, *params)
