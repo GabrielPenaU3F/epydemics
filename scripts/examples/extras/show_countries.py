@@ -2,7 +2,7 @@ from src.data_io.data_manager import DataManager
 
 # Reads the data from disk
 # Currently using the default data path, which is: 'resources/data/full_dataset.csv'
-from src.interface import pyepidemics_interface as pyepidemics
+from src.interface import epydemics
 
 DataManager.load_dataset()
 
@@ -10,4 +10,4 @@ DataManager.load_dataset()
 # DataManager.load_dataset('../../resources/data/full_dataset.csv')
 
 # Shows the list of countries
-pyepidemics.show_available_countries()
+epydemics.show_available_countries()

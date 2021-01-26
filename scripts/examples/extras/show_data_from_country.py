@@ -1,5 +1,5 @@
 from src.data_io.data_manager import DataManager
-from src.interface import pyepidemics_interface as pyepidemics
+from src.interface import epydemics
 
 
 DataManager.load_dataset()
@@ -8,4 +8,4 @@ DataManager.load_dataset()
 # pyepidemics.show_data_from_country('Argentina')
 
 # Deaths dataset can also be shown
-pyepidemics.show_data_from_country('Argentina', dataset='total_deaths')
+epydemics.show_data_from_country('Argentina', dataset='total_deaths')

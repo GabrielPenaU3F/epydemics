@@ -19,6 +19,10 @@ class ConsoleManager:
     def configure_dataframe_prints(self):
         pandas.set_option("display.max_rows", None, "display.max_columns", None)
 
+    def print_countries(self, countries):
+        print("List of available countries:")
+        print(countries)
+
     def print_data_from_country(self, country_dataframe, country, dataset_type):
         date_column_title = 'Date'
         dataset_column_title = StringManager.get_dataset_column_title(dataset_type)
