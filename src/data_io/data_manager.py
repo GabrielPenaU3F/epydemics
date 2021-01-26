@@ -1,8 +1,10 @@
 import numpy as np
 import pandas
-
 from src.data_io.data_writer import DataWriter
 from src.data_io.path_utils import get_project_root
+
+pandas.options.mode.chained_assignment = None  # default='warn'
+
 
 
 class DataManager:
@@ -29,12 +31,18 @@ class DataManager:
 
     @classmethod
     def get_country_data(cls, country_id, dataset, start, end):
-        country_data = cls.data[cls.data['location'] == country_id]
-        requested_dataset = country_data[['date', dataset]]
-        return cls.prepare_dataset(requested_dataset, dataset, start, end)
+        data = cls.data.copy()
+        country_data = data[data['location'] == country_id]
+        requested_columns_df = country_data[['date', dataset]]
+        return cls.prepare_dataset(requested_columns_df, dataset, start, end)
 
     @classmethod
     def prepare_dataset(cls, data, dataset_column, start, end):
-        nonnan_dataset = data.dropna()
-        correctly_indexed_dataset = nonnan_dataset.set_index(np.arange(1, len(nonnan_dataset) + 1), drop=True)
+        nonnan_dataset = data.dropna().reset_index(drop=True)
+        requested_subset = nonnan_dataset.iloc[start-1:end, :]
+        accumulated_events_previous_to_start = 0
+        if start > 1:
+            accumulated_events_previous_to_start = nonnan_dataset[dataset_column].iloc[start-2]
+        requested_subset.loc[:, dataset_column] -= accumulated_events_previous_to_start
+        correctly_indexed_dataset = requested_subset.set_index(np.arange(1, len(requested_subset) + 1), drop=True)
         return correctly_indexed_dataset.astype({dataset_column: 'int32'})

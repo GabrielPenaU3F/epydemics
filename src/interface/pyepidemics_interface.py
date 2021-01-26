@@ -17,7 +17,7 @@ def show_data_from_country(country_id, dataset='total_cases'):
     console.print_data_from_country(country_data, country_id, dataset)
 
 
-def fit_contagion_model(country_name, dataset='total_cases', start=0, end=-1, output=True, plot=True):
+def fit_contagion_model(country_name, dataset='total_cases', start=1, end=-1, output=True, plot=True):
     fit = Fitter.fit(country_name, dataset, start, end)
 
     if output is True:

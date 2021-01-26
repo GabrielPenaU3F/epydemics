@@ -9,6 +9,7 @@ DataManager.load_dataset()
 # Example 2: You can also fit the number of deaths
 # pyepidemics.fit_contagion_model('Argentina', dataset='total_deaths')
 
-# Example 3: The fit may start or end at any fixed day
-
-pyepidemics.fit_contagion_model('Argentina', start=200)
+# Examples 3-5: The fit may start or end at any fixed day
+# pyepidemics.fit_contagion_model('Argentina', end=200)
+# pyepidemics.fit_contagion_model('Argentina', start=200)
+pyepidemics.fit_contagion_model('Argentina', start=200, end=300)

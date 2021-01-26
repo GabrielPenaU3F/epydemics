@@ -20,14 +20,13 @@ class ConsoleManager:
         pandas.set_option("display.max_rows", None, "display.max_columns", None)
 
     def print_data_from_country(self, country_dataframe, country, dataset_type):
-        printable_df = country_dataframe.copy()
         date_column_title = 'Date'
         dataset_column_title = StringManager.get_dataset_column_title(dataset_type)
-        printable_df.columns = [date_column_title, dataset_column_title]
+        country_dataframe.columns = [date_column_title, dataset_column_title]
         print('\n-----------------------')
         print(StringManager.get_dataset_title(dataset_type) + country)
         print('-----------------------')
-        print(printable_df)
+        print(country_dataframe)
         print('-----------------------')
 
     def show_fit_results(self, fit):
