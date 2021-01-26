@@ -1,5 +1,7 @@
 import numpy as np
 import pandas
+
+from src.argument_verifier import ArgumentVerifier
 from src.data_io.data_writer import DataWriter
 from src.data_io.path_utils import get_project_root
 
@@ -32,7 +34,9 @@ class DataManager:
     @classmethod
     def get_country_data(cls, country_id, dataset='total_cases', start=1, end=-1):
         data = cls.data.copy()
+        ArgumentVerifier.validate_country(data, country_id)
         country_data = data[data['location'] == country_id]
+        ArgumentVerifier.validate_dataset_arguments(country_data, dataset, start, end)
         requested_columns_df = country_data[['date', dataset]]
         return cls.prepare_dataset(requested_columns_df, dataset, start, end)
 

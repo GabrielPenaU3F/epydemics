@@ -1,6 +1,7 @@
 import unittest
 
 from src.data_io.data_manager import DataManager
+from src.exceptions.exceptions import InvalidArgumentException
 
 
 class GetDataFromCountryTests(unittest.TestCase):
@@ -35,6 +36,27 @@ class GetDataFromCountryTests(unittest.TestCase):
         expected = ['2020-03-05', '2020-03-06', '2020-03-07', '2020-03-08', '2020-03-09']
         df = DataManager.get_country_data('Argentina', start=3, end=7)
         self.assertListEqual(expected, df['date'].to_list())
+
+    def test_country_not_on_list(self):
+        with self.assertRaises(InvalidArgumentException) as error:
+            DataManager.get_country_data('Coruscant')
+        self.assertEqual(error.exception.strerror, 'The requested country is not on the list')
+
+    def test_start_cannot_exceed_dataset_length(self):
+        with self.assertRaises(InvalidArgumentException) as error:
+            DataManager.get_country_data('Argentina', start=1000, end=7)
+        self.assertEqual(error.exception.strerror, 'Start and end arguments cannot exceed dataset length')
+
+    def test_end_cannot_exceed_dataset_length(self):
+        with self.assertRaises(InvalidArgumentException) as error:
+            DataManager.get_country_data('Argentina', end=1000)
+        self.assertEqual(error.exception.strerror, 'Start and end arguments cannot exceed dataset length')
+
+    def test_dataset_cannot_be_different_from_cases_or_deaths(self):
+        with self.assertRaises(InvalidArgumentException) as error:
+            DataManager.get_country_data('Argentina', dataset='new_cases')
+        self.assertEqual(error.exception.strerror, 'Supported datasets are total_cases and total_deaths only')
+
 
 
 if __name__ == '__main__':
