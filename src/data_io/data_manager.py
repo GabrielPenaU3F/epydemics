@@ -30,7 +30,7 @@ class DataManager:
         return cls.data['location'].unique()
 
     @classmethod
-    def get_country_data(cls, country_id, dataset, start=1, end=-1):
+    def get_country_data(cls, country_id, dataset='total_cases', start=1, end=-1):
         data = cls.data.copy()
         country_data = data[data['location'] == country_id]
         requested_columns_df = country_data[['date', dataset]]
