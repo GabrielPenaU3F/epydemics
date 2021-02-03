@@ -29,7 +29,7 @@ class PlotManager:
         axes.plot(x, real_data, linewidth=1, color='#263859', linestyle='--', label='Real data')
         axes.plot(x, explained, linewidth=1, color='#ca3e47', linestyle='-', label='Model prediction')
         self.config_plot_background(axes)
-        self.config_plot_axis(axes, fit)
+        self.config_fit_plot_axis(axes, fit)
         axes.set_title(title)
         axes.legend()
 
@@ -42,14 +42,15 @@ class PlotManager:
         gamma_by_rhos = [tup[1] for tup in parameter_tuples]
 
         fig, axes = plt.subplots(1, 2)
-        rho_plot = axes[0]
-        gamma_by_rho_plot = axes[1]
-        rho_plot.plot(x, rhos, linewidth=1, color='#263859', linestyle='-', label='\u03C1')
-        gamma_by_rho_plot.plot(x, gamma_by_rhos, linewidth=1, color='#ca3e47', linestyle='-', label='\u03B3 / \u03C1')
-        self.config_plot_background(rho_plot)
-        self.config_plot_background(gamma_by_rho_plot)
-        rho_plot.legend()
-        gamma_by_rho_plot.legend()
+        rho_axes = axes[0]
+        gamma_by_rho_axes = axes[1]
+        rho_axes.plot(x, rhos, linewidth=1, color='#db6400', linestyle='-', label='\u03C1')
+        gamma_by_rho_axes.plot(x, gamma_by_rhos, linewidth=1, color='#61b15a', linestyle='-', label='\u03B3 / \u03C1')
+        self.config_plot_background(rho_axes)
+        self.config_plot_background(gamma_by_rho_axes)
+        self.config_parameters_plot_axis(rho_axes, gamma_by_rho_axes)
+        rho_axes.legend()
+        gamma_by_rho_axes.legend()
 
         plt.show()
 
@@ -60,9 +61,22 @@ class PlotManager:
         axes.set_facecolor("#ffffff")
         axes.grid(color='black', linestyle='--', linewidth=0.5)
 
-    def config_plot_axis(self, axes, fit):
+    def config_fit_plot_axis(self, axes, fit):
         dataset = fit.get_dataset_type()
         axes.set_xlabel('t (days)')
         axes.set_ylabel(StringManager.get_fit_plot_ylabel(dataset))
+        axes.ticklabel_format(axis='x', style='plain')
+        axes.ticklabel_format(axis='y', style='plain')
+
+    def config_parameters_plot_axis(self, rho_axes, gamma_by_rho_axes):
+        rho_axes.set_xlabel('t (days)')
+        rho_axes.set_ylabel('\u03C1')
+        self.config_axis_plain_style(rho_axes)
+
+        gamma_by_rho_axes.set_xlabel('t (days)')
+        gamma_by_rho_axes.set_ylabel('\u03B3 / \u03C1')
+        self.config_axis_plain_style(gamma_by_rho_axes)
+
+    def config_axis_plain_style(self, axes):
         axes.ticklabel_format(axis='x', style='plain')
         axes.ticklabel_format(axis='y', style='plain')

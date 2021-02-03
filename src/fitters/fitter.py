@@ -20,13 +20,11 @@ class Fitter:
         return fit
 
     @classmethod
-    def perform_range_fits(cls, country_name, dataset, start_from):
-        data = DataManager.get_country_data(country_name)
+    def perform_range_fits(cls, country_name, dataset, start, end, start_from):
+        data = DataManager.get_country_data(country_name, dataset, start, end)
         model = ContagionModel()
-        start = 1
-        end = len(data)
         parameter_list = []
-        for i in range(start_from, end):
+        for i in range(start_from, len(data) + 1):
             sliced_data = DataManager.slice_data_by_index(data, 1, i)
             x = sliced_data.index.to_numpy()
             y = sliced_data[dataset].to_numpy()
