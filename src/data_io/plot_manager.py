@@ -1,3 +1,4 @@
+import numpy as np
 from matplotlib import pyplot as plt
 
 from src.strings_manager import StringManager
@@ -31,6 +32,24 @@ class PlotManager:
         self.config_plot_axis(axes, fit)
         axes.set_title(title)
         axes.legend()
+
+        plt.show()
+
+    def plot_parameters_over_time(self, parameter_tuples, start_from):
+        x_right_lim = start_from + len(parameter_tuples)
+        x = np.arange(start_from, x_right_lim)
+        rhos = [tup[0] for tup in parameter_tuples]
+        gamma_by_rhos = [tup[1] for tup in parameter_tuples]
+
+        fig, axes = plt.subplots(1, 2)
+        rho_plot = axes[0]
+        gamma_by_rho_plot = axes[1]
+        rho_plot.plot(x, rhos, linewidth=1, color='#263859', linestyle='-', label='\u03C1')
+        gamma_by_rho_plot.plot(x, gamma_by_rhos, linewidth=1, color='#ca3e47', linestyle='-', label='\u03B3 / \u03C1')
+        self.config_plot_background(rho_plot)
+        self.config_plot_background(gamma_by_rho_plot)
+        rho_plot.legend()
+        gamma_by_rho_plot.legend()
 
         plt.show()
 

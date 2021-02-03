@@ -8,7 +8,6 @@ from src.data_io.path_utils import get_project_root
 pandas.options.mode.chained_assignment = None  # default='warn'
 
 
-
 class DataManager:
 
     data_source = None
@@ -43,10 +42,14 @@ class DataManager:
     @classmethod
     def prepare_dataset(cls, data, dataset_column, start, end):
         nonnan_dataset = data.dropna().reset_index(drop=True)
-        requested_subset = nonnan_dataset.iloc[start-1:end, :]
+        requested_subset = cls.slice_data_by_index(nonnan_dataset, start, end)
         accumulated_events_previous_to_start = 0
         if start > 1:
             accumulated_events_previous_to_start = nonnan_dataset[dataset_column].iloc[start-2]
         requested_subset.loc[:, dataset_column] -= accumulated_events_previous_to_start
         correctly_indexed_dataset = requested_subset.set_index(np.arange(1, len(requested_subset) + 1), drop=True)
         return correctly_indexed_dataset.astype({dataset_column: 'int32'})
+
+    @classmethod
+    def slice_data_by_index(cls, data, start, end):
+        return data.iloc[start-1:end, :]

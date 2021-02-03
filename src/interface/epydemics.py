@@ -25,3 +25,8 @@ def fit_contagion_model(country_name, dataset='total_cases', start=1, end=-1, ou
         
     if plot is True:
         plotter.plot_fit_results(fit)
+
+
+def analyze_model_parameters_over_time(country_name, dataset='total_cases', start_from=30):
+    parameter_tuples = Fitter.perform_range_fits(country_name, dataset, start_from)
+    plotter.plot_parameters_over_time(parameter_tuples, start_from)
