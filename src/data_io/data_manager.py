@@ -52,4 +52,4 @@ class DataManager:
 
     @classmethod
     def slice_data_by_index(cls, data, start, end):
-        return data.iloc[start-1:end, :]
+        return data.iloc[start-1:end, :].reset_index(drop=True)
