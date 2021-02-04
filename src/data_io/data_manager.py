@@ -52,4 +52,7 @@ class DataManager:
 
     @classmethod
     def slice_data_by_index(cls, data, start, end):
-        return data.iloc[start-1:end, :].reset_index(drop=True)
+        sliced_data = data.iloc[start-1:end, :]
+        correct_index = np.arange(1, len(sliced_data) + 1)
+        sliced_data.set_index(correct_index, inplace=True, drop=True)
+        return sliced_data

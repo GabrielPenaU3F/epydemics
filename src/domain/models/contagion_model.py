@@ -3,8 +3,8 @@ import scipy.optimize as opt
 
 class ContagionModel:
 
-    def fit(self, x, y):
-        params, cov = opt.curve_fit(self.mean_value_function, x, y, p0=(0.1, 1), method='lm')
+    def fit(self, x, y, x0):
+        params, cov = opt.curve_fit(self.mean_value_function, x, y, p0=x0, method='lm')
         return params
 
     def mean_value_function(self, x, a, b):

@@ -12,8 +12,8 @@ class CountryListTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         DataManager.load_dataset()
-        cls.arg_early_fit = Fitter.fit('Argentina', 'total_cases', 1, 200)
-        cls.arg_mitigation_fit = Fitter.fit('Argentina', 'total_cases', 200, 300)
+        cls.arg_early_fit = Fitter.fit('Argentina', 'total_cases', 1, 200, x0=(0.1, 1))
+        cls.arg_mitigation_fit = Fitter.fit('Argentina', 'total_cases', 200, 300, x0=(0.1, 1))
 
     def test_argentina_early_stage_rho_parameter_should_be_0_dot_130(self):
         rho = self.__class__.arg_early_fit.get_params()[0]

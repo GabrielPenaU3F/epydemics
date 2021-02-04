@@ -20,11 +20,13 @@ class SliceDataTests(unittest.TestCase):
 
     def test_obtain_rows_0_and_1_asking_for_rows_1_to_2(self):
         expected = pd.DataFrame([[1, 1, 1, 1], [2, 2, 2, 2]])
+        expected.set_index(np.array([1, 2]), inplace=True, drop=True)
         rows_0_and_1 = DataManager.slice_data_by_index(self.__class__.test_df, 1, 2)
         assert_frame_equal(expected, rows_0_and_1)
 
     def test_obtain_rows_1_to_3_asking_for_rows_2_to_4(self):
         expected = pd.DataFrame([[2, 2, 2, 2], [3, 3, 3, 3], [4, 4, 4, 4]])
+        expected.set_index(np.array([1, 2, 3]), inplace=True, drop=True)
         rows_1_to_3 = DataManager.slice_data_by_index(self.__class__.test_df, 2, 4)
         assert_frame_equal(expected, rows_1_to_3)
 
