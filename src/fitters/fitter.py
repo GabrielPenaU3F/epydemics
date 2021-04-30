@@ -11,8 +11,8 @@ class Fitter:
     def fit(cls, country_name, dataset, start, end, x0):
         data = DataManager.get_country_data(country_name, dataset, start, end)
         model = ContagionModel()
-        x = data.index.to_numpy()
-        y = data[dataset].to_numpy()
+        x = data.index.values
+        y = data[dataset].values
         params = model.fit(x, y, x0)
         explained = model.mean_value_function(x, *params)
         rsq = r2_score(y, explained)
@@ -26,8 +26,8 @@ class Fitter:
         parameter_list = []
         for i in range(start_from, len(data) + 1):
             sliced_data = DataManager.slice_data_by_index(data, 1, i)
-            x = sliced_data.index.to_numpy()
-            y = sliced_data[dataset].to_numpy()
+            x = sliced_data.index.values
+            y = sliced_data[dataset].values
             params = tuple(model.fit(x, y, x0=fit_x0))
             parameter_list.append(params)
         return parameter_list
