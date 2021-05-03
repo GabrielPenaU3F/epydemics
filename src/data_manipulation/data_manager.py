@@ -4,8 +4,8 @@ import pandas
 from src.argument_verifier import ArgumentVerifier
 from src.data_io.data_writer import DataWriter
 from src.data_io.path_utils import get_project_root
-from src.domain.data_source import *
 from src.domain.full_dataset import FullDataset
+from src.repository.source_repository import SourceRepository
 
 pandas.options.mode.chained_assignment = None  # default='warn'
 
@@ -13,12 +13,8 @@ pandas.options.mode.chained_assignment = None  # default='warn'
 class DataManager:
 
     data = None
+    current_data_source = None
     default_path = str(get_project_root() + '\\resources\\data\\')
-
-    sources = {
-        'owid': OWIDDataSource(),
-        'mapache_arg': MapacheArgDataSource()
-    }
 
     @classmethod
     def update_data(cls, source='owid', filename=''):
@@ -29,23 +25,25 @@ class DataManager:
 
     @classmethod
     def setup(cls, source_id, path, filename):
-        cls.data = FullDataset(source_id, pandas.read_csv(cls.sources.get(source_id).get_url()))
+        cls.current_data_source = SourceRepository.retrieve_data_source(source_id)
+        cls.data = FullDataset(source_id, pandas.read_csv(cls.current_data_source.get_url()))
         full_path = path + filename
         DataWriter.write_to_csv(cls.data.get_raw_data(), full_path)
 
     @classmethod
     def load_dataset(cls, source_id='owid', filename='owid_dataset.csv'):
         rel_path = cls.default_path + filename
+        cls.current_data_source = SourceRepository.retrieve_data_source(source_id)
         cls.data = FullDataset(source_id, pandas.read_csv(rel_path))
 
     @classmethod
     def get_location_list(cls):
-        current_data_source = cls.data.get_source_id()
-        filter_strategy = cls.sources.get(current_data_source).get_filter_strategy()
+        filter_strategy = cls.current_data_source.get_filter_strategy()
         return filter_strategy.get_location_list(cls.data.get_raw_data())
 
     @classmethod
-    def get_location_data(cls, location_id, dataset='total_cases', start=1, end=-1):
+    def get_location_data(cls, location_id, dataset='', start=1, end=-1):
+        dataset = cls.choose_dataset(dataset)
         data = cls.data.get_raw_data().copy()
         ArgumentVerifier.validate_location(data, location_id)
         location_data = data[data['location'] == location_id]
@@ -74,10 +72,17 @@ class DataManager:
     @classmethod
     def list_supported_sources(cls):
         print('The currently supported data sources are: ')
-        print(cls.sources.values())
+        print(SourceRepository.list_sources())
 
     @classmethod
     def choose_filename(cls, filename, source):
         if filename == '':
             filename = str(source) + '_dataset.csv'
         return filename
+
+    @classmethod
+    def choose_dataset(cls, dataset):
+        if dataset == '':
+            strategy = cls.current_data_source.get_default_parameters_strategy()
+            dataset = strategy.get_default_dataset()
+        return dataset
