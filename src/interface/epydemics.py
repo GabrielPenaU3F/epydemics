@@ -12,13 +12,13 @@ def show_available_locations():
     console.print_countries(countries)
 
 
-def show_data_from_location(country_id, dataset='total_cases'):
-    country_data = DataManager.get_location_data(country_id, dataset)
-    console.print_data_from_country(country_data, country_id, dataset)
+def show_data_from_location(location_id, dataset=''):
+    location_data = DataManager.get_location_data(location_id, dataset)
+    console.print_data_from_location(location_data, location_id, dataset)
 
 
-def fit_contagion_model(country_name, dataset='total_cases', start=1, end=-1, x0=(0.1, 1), output=True, plot=True):
-    fit = Fitter.fit(country_name, dataset, start, end, x0)
+def fit_contagion_model(location_name, dataset='', start=1, end=-1, x0=(0.1, 1), output=True, plot=True):
+    fit = Fitter.fit(location_name, dataset, start, end, x0)
 
     if output is True:
         console.show_fit_results(fit)
@@ -27,7 +27,7 @@ def fit_contagion_model(country_name, dataset='total_cases', start=1, end=-1, x0
         plotter.plot_fit_results(fit)
 
 
-def analyze_model_parameters_over_time(country_name, dataset='total_cases', start=1, end=-1, start_from=30,
+def analyze_model_parameters_over_time(location_name, dataset='', start=1, end=-1, start_from=30,
                                        fit_x0=(0.1, 1)):
-    parameter_tuples = Fitter.perform_range_fits(country_name, dataset, start, end, start_from, fit_x0)
+    parameter_tuples = Fitter.perform_range_fits(location_name, dataset, start, end, start_from, fit_x0)
     plotter.plot_parameters_over_time(parameter_tuples, start_from)

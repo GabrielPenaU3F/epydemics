@@ -10,6 +10,7 @@ class Fitter:
     @classmethod
     def fit(cls, location_name, dataset, start, end, x0):
         data = DataManager.get_location_data(location_name, dataset, start, end)
+        dataset = DataManager.choose_dataset(dataset)
         model = ContagionModel()
         x = data.index.values
         y = data[dataset].values

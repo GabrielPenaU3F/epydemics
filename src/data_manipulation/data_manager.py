@@ -31,7 +31,8 @@ class DataManager:
         DataWriter.write_to_csv(cls.data.get_raw_data(), full_path)
 
     @classmethod
-    def load_dataset(cls, source_id='owid', filename='owid_dataset.csv'):
+    def load_dataset(cls, source_id='owid', filename=''):
+        filename = cls.choose_filename(filename, source_id)
         rel_path = cls.default_path + filename
         cls.current_data_source = SourceRepository.retrieve_data_source(source_id)
         cls.data = FullDataset(source_id, pandas.read_csv(rel_path))
@@ -45,10 +46,12 @@ class DataManager:
     def get_location_data(cls, location_id, dataset='', start=1, end=-1):
         dataset = cls.choose_dataset(dataset)
         data = cls.data.get_raw_data().copy()
-        ArgumentVerifier.validate_location(data, location_id)
-        location_data = data[data['location'] == location_id]
-        ArgumentVerifier.validate_dataset_arguments(location_data, dataset, start, end)
-        requested_columns_df = location_data[['date', dataset]]
+        location_column_name = cls.current_data_source.get_column_choosing_strategy().get_location_column_name()
+        ArgumentVerifier.validate_location(data, location_column_name, location_id)
+        location_data = data[data[location_column_name] == location_id]
+        ArgumentVerifier.validate_dataset_arguments(cls.current_data_source, location_data, dataset, start, end)
+        date_column_name = cls.current_data_source.get_column_choosing_strategy().get_date_column_name()
+        requested_columns_df = location_data[[date_column_name, dataset]]
         return cls.prepare_dataset(requested_columns_df, dataset, start, end)
 
     @classmethod
@@ -83,6 +86,6 @@ class DataManager:
     @classmethod
     def choose_dataset(cls, dataset):
         if dataset == '':
-            strategy = cls.current_data_source.get_default_parameters_strategy()
+            strategy = cls.current_data_source.get_column_choosing_strategy()
             dataset = strategy.get_default_dataset()
         return dataset
