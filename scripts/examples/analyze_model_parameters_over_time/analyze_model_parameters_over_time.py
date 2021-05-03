@@ -1,7 +1,7 @@
 from src.data_io.data_manager import DataManager
 from src.interface import epydemics
 
-DataManager.load_dataset()
+DataManager.load_dataset('owid_dataset.csv')
 
 # Example 1: This will plot the model parameters versus time
 # epydemics.analyze_model_parameters_over_time('Argentina')

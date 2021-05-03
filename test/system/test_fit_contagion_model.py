@@ -4,14 +4,14 @@ from src.data_io.data_manager import DataManager
 from src.fitters.fitter import Fitter
 
 
-class CountryListTests(unittest.TestCase):
+class FitContagionModelTests(unittest.TestCase):
 
     arg_early_fit = None
     arg_mitigation_fit = None
 
     @classmethod
     def setUpClass(cls) -> None:
-        DataManager.load_dataset()
+        DataManager.load_dataset('owid_dataset.csv')
         cls.arg_early_fit = Fitter.fit('Argentina', 'total_cases', 1, 200, x0=(0.1, 1))
         cls.arg_mitigation_fit = Fitter.fit('Argentina', 'total_cases', 200, 300, x0=(0.1, 1))
 

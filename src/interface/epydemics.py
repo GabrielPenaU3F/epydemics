@@ -7,13 +7,13 @@ console = ConsoleManager.get_instance()
 plotter = PlotManager.get_instance()
 
 
-def show_available_countries():
+def show_available_locations():
     countries = DataManager.get_country_list()
     console.print_countries(countries)
 
 
-def show_data_from_country(country_id, dataset='total_cases'):
-    country_data = DataManager.get_country_data(country_id, dataset)
+def show_data_from_location(country_id, dataset='total_cases'):
+    country_data = DataManager.get_location_data(country_id, dataset)
     console.print_data_from_country(country_data, country_id, dataset)
 
 

@@ -9,7 +9,7 @@ class Fitter:
 
     @classmethod
     def fit(cls, country_name, dataset, start, end, x0):
-        data = DataManager.get_country_data(country_name, dataset, start, end)
+        data = DataManager.get_location_data(country_name, dataset, start, end)
         model = ContagionModel()
         x = data.index.values
         y = data[dataset].values
@@ -21,7 +21,7 @@ class Fitter:
 
     @classmethod
     def perform_range_fits(cls, country_name, dataset, start, end, start_from, fit_x0):
-        data = DataManager.get_country_data(country_name, dataset, start, end)
+        data = DataManager.get_location_data(country_name, dataset, start, end)
         model = ContagionModel()
         parameter_list = []
         for i in range(start_from, len(data) + 1):
