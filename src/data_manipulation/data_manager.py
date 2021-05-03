@@ -46,11 +46,11 @@ class DataManager:
     def get_location_data(cls, location_id, dataset='', start=1, end=-1):
         dataset = cls.choose_dataset(dataset)
         data = cls.data.get_raw_data().copy()
-        location_column_name = cls.current_data_source.get_column_choosing_strategy().get_location_column_name()
+        location_column_name = cls.current_data_source.get_location_column_name()
         ArgumentVerifier.validate_location(data, location_column_name, location_id)
         location_data = data[data[location_column_name] == location_id]
         ArgumentVerifier.validate_dataset_arguments(cls.current_data_source, location_data, dataset, start, end)
-        date_column_name = cls.current_data_source.get_column_choosing_strategy().get_date_column_name()
+        date_column_name = cls.current_data_source.get_date_column_name()
         requested_columns_df = location_data[[date_column_name, dataset]]
         return cls.prepare_dataset(requested_columns_df, dataset, start, end)
 
@@ -86,6 +86,5 @@ class DataManager:
     @classmethod
     def choose_dataset(cls, dataset):
         if dataset == '':
-            strategy = cls.current_data_source.get_column_choosing_strategy()
-            dataset = strategy.get_default_dataset()
+            dataset = cls.current_data_source.get_default_dataset()
         return dataset

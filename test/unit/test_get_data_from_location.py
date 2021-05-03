@@ -40,7 +40,7 @@ class GetDataFromLocationTests(unittest.TestCase):
     def test_country_not_on_list(self):
         with self.assertRaises(InvalidArgumentException) as error:
             DataManager.get_location_data('Coruscant')
-        self.assertEqual(error.exception.strerror, 'The requested country was not found')
+        self.assertEqual(error.exception.strerror, 'The requested location was not found')
 
     def test_start_cannot_exceed_dataset_length(self):
         with self.assertRaises(InvalidArgumentException) as error:
