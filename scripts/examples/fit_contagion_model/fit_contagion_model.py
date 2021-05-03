@@ -1,4 +1,4 @@
-from src.data_io.data_manager import DataManager
+from src.data_manipulation.data_manager import DataManager
 from src.interface import epydemics
 
 DataManager.load_dataset('owid_dataset.csv')

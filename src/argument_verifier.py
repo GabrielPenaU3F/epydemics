@@ -24,6 +24,6 @@ class ArgumentVerifier:
             raise InvalidArgumentException('Supported datasets are total_cases and total_deaths only')
 
     @classmethod
-    def validate_country(cls, data, country_id):
-        if country_id not in data['location'].values:
+    def validate_location(cls, data, location_id):
+        if location_id not in data['location'].values:
             raise InvalidArgumentException('The requested country is not on the list')

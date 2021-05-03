@@ -1,6 +1,6 @@
 import unittest
 
-from src.data_io.data_manager import DataManager
+from src.data_manipulation.data_manager import DataManager
 from src.exceptions.exceptions import InvalidArgumentException
 
 
@@ -8,7 +8,7 @@ class GetDataFromLocationTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        DataManager.load_dataset('owid_dataset.csv')
+        DataManager.load_dataset()
 
     def test_cases_from_first_5_days_from_argentina(self):
         expected = [1, 1, 1, 2, 8]

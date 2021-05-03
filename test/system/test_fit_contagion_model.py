@@ -1,6 +1,6 @@
 import unittest
 
-from src.data_io.data_manager import DataManager
+from src.data_manipulation.data_manager import DataManager
 from src.fitters.fitter import Fitter
 
 
@@ -11,7 +11,7 @@ class FitContagionModelTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        DataManager.load_dataset('owid_dataset.csv')
+        DataManager.load_dataset()
         cls.arg_early_fit = Fitter.fit('Argentina', 'total_cases', 1, 200, x0=(0.1, 1))
         cls.arg_mitigation_fit = Fitter.fit('Argentina', 'total_cases', 200, 300, x0=(0.1, 1))
 

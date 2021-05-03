@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from pandas._testing import assert_frame_equal
 
-from src.data_io.data_manager import DataManager
+from src.data_manipulation.data_manager import DataManager
 
 
 class SliceDataTests(unittest.TestCase):

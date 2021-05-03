@@ -1,16 +1,14 @@
 import unittest
 
-from src.data_io.data_manager import DataManager
+from src.data_manipulation.data_manager import DataManager
 
 
 class LocationListTests(unittest.TestCase):
 
-    @classmethod
-    def setUpClass(cls) -> None:
-        DataManager.load_dataset('owid_dataset.csv')
 
     def test_owid_location_list_is_correct(self):
-        locations = ['Afghanistan', 'Africa', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Anguilla',
+        DataManager.load_dataset('owid', 'owid_dataset.csv')
+        owid_locations = ['Afghanistan', 'Africa', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Anguilla',
          'Antigua and Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Asia', 'Australia', 'Austria',
          'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus',
          'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina',
@@ -44,8 +42,18 @@ class LocationListTests(unittest.TestCase):
          'Turkey', 'Turks and Caicos Islands', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom',
          'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican', 'Venezuela',
          'Vietnam', 'World', 'Yemen', 'Zambia', 'Zimbabwe']
-        actual_locations = list(DataManager.get_country_list())
-        self.assertListEqual(locations, actual_locations)
+        actual_locations = list(DataManager.get_location_list())
+        self.assertListEqual(owid_locations, actual_locations)
+
+
+    def test_mapache_arg_location_list_is_correct(self):
+        DataManager.load_dataset('mapache_arg', 'mapache_arg_dataset.csv')
+        mapache_locations = ['Buenos Aires', 'CABA', 'Córdoba', 'Mendoza', 'Santa Cruz', 'Tierra del Fuego', 'Formosa',
+                             'San Juan', 'Corrientes', 'Santa Fe', 'Salta', 'Misiones', 'Entre Ríos', 'La Rioja',
+                             'Río Negro', 'Chaco', 'San Luis', 'Tucumán', 'Neuquén', 'La Pampa', 'Catamarca',
+                             'Chubut', 'Jujuy', 'Santiago del Estero']
+        actual_locations = list(DataManager.get_location_list())
+        self.assertListEqual(mapache_locations, actual_locations)
 
 
 if __name__ == '__main__':
