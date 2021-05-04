@@ -1,8 +1,10 @@
 from src.data_manipulation.data_manager import DataManager
 from src.interface import epydemics
 
-# Example 1: consider the Our World In Data dataset. First, we load it. The following three lines do exactly the same:
+# Example 1: consider the Our World In Data dataset. First, we load it. The following lines do exactly the same:
+# DataManager.load_dataset(source='owid', filename='owid_dataset.csv')
 # DataManager.load_dataset('owid', 'owid_dataset.csv')
+# DataManager.load_dataset(source='owid')
 # DataManager.load_dataset('owid')
 # DataManager.load_dataset()
 

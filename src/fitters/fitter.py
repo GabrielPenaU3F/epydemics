@@ -17,7 +17,7 @@ class Fitter:
         params = model.fit(x, y, x0)
         explained = model.mean_value_function(x, *params)
         rsq = r2_score(y, explained)
-        fit = Fit(location_name, dataset, x, y, explained, params, rsq)
+        fit = Fit(DataManager.get_data_source(), location_name, dataset, x, y, explained, params, rsq)
         return fit
 
     @classmethod

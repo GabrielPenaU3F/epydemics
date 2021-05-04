@@ -17,4 +17,4 @@ class OWIDFilterStrategy(DataFilterStrategy):
 class MapacheArgFilterStrategy(DataFilterStrategy):
 
     def get_location_list(self, raw_data):
-        return raw_data['provincia_residencia'].unique()
+        return raw_data['osm_admin_level_4'].unique()

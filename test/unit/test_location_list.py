@@ -43,17 +43,17 @@ class LocationListTests(unittest.TestCase):
          'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican', 'Venezuela',
          'Vietnam', 'World', 'Yemen', 'Zambia', 'Zimbabwe']
         actual_locations = list(DataManager.get_location_list())
-        self.assertListEqual(owid_locations, actual_locations)
+        self.assertCountEqual(owid_locations, actual_locations)
 
 
     def test_mapache_arg_location_list_is_correct(self):
         DataManager.load_dataset('mapache_arg', 'mapache_arg_dataset.csv')
-        mapache_locations = ['Buenos Aires', 'CABA', 'Córdoba', 'Mendoza', 'Santa Cruz', 'Tierra del Fuego', 'Formosa',
+        mapache_locations = ['Buenos Aires', 'Indeterminado', 'CABA', 'Córdoba', 'Mendoza', 'Santa Cruz', 'Tierra del Fuego', 'Formosa',
                              'San Juan', 'Corrientes', 'Santa Fe', 'Salta', 'Misiones', 'Entre Ríos', 'La Rioja',
                              'Río Negro', 'Chaco', 'San Luis', 'Tucumán', 'Neuquén', 'La Pampa', 'Catamarca',
                              'Chubut', 'Jujuy', 'Santiago del Estero']
         actual_locations = list(DataManager.get_location_list())
-        self.assertListEqual(mapache_locations, actual_locations)
+        self.assertCountEqual(mapache_locations, actual_locations)
 
 
 if __name__ == '__main__':

@@ -1,8 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from src.strings_manager import StringManager
-
 
 class PlotManager:
 

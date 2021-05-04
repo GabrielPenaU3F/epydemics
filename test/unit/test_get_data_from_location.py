@@ -55,7 +55,7 @@ class GetDataFromLocationTests(unittest.TestCase):
     def test_dataset_cannot_be_different_from_cases_or_deaths(self):
         with self.assertRaises(InvalidArgumentException) as error:
             DataManager.get_location_data('Argentina', dataset='new_cases')
-        self.assertEqual(error.exception.strerror, 'Supported datasets are total_cases and total_deaths only')
+        self.assertEqual(error.exception.strerror, 'Requested dataset is not supported')
 
 
 

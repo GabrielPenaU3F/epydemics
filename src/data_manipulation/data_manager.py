@@ -31,11 +31,11 @@ class DataManager:
         DataWriter.write_to_csv(cls.data.get_raw_data(), full_path)
 
     @classmethod
-    def load_dataset(cls, source_id='owid', filename=''):
-        filename = cls.choose_filename(filename, source_id)
+    def load_dataset(cls, source='owid', filename=''):
+        filename = cls.choose_filename(filename, source)
         rel_path = cls.default_path + filename
-        cls.current_data_source = SourceRepository.retrieve_data_source(source_id)
-        cls.data = FullDataset(source_id, pandas.read_csv(rel_path))
+        cls.current_data_source = SourceRepository.retrieve_data_source(source)
+        cls.data = FullDataset(source, pandas.read_csv(rel_path))
 
     @classmethod
     def get_location_list(cls):
@@ -88,3 +88,7 @@ class DataManager:
         if dataset == '':
             dataset = cls.current_data_source.get_default_dataset()
         return dataset
+
+    @classmethod
+    def get_data_source(cls):
+        return cls.current_data_source

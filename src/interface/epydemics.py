@@ -8,17 +8,18 @@ plotter = PlotManager.get_instance()
 
 
 def show_available_locations():
-    countries = DataManager.get_location_list()
-    console.print_countries(countries)
+    locations = DataManager.get_location_list()
+    console.print_locations(locations)
 
 
 def show_data_from_location(location_id, dataset=''):
     location_data = DataManager.get_location_data(location_id, dataset)
-    console.print_data_from_location(location_data, location_id, dataset)
+    source = DataManager.get_data_source()
+    console.print_data_from_location(source, location_id, dataset, location_data)
 
 
-def fit_contagion_model(location_name, dataset='', start=1, end=-1, x0=(0.1, 1), output=True, plot=True):
-    fit = Fitter.fit(location_name, dataset, start, end, x0)
+def fit_contagion_model(location_id, dataset='', start=1, end=-1, x0=(0.1, 1), output=True, plot=True):
+    fit = Fitter.fit(location_id, dataset, start, end, x0)
 
     if output is True:
         console.show_fit_results(fit)

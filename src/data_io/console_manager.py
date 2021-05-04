@@ -1,7 +1,5 @@
 import pandas
 
-from src.strings_manager import StringManager
-
 
 class ConsoleManager:
 
@@ -19,23 +17,24 @@ class ConsoleManager:
     def configure_dataframe_prints(self):
         pandas.set_option("display.max_rows", None, "display.max_columns", None)
 
-    def print_countries(self, countries):
-        print("List of available countries:")
-        print(countries)
+    def print_locations(self, locations):
+        print("List of available locations:")
+        print(locations)
 
-    def print_data_from_country(self, country_dataframe, country, dataset_type):
+    def print_data_from_location(self, source, location_id, dataset, location_dataframe):
         date_column_title = 'Date'
-        dataset_column_title = StringManager.get_dataset_column_title(dataset_type)
-        country_dataframe.columns = [date_column_title, dataset_column_title]
+        dataset_column_title = source.get_dataset_title(dataset)
+        location_dataframe.columns = [date_column_title, dataset_column_title]
         print('\n-----------------------')
-        print(StringManager.get_dataset_title(dataset_type) + country)
+        print(source.get_dataset_title(dataset) + ' in ' + location_id)
         print('-----------------------')
-        print(country_dataframe)
+        print(location_dataframe)
         print('-----------------------')
 
     def show_fit_results(self, fit):
+        source = fit.get_source()
         print('\n-----------------------')
-        print(StringManager.get_dataset_title(fit.get_dataset_type()) + fit.get_country())
+        print(source.get_dataset_title(fit.get_dataset_type()) + fit.get_location())
         print('-----------------------')
         print('Model parameters:')
         print('\u03C1 (1/day):  ' + str(fit.get_params()[0]))

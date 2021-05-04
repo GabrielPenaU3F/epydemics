@@ -20,7 +20,7 @@ class ArgumentVerifier:
     def validate_dataset(cls, source, dataset):
         supported_datasets = source.get_supported_datasets()
         if dataset not in supported_datasets:
-            raise InvalidArgumentException('Supported datasets are total_cases and total_deaths only')
+            raise InvalidArgumentException('Requested dataset is not supported')
 
     @classmethod
     def validate_location(cls, raw_data, location_column_name, location_id):
