@@ -39,38 +39,29 @@ class DataManager:
 
     @classmethod
     def get_location_list(cls):
-        filter_strategy = cls.current_data_source.get_filter_strategy()
+        filter_strategy = cls.current_data_source.get_data_management_strategy()
         return filter_strategy.get_location_list(cls.data.get_raw_data())
 
     @classmethod
     def get_location_data(cls, location_id, dataset='', start=1, end=-1):
+        source = cls.current_data_source
         dataset = cls.choose_dataset(dataset)
         data = cls.data.get_raw_data().copy()
-        location_column_name = cls.current_data_source.get_location_column_name()
+        location_column_name = source.get_location_column_name()
         ArgumentVerifier.validate_location(data, location_column_name, location_id)
         location_data = data[data[location_column_name] == location_id]
-        ArgumentVerifier.validate_dataset_arguments(cls.current_data_source, location_data, dataset, start, end)
-        date_column_name = cls.current_data_source.get_date_column_name()
+        ArgumentVerifier.validate_dataset_arguments(source, location_data, dataset, start, end)
+        date_column_name = source.get_date_column_name()
         requested_columns_df = location_data[[date_column_name, dataset]]
-        return cls.prepare_dataset(requested_columns_df, dataset, start, end)
+        return cls.prepare_dataset(source, requested_columns_df, dataset, start, end)
 
     @classmethod
-    def prepare_dataset(cls, data, dataset_column, start, end):
+    def prepare_dataset(cls, source, data, dataset_column, start, end):
+        dm_strategy = source.get_data_management_strategy()
         nonnan_dataset = data.dropna().reset_index(drop=True)
-        requested_subset = cls.slice_data_by_index(nonnan_dataset, start, end)
-        accumulated_events_previous_to_start = 0
-        if start > 1:
-            accumulated_events_previous_to_start = nonnan_dataset[dataset_column].iloc[start-2]
-        requested_subset.loc[:, dataset_column] -= accumulated_events_previous_to_start
+        requested_subset = dm_strategy.filter_rows(nonnan_dataset, dataset_column, start, end)
         correctly_indexed_dataset = requested_subset.set_index(np.arange(1, len(requested_subset) + 1), drop=True)
         return correctly_indexed_dataset.astype({dataset_column: 'int32'})
-
-    @classmethod
-    def slice_data_by_index(cls, data, start, end):
-        sliced_data = data.iloc[start-1:end, :]
-        correct_index = np.arange(1, len(sliced_data) + 1)
-        sliced_data.set_index(correct_index, inplace=True, drop=True)
-        return sliced_data
 
     @classmethod
     def list_supported_sources(cls):

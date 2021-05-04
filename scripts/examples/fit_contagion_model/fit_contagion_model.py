@@ -25,10 +25,8 @@ from src.interface import epydemics
 # Example 1.7: No console output, just the plots.
 # epydemics.fit_contagion_model('Argentina', output=False)
 
-
-
 # Example 2: now consider the Mapache Dataset from Argentina. Load it:
 DataManager.load_dataset('mapache_arg')
 
 # Example 2.1: Fit the cases in CABA
-epydemics.fit_contagion_model('CABA')
+epydemics.fit_contagion_model('CABA', start=160, end=260)

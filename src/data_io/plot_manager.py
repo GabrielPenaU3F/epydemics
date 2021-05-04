@@ -20,8 +20,9 @@ class PlotManager:
         real_data = fit.get_y_data()
         explained = fit.get_explained_data()
         dataset_type = fit.get_dataset_type()
-        country = fit.get_country()
-        title = StringManager.get_dataset_title(dataset_type) + country
+        location = fit.get_location()
+        source = fit.get_source()
+        title = source.get_dataset_title(dataset_type) + ' in ' + location
 
         fig, axes = plt.subplots()
         axes.plot(x, real_data, linewidth=1, color='#263859', linestyle='--', label='Real data')
@@ -61,8 +62,9 @@ class PlotManager:
 
     def config_fit_plot_axis(self, axes, fit):
         dataset = fit.get_dataset_type()
+        source = fit.get_source()
         axes.set_xlabel('t (days)')
-        axes.set_ylabel(StringManager.get_fit_plot_ylabel(dataset))
+        axes.set_ylabel(source.get_fit_plot_ylabel(dataset))
         axes.ticklabel_format(axis='x', style='plain')
         axes.ticklabel_format(axis='y', style='plain')
 
