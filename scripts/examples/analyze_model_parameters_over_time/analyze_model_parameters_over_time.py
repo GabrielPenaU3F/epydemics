@@ -18,5 +18,5 @@ from src.interface import epydemics
 # Example 2: now consider the Mapache Dataset from Argentina. Load it:
 DataManager.load_dataset('mapache_arg')
 
-# Example 2.1: This will plot the model parameters versus time in CABA
-epydemics.analyze_model_parameters_over_time('CABA')
+# Example 2.1: This will plot the model parameters versus time in Córdoba
+epydemics.analyze_model_parameters_over_time('Córdoba')

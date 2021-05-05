@@ -4,7 +4,7 @@ from src.data_manipulation.data_manager import DataManager
 from src.fitters.fitter import Fitter
 
 
-class FitContagionModelTests(unittest.TestCase):
+class FitContagionModelMapacheTests(unittest.TestCase):
 
     caba_early_fit = None
     caba_mitigation_fit = None

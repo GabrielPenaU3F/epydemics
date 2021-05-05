@@ -34,7 +34,8 @@ class ConsoleManager:
     def show_fit_results(self, fit):
         source = fit.get_source()
         print('\n-----------------------')
-        print(source.get_dataset_title(fit.get_dataset_type()) + fit.get_location())
+        print(source.get_dataset_title(fit.get_dataset_type()) + ' in ' +
+              fit.get_location())
         print('-----------------------')
         print('Model parameters:')
         print('\u03C1 (1/day):  ' + str(fit.get_params()[0]))

@@ -6,7 +6,7 @@ from src.data_manipulation.data_manager import DataManager
 from src.fitters.fitter import Fitter
 
 
-class AnalyzeParametersOverTimeTests(unittest.TestCase):
+class AnalyzeParametersOverTimeOWIDTests(unittest.TestCase):
 
     arg_until_40 = None
 
