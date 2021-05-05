@@ -1,6 +1,8 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
+from src.unit_converter import DaysConverter
+
 
 class PlotManager:
 
@@ -54,11 +56,15 @@ class PlotManager:
         plt.show()
 
     def plot_mtbis(self, mtbis, start_from, plot_unit):
+
+        converter = DaysConverter.get_instance()
+        converted_mtbis = converter.convert_days_to(plot_unit, mtbis)
+
         x_right_lim = start_from + len(mtbis)
         x = np.arange(start_from, x_right_lim)
 
         fig, axes = plt.subplots()
-        axes.plot(x, mtbis, linewidth=1, color='#db6400', linestyle='-', label='MTBI')
+        axes.plot(x, converted_mtbis, linewidth=1, color='#db6400', linestyle='-', label='MTBI')
         self.config_plot_background(axes)
         self.config_mtbi_plot_axis(axes, plot_unit)
         axes.legend()

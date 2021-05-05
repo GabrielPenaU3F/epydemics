@@ -3,7 +3,7 @@ import pandas
 
 from src.argument_verifier import ArgumentVerifier
 from src.data_io.data_writer import DataWriter
-from src.data_io.path_utils import get_project_root
+from src.utils.path_utils import get_project_root
 from src.domain.full_dataset import FullDataset
 from src.repository.source_repository import SourceRepository
 

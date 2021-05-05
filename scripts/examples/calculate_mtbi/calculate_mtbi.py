@@ -3,8 +3,7 @@ from src.interface import epydemics
 
 DataManager.load_dataset('owid')
 
-epydemics.calculate_mtbi('Argentina')
+epydemics.calculate_mtbi('Argentina', plot_unit='min')
 
-# TODO: implement unit conversion
 # TODO: implement minimum checking
 # TODO: optimize
