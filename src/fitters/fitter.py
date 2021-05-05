@@ -35,3 +35,21 @@ class Fitter:
             params = tuple(model.fit(x, y, x0=fit_x0))
             parameter_list.append(params)
         return parameter_list
+
+    @classmethod
+    def calculate_mtbis(cls, location, dataset, start, end, start_from, fit_x0):
+        parameter_list = cls.perform_range_fits(location, dataset, start, end, start_from, fit_x0)
+        mtbis = []
+        for s in range(start_from, len(parameter_list)):
+            params = parameter_list[s]
+            rho = params[0]
+            gamma_per_rho = params[1]
+            k_minus_one = DataManager.get_single_datum(location, dataset, start + s)
+            mtbi = cls.calculate_conditional_mtbi(s, k_minus_one, rho, gamma_per_rho)
+            mtbis.append(mtbi)
+        return mtbis
+
+    @classmethod
+    def calculate_conditional_mtbi(cls, s, k, rho, gamma_per_rho):
+        gamma = gamma_per_rho * rho
+        return (1 + rho * s) / (gamma * (k - 1))

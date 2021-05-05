@@ -53,6 +53,17 @@ class PlotManager:
 
         plt.show()
 
+    def plot_mtbis(self, mtbis, start_from, plot_unit):
+        x_right_lim = start_from + len(mtbis)
+        x = np.arange(start_from, x_right_lim)
+
+        fig, axes = plt.subplots()
+        axes.plot(x, mtbis, linewidth=1, color='#db6400', linestyle='-', label='MTBI')
+        self.config_plot_background(axes)
+        self.config_mtbi_plot_axis(axes, plot_unit)
+        axes.legend()
+        plt.show()
+
     def config_plot_background(self, axes):
         axes.patch.set_facecolor("#ffffff")
         axes.patch.set_edgecolor('black')
@@ -76,6 +87,11 @@ class PlotManager:
         gamma_by_rho_axes.set_xlabel('t (days)')
         gamma_by_rho_axes.set_ylabel('\u03B3 / \u03C1')
         self.config_axis_plain_style(gamma_by_rho_axes)
+
+    def config_mtbi_plot_axis(self, axes, plot_unit):
+        axes.set_xlabel('t (days)')
+        axes.set_ylabel('MTBI (' + str(plot_unit) + ')')
+        self.config_axis_plain_style(axes)
 
     def config_axis_plain_style(self, axes):
         axes.ticklabel_format(axis='x', style='plain')

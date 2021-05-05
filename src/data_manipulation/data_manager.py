@@ -83,3 +83,9 @@ class DataManager:
     @classmethod
     def get_data_source(cls):
         return cls.current_data_source
+
+    @classmethod
+    def get_single_datum(cls, location, dataset, s):
+        dataset = cls.choose_dataset(dataset)
+        location_data = cls.get_location_data(location, dataset)
+        return location_data[[dataset]].iloc[s - 1][0]
