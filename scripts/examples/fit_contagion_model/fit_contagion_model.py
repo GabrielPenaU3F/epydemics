@@ -29,4 +29,4 @@ from src.interface import epydemics
 DataManager.load_dataset('mapache_arg')
 
 # Example 2.1: Fit the cases in CABA
-epydemics.fit_contagion_model('Buenos Aires', start=350)
+epydemics.fit_contagion_model('Buenos Aires')

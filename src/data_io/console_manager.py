@@ -1,6 +1,7 @@
 import numpy as np
 import pandas
 import src.utils.checking_utils as checker
+from src.unit_converter import DaysConverter
 
 
 class ConsoleManager:
@@ -47,7 +48,8 @@ class ConsoleManager:
         print('R2:  ' + str(fit.get_rsq()))
         print('-----------------------')
 
-    def show_minimum_status(self, mtbis):
+    def show_minimum_status(self, mtbis, start_from, unit):
+        mtbis = DaysConverter.get_instance().convert_days_to(unit, mtbis)
         if checker.check_if_minimum_was_reached(mtbis):
             status = 'REACHED'
         else:
@@ -55,5 +57,5 @@ class ConsoleManager:
         print('\n-----------------------')
         print('Minimum status: ' + status)
         print('Current minimum is ' +
-              str(np.min(mtbis)) + ', located at day ' + str(np.argmin(mtbis) + 1))
+              str(np.min(mtbis)) + ' ' + unit + ', located at day ' + str(np.argmin(mtbis) + start_from + 1))
         print('-----------------------')
