@@ -40,16 +40,20 @@ class Fitter:
     def calculate_mtbis(cls, location, dataset, start, end, start_from, fit_x0):
         parameter_list = cls.perform_range_fits(location, dataset, start, end, start_from, fit_x0)
         mtbis = []
-        for s in range(start_from, len(parameter_list)):
-            params = parameter_list[s]
+        for i in range(len(parameter_list)):
+            s = start_from + i
+            params = parameter_list[i]
             rho = params[0]
             gamma_per_rho = params[1]
-            k_minus_one = DataManager.get_single_datum(location, dataset, start + s)
+            k_minus_one = DataManager.get_single_datum(location, dataset, s)
             mtbi = cls.calculate_conditional_mtbi(s, k_minus_one, rho, gamma_per_rho)
             mtbis.append(mtbi)
         return mtbis
 
     @classmethod
-    def calculate_conditional_mtbi(cls, s, k, rho, gamma_per_rho):
+    def calculate_conditional_mtbi(cls, s, k_minus_one, rho, gamma_per_rho):
         gamma = gamma_per_rho * rho
-        return (1 + rho * s) / (gamma * (k - 1))
+        return (1 + rho * s) / (gamma * k_minus_one)
+
+        # Approximate formula:
+        # return (1 + rho * s) / (rho * ((1 + rho * s)**gamma_per_rho - 1))
