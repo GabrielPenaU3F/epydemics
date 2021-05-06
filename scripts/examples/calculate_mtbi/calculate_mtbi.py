@@ -5,5 +5,4 @@ DataManager.load_dataset('owid')
 
 epydemics.calculate_mtbi('Argentina', plot_unit='min')
 
-# TODO: implement minimum checking
 # TODO: optimize

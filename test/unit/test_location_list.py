@@ -5,7 +5,6 @@ from src.data_manipulation.data_manager import DataManager
 
 class LocationListTests(unittest.TestCase):
 
-
     def test_owid_location_list_is_correct(self):
         DataManager.load_dataset('owid', 'owid_dataset.csv')
         owid_locations = ['Afghanistan', 'Africa', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Anguilla',
@@ -44,7 +43,6 @@ class LocationListTests(unittest.TestCase):
          'Vietnam', 'World', 'Yemen', 'Zambia', 'Zimbabwe']
         actual_locations = list(DataManager.get_location_list())
         self.assertCountEqual(owid_locations, actual_locations)
-
 
     def test_mapache_arg_location_list_is_correct(self):
         DataManager.load_dataset('mapache_arg', 'mapache_arg_dataset.csv')

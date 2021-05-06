@@ -1,4 +1,6 @@
+import numpy as np
 import pandas
+import src.utils.checking_utils as checker
 
 
 class ConsoleManager:
@@ -43,4 +45,15 @@ class ConsoleManager:
         print('-----------------------')
         print('Goodness of fit:')
         print('R2:  ' + str(fit.get_rsq()))
+        print('-----------------------')
+
+    def show_minimum_status(self, mtbis):
+        if checker.check_if_minimum_was_reached(mtbis):
+            status = 'REACHED'
+        else:
+            status = 'NOT REACHED'
+        print('\n-----------------------')
+        print('Minimum status: ' + status)
+        print('Current minimum is ' +
+              str(np.min(mtbis)) + ', located at day ' + str(np.argmin(mtbis) + 1))
         print('-----------------------')
