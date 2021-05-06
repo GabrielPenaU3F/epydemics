@@ -3,6 +3,6 @@ from src.interface import epydemics
 
 DataManager.load_dataset('owid')
 
-epydemics.calculate_mtbi('Argentina', plot_unit='min')
+epydemics.calculate_mtbi('Argentina', plot_unit='min', start=150, formula='exact_conditional')
 
 # TODO: optimize

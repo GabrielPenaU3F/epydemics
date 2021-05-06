@@ -34,8 +34,9 @@ def analyze_model_parameters_over_time(location, dataset='', start=1, end=-1, st
     plotter.plot_parameters_over_time(parameter_tuples, start_from)
 
 
-def calculate_mtbi(location, dataset='', start=1, end=-1, start_from=30, fit_x0=(0.1, 1), plot_unit='day'):
-    mtbis = Fitter.calculate_mtbis(location, dataset, start, end, start_from, fit_x0)
+def calculate_mtbi(location, dataset='', start=1, end=-1, start_from=30,
+                   fit_x0=(0.1, 1), plot_unit='day', formula='exact_conditional'):
+    mtbis = Fitter.calculate_mtbis(location, dataset, start, end, start_from, fit_x0, formula)
     console.show_minimum_status(mtbis)
     plotter.plot_mtbis(mtbis, start_from, plot_unit)
 

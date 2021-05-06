@@ -12,11 +12,20 @@ class CalculateMTBIOWIDTest(unittest.TestCase):
     def setUpClass(cls) -> None:
         DataManager.load_dataset('owid')
 
-    def test_mtbi_owid_arg(self):
+    def test_mtbi_owid_arg_exact(self):
         expected_mtbis_seg = np.array([633, 640, 610, 551, 595, 594, 607, 615, 625, 594, 630])
-        mtbis_seg = np.round(86400 * np.array(Fitter.calculate_mtbis(
-            'Argentina', dataset='total_cases', start=1, end=40, start_from=30, fit_x0=(0.1, 1))))
+        mtbis_seg = np.round(86400 * np.array(Fitter.calculate_mtbis('Argentina', dataset='total_cases',
+                                                                     start=1, end=40, start_from=30, fit_x0=(0.1, 1),
+                                                                     formula='exact_conditional')))
         testing.assert_array_equal(expected_mtbis_seg, mtbis_seg)
+
+    def test_mtbi_owid_arg_approx(self):
+        expected_mtbis_day = np.array([0.0069, 0.0069, 0.0067, 0.0063, 0.0064,
+                                       0.0064, 0.0065, 0.0066, 0.0067, 0.0066, 0.0067])
+        mtbis_day = np.array(Fitter.calculate_mtbis('Argentina', dataset='total_cases',
+                                                    start=1, end=40, start_from=30, fit_x0=(0.1, 1),
+                                                    formula='approx_conditional'))
+        testing.assert_array_almost_equal(expected_mtbis_day, mtbis_day, decimal=4)
 
 
 if __name__ == '__main__':

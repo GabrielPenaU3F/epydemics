@@ -37,7 +37,7 @@ class Fitter:
         return parameter_list
 
     @classmethod
-    def calculate_mtbis(cls, location, dataset, start, end, start_from, fit_x0):
+    def calculate_mtbis(cls, location, dataset, start, end, start_from, fit_x0, formula):
         parameter_list = cls.perform_range_fits(location, dataset, start, end, start_from, fit_x0)
         mtbis = []
         for i in range(len(parameter_list)):
@@ -46,14 +46,14 @@ class Fitter:
             rho = params[0]
             gamma_per_rho = params[1]
             k_minus_one = DataManager.get_single_datum(location, dataset, s)
-            mtbi = cls.calculate_conditional_mtbi(s, k_minus_one, rho, gamma_per_rho)
+            mtbi = cls.calculate_conditional_mtbi(s, k_minus_one, rho, gamma_per_rho, formula)
             mtbis.append(mtbi)
         return mtbis
 
     @classmethod
-    def calculate_conditional_mtbi(cls, s, k_minus_one, rho, gamma_per_rho):
-        gamma = gamma_per_rho * rho
-        return (1 + rho * s) / (gamma * k_minus_one)
-
-        # Approximate formula:
-        # return (1 + rho * s) / (rho * ((1 + rho * s)**gamma_per_rho - 1))
+    def calculate_conditional_mtbi(cls, s, k_minus_one, rho, gamma_per_rho, formula):
+        if formula == 'exact_conditional':
+            gamma = gamma_per_rho * rho
+            return (1 + rho * s) / (gamma * k_minus_one)
+        elif formula == 'approx_conditional':
+            return (1 + rho * s) / (rho * ((1 + rho * s) ** gamma_per_rho - 1))
