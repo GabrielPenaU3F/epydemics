@@ -34,7 +34,8 @@ class DaysConverter(UnitConverter):
     def config_supported_units(self):
         self.supported_units = {
             'sec': uc.days_to_seconds,
-            'min': uc.days_to_minutes
+            'min': uc.days_to_minutes,
+            'day': uc.days_to_days
         }
 
     def convert_days_to(self, unit_id, days):

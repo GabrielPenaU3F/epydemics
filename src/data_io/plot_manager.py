@@ -1,7 +1,10 @@
 import numpy as np
-from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt, rc
 
 from src.unit_converter import DaysConverter
+
+rc('font', **{'family': 'serif', 'serif': ['CMU Sans Serif']})
+plt.rcParams['pdf.fonttype'] = 42
 
 
 class PlotManager:
@@ -55,7 +58,7 @@ class PlotManager:
 
         plt.show()
 
-    def plot_mtbis(self, mtbis, start_from, plot_unit):
+    def plot_mtbis(self, mtbis, location, start_from, plot_unit):
 
         converter = DaysConverter.get_instance()
         converted_mtbis = converter.convert_days_to(plot_unit, mtbis)
@@ -64,9 +67,9 @@ class PlotManager:
         x = np.arange(start_from, x_right_lim)
 
         fig, axes = plt.subplots()
-        axes.plot(x, converted_mtbis, linewidth=1, color='#db6400', linestyle='-', label='MTBI')
+        axes.plot(x, converted_mtbis, linewidth=1, color='#6F17A6', linestyle='-', label='MTBI')
         self.config_plot_background(axes)
-        self.config_mtbi_plot_axis(axes, plot_unit)
+        self.config_mtbi_plot_axis(axes, location, plot_unit)
         axes.legend()
         plt.show()
 
@@ -94,7 +97,8 @@ class PlotManager:
         gamma_by_rho_axes.set_ylabel('\u03B3 / \u03C1')
         self.config_axis_plain_style(gamma_by_rho_axes)
 
-    def config_mtbi_plot_axis(self, axes, plot_unit):
+    def config_mtbi_plot_axis(self, axes, location, plot_unit):
+        axes.set_title('Mean Time Between Infections (' + location + ')')
         axes.set_xlabel('t (days)')
         axes.set_ylabel('MTBI (' + str(plot_unit) + ')')
         self.config_axis_plain_style(axes)
