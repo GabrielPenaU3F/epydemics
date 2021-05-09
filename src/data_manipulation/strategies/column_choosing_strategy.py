@@ -7,6 +7,10 @@ class ColumnChoosingStrategy(ABC):
     location_column_name = None
     date_column_name = None
 
+    @abstractmethod
+    def __init__(self):
+        pass
+
     def get_default_dataset(self):
         return self.default_dataset
 

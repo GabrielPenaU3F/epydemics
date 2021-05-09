@@ -31,7 +31,7 @@ def fit_contagion_model(location_id, dataset='', start=1, end=-1, x0=(0.1, 1), o
 def analyze_model_parameters_over_time(location, dataset='', start=1, end=-1, start_from=30,
                                        fit_x0=(0.1, 1)):
     parameter_tuples = Fitter.perform_range_fits(location, dataset, start, end, start_from, fit_x0)
-    plotter.plot_parameters_over_time(parameter_tuples, start_from)
+    plotter.plot_parameters_over_time(parameter_tuples, location, start_from)
 
 
 def calculate_mtbi(location, dataset='', start=1, end=-1, start_from=30,

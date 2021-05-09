@@ -1,5 +1,5 @@
 from src.data_manipulation.data_manager import DataManager
-from src.interface import epydemics
+import src.interface.epydemics as epydemics
 
 # Example 1: consider the Our World In Data dataset. First, we load it.
 # DataManager.load_dataset('owid')

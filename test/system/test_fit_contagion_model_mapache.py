@@ -39,5 +39,5 @@ class FitContagionModelMapacheTests(unittest.TestCase):
         rsq = self.__class__.caba_mitigation_fit.get_rsq()
         self.assertAlmostEqual(0.989, rsq, places=3)
 
-    if __name__ == '__main__':
-        unittest.main()
+if __name__ == '__main__':
+    unittest.main()

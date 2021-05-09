@@ -32,29 +32,31 @@ class PlotManager:
         fig, axes = plt.subplots()
         axes.plot(x, real_data, linewidth=1, color='#263859', linestyle='--', label='Real data')
         axes.plot(x, explained, linewidth=1, color='#ca3e47', linestyle='-', label='Model prediction')
+        axes.set_title(title)
         self.config_plot_background(axes)
         self.config_fit_plot_axis(axes, fit)
-        axes.set_title(title)
         axes.legend()
 
         plt.show()
 
-    def plot_parameters_over_time(self, parameter_tuples, start_from):
+    def plot_parameters_over_time(self, parameter_tuples, location, start_from):
         x_right_lim = start_from + len(parameter_tuples)
         x = np.arange(start_from, x_right_lim)
         rhos = [tup[0] for tup in parameter_tuples]
-        gamma_by_rhos = [tup[1] for tup in parameter_tuples]
+        gamma_per_rhos = [tup[1] for tup in parameter_tuples]
 
         fig, axes = plt.subplots(1, 2)
         rho_axes = axes[0]
-        gamma_by_rho_axes = axes[1]
+        gamma_per_rho_axes = axes[1]
         rho_axes.plot(x, rhos, linewidth=1, color='#db6400', linestyle='-', label='\u03C1')
-        gamma_by_rho_axes.plot(x, gamma_by_rhos, linewidth=1, color='#61b15a', linestyle='-', label='\u03B3 / \u03C1')
+        rho_axes.set_title('\u03C1 over time (' + location + ')')
+        gamma_per_rho_axes.plot(x, gamma_per_rhos, linewidth=1, color='#61b15a', linestyle='-', label='\u03B3 / \u03C1')
+        gamma_per_rho_axes.set_title('\u03B3 / \u03C1 over time (' + location + ')')
         self.config_plot_background(rho_axes)
-        self.config_plot_background(gamma_by_rho_axes)
-        self.config_parameters_plot_axis(rho_axes, gamma_by_rho_axes)
+        self.config_plot_background(gamma_per_rho_axes)
+        self.config_parameters_plot_axis(rho_axes, gamma_per_rho_axes)
         rho_axes.legend()
-        gamma_by_rho_axes.legend()
+        gamma_per_rho_axes.legend()
 
         plt.show()
 
@@ -68,8 +70,9 @@ class PlotManager:
 
         fig, axes = plt.subplots()
         axes.plot(x, converted_mtbis, linewidth=1, color='#6F17A6', linestyle='-', label='MTBI')
+        axes.set_title('Mean Time Between Infections (' + location + ')')
         self.config_plot_background(axes)
-        self.config_mtbi_plot_axis(axes, location, plot_unit)
+        self.config_mtbi_plot_axis(axes, plot_unit)
         axes.legend()
         plt.show()
 
@@ -88,17 +91,17 @@ class PlotManager:
         axes.ticklabel_format(axis='x', style='plain')
         axes.ticklabel_format(axis='y', style='plain')
 
-    def config_parameters_plot_axis(self, rho_axes, gamma_by_rho_axes):
+    def config_parameters_plot_axis(self, rho_axes, gamma_per_rho_axes):
+
         rho_axes.set_xlabel('t (days)')
         rho_axes.set_ylabel('\u03C1')
         self.config_axis_plain_style(rho_axes)
 
-        gamma_by_rho_axes.set_xlabel('t (days)')
-        gamma_by_rho_axes.set_ylabel('\u03B3 / \u03C1')
-        self.config_axis_plain_style(gamma_by_rho_axes)
+        gamma_per_rho_axes.set_xlabel('t (days)')
+        gamma_per_rho_axes.set_ylabel('\u03B3 / \u03C1')
+        self.config_axis_plain_style(gamma_per_rho_axes)
 
-    def config_mtbi_plot_axis(self, axes, location, plot_unit):
-        axes.set_title('Mean Time Between Infections (' + location + ')')
+    def config_mtbi_plot_axis(self, axes, plot_unit):
         axes.set_xlabel('t (days)')
         axes.set_ylabel('MTBI (' + str(plot_unit) + ')')
         self.config_axis_plain_style(axes)

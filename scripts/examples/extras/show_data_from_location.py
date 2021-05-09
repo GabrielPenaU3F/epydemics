@@ -1,5 +1,5 @@
 from src.data_manipulation.data_manager import DataManager
-from src.interface import epydemics
+import src.interface.epydemics as epydemics
 
 
 DataManager.load_dataset('owid')

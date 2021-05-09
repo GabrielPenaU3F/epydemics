@@ -1,4 +1,4 @@
-from src.domain.data_source import *
+from src.domain.data_source import OWIDDataSource, MapacheArgDataSource
 
 
 class SourceRepository:

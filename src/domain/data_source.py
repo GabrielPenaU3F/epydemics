@@ -1,5 +1,5 @@
-from src.data_manipulation.strategies.data_management_strategy import *
-from src.data_manipulation.strategies.column_choosing_strategy import *
+from abc import ABC, abstractmethod
+from src.data_manipulation.strategies.data_management_strategy import OWIDManagementStrategy, MapacheArgManagementStrategy
 
 
 class DataSource(ABC):
