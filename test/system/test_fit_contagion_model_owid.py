@@ -39,5 +39,6 @@ class FitContagionModelOWIDTests(unittest.TestCase):
         rsq = self.__class__.arg_mitigation_fit.get_rsq()
         self.assertAlmostEqual(0.987, rsq, places=3)
 
+
 if __name__ == '__main__':
-        unittest.main()
+    unittest.main()

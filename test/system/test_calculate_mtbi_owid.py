@@ -27,6 +27,24 @@ class CalculateMTBIOWIDTest(unittest.TestCase):
                                                     formula='approx_conditional'))
         testing.assert_array_almost_equal(expected_mtbis_day, mtbis_day, decimal=4)
 
+    def test_mtbi_owid_arg_50_days_from_30(self):
+        expected_mtbis_day = np.array([0.0069, 0.0069, 0.0067, 0.0063, 0.0064,
+                                       0.0064, 0.0065, 0.0066, 0.0067, 0.0066, 0.0067,
+                                       0.0067, 0.0067, 0.0068, 0.0067, 0.0067, 0.0066,
+                                       0.0066, 0.0067, 0.0067, 0.0067])
+        mtbis = np.array(Fitter.calculate_mtbis('Argentina', dataset='total_cases',
+                                                start=1, end=50, start_from=30, fit_x0=(0.1, 1),
+                                                formula='approx_conditional'))
+        testing.assert_array_almost_equal(expected_mtbis_day, mtbis, decimal=4)
+
+    def test_mtbi_owid_arg_50_days_from_40(self):
+        expected_mtbis = np.array([0.0067, 0.0067, 0.0067, 0.0068, 0.0067,
+                                   0.0067, 0.0067, 0.0066, 0.0067, 0.0067, 0.0067])
+        mtbis = np.array(Fitter.calculate_mtbis('Argentina', dataset='total_cases',
+                                                start=1, end=50, start_from=40, fit_x0=(0.1, 1),
+                                                formula='approx_conditional'))
+        testing.assert_array_almost_equal(expected_mtbis, mtbis, decimal=4)
+
 
 if __name__ == '__main__':
     unittest.main()
