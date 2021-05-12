@@ -68,10 +68,7 @@ class DataManager:
     @classmethod
     def process_data_for_fitting(cls, data, location, dataset, start):
         dataset = cls.choose_dataset(dataset)
-        accumulated_events_previous_to_start = 0
-        if start > 1:
-            accumulated_events_previous_to_start = cls.get_single_datum(location, dataset, start - 1)
-        data.loc[:, dataset] -= accumulated_events_previous_to_start
+        data.loc[:, dataset] -= cls.calculate_accumulated_events_prior_to_start(location, dataset, start)
         return data
 
     @classmethod
@@ -105,3 +102,19 @@ class DataManager:
     def get_raw_cumulative_data(cls, location_id, dataset='', start=1, end=-1):
         dataset = cls.choose_dataset(dataset)
         return cls.get_location_data(location_id, dataset, start, end)[dataset].values
+
+    @classmethod
+    def get_raw_incidence_data(cls, location_id, dataset='', start=1, end=-1):
+        dataset = cls.choose_dataset(dataset)
+        accumulated_events_prior_to_start = cls.calculate_accumulated_events_prior_to_start(location_id, dataset, start)
+        cumulative_data = np.concatenate(
+            ([accumulated_events_prior_to_start], cls.get_raw_cumulative_data(location_id, dataset, start, end))
+        )
+        return np.diff(cumulative_data)
+
+    @classmethod
+    def calculate_accumulated_events_prior_to_start(cls, location, dataset, start):
+        accumulated_events_prior_to_start = 0
+        if start > 1:
+            accumulated_events_prior_to_start = cls.get_single_datum(location, dataset, start - 1)
+        return accumulated_events_prior_to_start
