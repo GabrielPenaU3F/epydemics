@@ -10,12 +10,7 @@ class DataManagementStrategy(ABC):
         pass
 
     def filter_rows(self, data, dataset_column, start, end):
-        requested_subset = DataframeSlicer.slice_rows_by_index(data, start, end)
-        accumulated_events_previous_to_start = 0
-        if start > 1:
-            accumulated_events_previous_to_start = data[dataset_column].iloc[start - 2]
-        requested_subset.loc[:, dataset_column] -= accumulated_events_previous_to_start
-        return requested_subset
+        return DataframeSlicer.slice_rows_by_index(data, start, end)
 
 
 class OWIDManagementStrategy(DataManagementStrategy):

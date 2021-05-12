@@ -11,7 +11,7 @@ class Fitter:
     @classmethod
     def fit(cls, location_name, dataset, start, end, x0):
         source = DataManager.get_data_source()
-        data = DataManager.get_location_data(location_name, dataset, start, end)
+        data = DataManager.get_fittable_location_data(location_name, dataset, start, end)
         dataset = DataManager.choose_dataset(dataset)
         model = ContagionModel()
         x = data.index.values
@@ -24,7 +24,7 @@ class Fitter:
 
     @classmethod
     def perform_range_fits(cls, location_name, dataset, start, end, start_from, fit_x0):
-        data = DataManager.get_location_data(location_name, dataset, start, end)
+        data = DataManager.get_fittable_location_data(location_name, dataset, start, end)
         dataset = DataManager.choose_dataset(dataset)
         model = ContagionModel()
         parameter_list = []

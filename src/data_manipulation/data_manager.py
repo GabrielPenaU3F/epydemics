@@ -43,25 +43,36 @@ class DataManager:
         return filter_strategy.get_location_list(cls.data.get_raw_data())
 
     @classmethod
-    def get_location_data(cls, location_id, dataset='', start=1, end=-1):
+    def get_fittable_location_data(cls, location_id, dataset='', start=1, end=-1):
+        data = cls.get_location_data(location_id, dataset, start, end)
+        ready_data = cls.process_data_for_fitting(data, location_id, dataset, start)
+        return ready_data
+
+    @classmethod
+    def get_location_data(cls, location_id, dataset, start, end):
         source = cls.current_data_source
         dataset = cls.choose_dataset(dataset)
         data = cls.data.get_raw_data().copy()
+        dm_strategy = source.get_data_management_strategy()
         location_column_name = source.get_location_column_name()
         ArgumentVerifier.validate_location(data, location_column_name, location_id)
         location_data = data[data[location_column_name] == location_id]
         ArgumentVerifier.validate_dataset_arguments(source, location_data, dataset, start, end)
         date_column_name = source.get_date_column_name()
         requested_columns_df = location_data[[date_column_name, dataset]]
-        return cls.prepare_dataset(source, requested_columns_df, dataset, start, end)
+        nonnan_data = requested_columns_df.dropna().reset_index(drop=True)
+        requested_rows = dm_strategy.filter_rows(nonnan_data, dataset, start, end)
+        ready_dataset = requested_rows.set_index(np.arange(1, len(requested_rows) + 1), drop=True)
+        return ready_dataset.astype({dataset: 'int32'})
 
     @classmethod
-    def prepare_dataset(cls, source, data, dataset_column, start, end):
-        dm_strategy = source.get_data_management_strategy()
-        nonnan_dataset = data.dropna().reset_index(drop=True)
-        requested_subset = dm_strategy.filter_rows(nonnan_dataset, dataset_column, start, end)
-        correctly_indexed_dataset = requested_subset.set_index(np.arange(1, len(requested_subset) + 1), drop=True)
-        return correctly_indexed_dataset.astype({dataset_column: 'int32'})
+    def process_data_for_fitting(cls, data, location, dataset, start):
+        dataset = cls.choose_dataset(dataset)
+        accumulated_events_previous_to_start = 0
+        if start > 1:
+            accumulated_events_previous_to_start = cls.get_single_datum(location, dataset, start - 1)
+        data.loc[:, dataset] -= accumulated_events_previous_to_start
+        return data
 
     @classmethod
     def list_supported_sources(cls):
@@ -87,5 +98,10 @@ class DataManager:
     @classmethod
     def get_single_datum(cls, location, dataset, s):
         dataset = cls.choose_dataset(dataset)
-        location_data = cls.get_location_data(location, dataset)
+        location_data = cls.get_fittable_location_data(location, dataset)
         return location_data[[dataset]].iloc[s - 1][0]
+
+    @classmethod
+    def get_raw_cumulative_data(cls, location_id, dataset='', start=1, end=-1):
+        dataset = cls.choose_dataset(dataset)
+        return cls.get_location_data(location_id, dataset, start, end)[dataset].values
