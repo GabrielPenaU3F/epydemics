@@ -1,7 +1,7 @@
 import numpy as np
 import pandas
 
-from src.argument_verifier import ArgumentVerifier
+from src.argument_manager import ArgumentManager
 from src.data_io.data_writer import DataWriter
 from src.utils.path_utils import get_project_root
 from src.domain.full_dataset import FullDataset
@@ -55,9 +55,9 @@ class DataManager:
         data = cls.data.get_raw_data().copy()
         dm_strategy = source.get_data_management_strategy()
         location_column_name = source.get_location_column_name()
-        ArgumentVerifier.validate_location(data, location_column_name, location_id)
+        ArgumentManager.validate_location(data, location_column_name, location_id)
         location_data = data[data[location_column_name] == location_id]
-        ArgumentVerifier.validate_dataset_arguments(source, location_data, dataset, start, end)
+        ArgumentManager.validate_dataset_arguments(source, location_data, dataset, start, end)
         date_column_name = source.get_date_column_name()
         requested_columns_df = location_data[[date_column_name, dataset]]
         nonnan_data = requested_columns_df.dropna().reset_index(drop=True)

@@ -1,7 +1,7 @@
 from src.exceptions.exceptions import InvalidArgumentException
 
 
-class ArgumentVerifier:
+class ArgumentManager:
 
     @classmethod
     def validate_dataset_arguments(cls, source, location_data, dataset, start, end):
@@ -26,3 +26,22 @@ class ArgumentVerifier:
     def validate_location(cls, raw_data, location_column_name, location_id):
         if location_id not in raw_data[location_column_name].unique():
             raise InvalidArgumentException('The requested location was not found')
+
+    @classmethod
+    def determine_start_from(cls, start, start_from):
+
+        if start_from < start and start_from != -1:
+            raise InvalidArgumentException('start_from argument must not exceed start argument')
+
+        if start == 1:
+            if start_from == -1:
+                return 30
+            else:
+                return start_from
+        elif start > 1:
+            if start_from == -1:
+                return start + 30
+            else:
+                return start_from
+
+

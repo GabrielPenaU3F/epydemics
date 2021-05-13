@@ -1,5 +1,6 @@
 import numpy as np
 
+from src.argument_manager import ArgumentManager
 from src.data_io.console_manager import ConsoleManager
 from src.data_manipulation.data_manager import DataManager
 from src.data_io.plot_manager import PlotManager
@@ -30,16 +31,18 @@ def fit_contagion_model(location_id, dataset='', start=1, end=-1, x0=(0.1, 1), o
     return fit
 
 
-def analyze_model_parameters_over_time(location, dataset='', start=1, end=-1, start_from=30,
+def analyze_model_parameters_over_time(location, dataset='', start=1, end=-1, start_from=-1,
                                        fit_x0=(0.1, 1), output=True):
+    start_from = ArgumentManager.determine_start_from(start, start_from)
     parameter_tuples = Fitter.perform_range_fits(location, dataset, start, end, start_from, fit_x0)
     if output is True:
         plotter.plot_parameters_over_time(parameter_tuples, location, start_from)
     return parameter_tuples
 
 
-def calculate_mtbi(location, dataset='', start=1, end=-1, start_from=30,
+def calculate_mtbi(location, dataset='', start=1, end=-1, start_from=-1,
                    fit_x0=(0.1, 1), unit='day', formula='exact_conditional', output=True):
+    start_from = ArgumentManager.determine_start_from(start, start_from)
     mtbis = Fitter.calculate_mtbis(location, dataset, start, end, start_from, fit_x0, formula)
     if output is True:
         console.show_minimum_status(mtbis, start_from, unit)
@@ -47,9 +50,10 @@ def calculate_mtbi(location, dataset='', start=1, end=-1, start_from=30,
     return mtbis
 
 
-def calculate_mtbi_inverse(location, dataset='', start=1, end=-1, start_from=30,
+def calculate_mtbi_inverse(location, dataset='', start=1, end=-1, start_from=-1,
                            fit_x0=(0.1, 1), unit='day', formula='exact_conditional',
                            output=True, real_data=True):
+    start_from = ArgumentManager.determine_start_from(start, start_from)
     mtbis = Fitter.calculate_mtbis(location, dataset, start, end, start_from, fit_x0, formula)
     if output is True:
         plotter.plot_mtbi_inverses(mtbis, location, dataset, start_from, unit, real_data)
