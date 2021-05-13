@@ -24,11 +24,13 @@ class Fitter:
 
     @classmethod
     def perform_range_fits(cls, location_name, dataset, start, end, start_from, fit_x0):
-        data = DataManager.get_fittable_location_data(location_name, dataset, start, end)
         dataset = DataManager.choose_dataset(dataset)
+        data = DataManager.get_fittable_location_data(location_name, dataset, start, end)
+        if end == -1:
+            end = len(data)
         model = ContagionModel()
         parameter_list = []
-        for i in range(start_from, len(data) + 1):
+        for i in range(start_from, end + 1):
             sliced_data = DataframeSlicer.slice_rows_by_index(data, 1, i)
             x = sliced_data.index.values
             y = sliced_data[dataset].values

@@ -1,3 +1,5 @@
+import numpy as np
+
 from src.data_io.console_manager import ConsoleManager
 from src.data_manipulation.data_manager import DataManager
 from src.data_io.plot_manager import PlotManager
@@ -43,3 +45,13 @@ def calculate_mtbi(location, dataset='', start=1, end=-1, start_from=30,
         console.show_minimum_status(mtbis, start_from, unit)
         plotter.plot_mtbis(mtbis, location, start_from, unit)
     return mtbis
+
+
+def calculate_mtbi_inverse(location, dataset='', start=1, end=-1, start_from=30,
+                           fit_x0=(0.1, 1), unit='day', formula='exact_conditional',
+                           output=True, real_data=True):
+    mtbis = Fitter.calculate_mtbis(location, dataset, start, end, start_from, fit_x0, formula)
+    if output is True:
+        plotter.plot_mtbi_inverses(mtbis, location, dataset, start_from, unit, real_data)
+    inverses = np.power(mtbis, -1)
+    return inverses

@@ -1,6 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt, rc
 
+from src.data_manipulation.data_manager import DataManager
 from src.unit_converter import DaysConverter
 
 rc('font', **{'family': 'serif', 'serif': ['CMU Sans Serif']})
@@ -73,6 +74,27 @@ class PlotManager:
         axes.set_title('Mean Time Between Infections (' + location + ')')
         self.config_plot_background(axes)
         self.config_mtbi_plot_axis(axes, plot_unit)
+        axes.legend()
+        plt.show()
+
+    def plot_mtbi_inverses(self, mtbis, location, dataset, start_from, unit, real_data):
+
+        converter = DaysConverter.get_instance()
+        converted_mtbis = converter.convert_days_to(unit, mtbis)
+        inverses = np.power(converted_mtbis, -1)
+
+        x_right_lim = start_from + len(inverses)
+        x = np.arange(start_from, x_right_lim)
+
+        fig, axes = plt.subplots()
+        axes.plot(x, inverses, linewidth=1, color='#6F17A6', linestyle='-', label='MTBI inverses')
+        if real_data is True:
+            data = DataManager.get_raw_incidence_data(location, dataset=dataset, start=start_from, end=x_right_lim-1)
+            axes.plot(x, data, linewidth=1, color='#80BF60', linestyle='-', label='Incidence data')
+
+        axes.set_title('MTBI inverses (' + location + ')')
+        self.config_plot_background(axes)
+        self.config_mtbi_plot_axis(axes, unit)
         axes.legend()
         plt.show()
 
