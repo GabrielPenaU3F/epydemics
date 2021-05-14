@@ -1,10 +1,10 @@
 import numpy as np
 
-from src.argument_manager import ArgumentManager
+from src.data_manipulation.argument_manager import ArgumentManager
 from src.data_io.console_manager import ConsoleManager
 from src.data_manipulation.data_manager import DataManager
 from src.data_io.plot_manager import PlotManager
-from src.fitters.fitter import Fitter
+from src.domain.fitter import Fitter
 
 console = ConsoleManager.get_instance()
 plotter = PlotManager.get_instance()

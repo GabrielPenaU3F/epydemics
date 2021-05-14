@@ -1,7 +1,7 @@
 import numpy as np
 import pandas
 import src.utils.checking_utils as checker
-from src.unit_converter import DaysConverter
+from src.domain.unit_converter import DaysConverter
 
 
 class ConsoleManager:

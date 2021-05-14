@@ -1,7 +1,7 @@
 import unittest
 
 from src.data_manipulation.data_manager import DataManager
-from src.fitters.fitter import Fitter
+from src.domain.fitter import Fitter
 
 
 class FitContagionModelOWIDTests(unittest.TestCase):

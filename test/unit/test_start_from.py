@@ -1,6 +1,6 @@
 import unittest
 
-from src.argument_manager import ArgumentManager
+from src.data_manipulation.argument_manager import ArgumentManager
 from src.exceptions.exceptions import InvalidArgumentException
 
 

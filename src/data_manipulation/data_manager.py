@@ -1,7 +1,7 @@
 import numpy as np
 import pandas
 
-from src.argument_manager import ArgumentManager
+from src.data_manipulation.argument_manager import ArgumentManager
 from src.data_io.data_writer import DataWriter
 from src.utils.path_utils import get_project_root
 from src.domain.full_dataset import FullDataset

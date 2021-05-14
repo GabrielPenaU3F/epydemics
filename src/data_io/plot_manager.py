@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt, rc
 
 from src.data_manipulation.data_manager import DataManager
-from src.unit_converter import DaysConverter
+from src.domain.unit_converter import DaysConverter
 
 rc('font', **{'family': 'serif', 'serif': ['CMU Sans Serif']})
 plt.rcParams['pdf.fonttype'] = 42

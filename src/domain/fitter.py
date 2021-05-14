@@ -27,7 +27,7 @@ class Fitter:
         dataset = DataManager.choose_dataset(dataset)
         data = DataManager.get_fittable_location_data(location_name, dataset, start, end)
         if end == -1:
-            end = len(data)
+            end = start_from + len(data)
         model = ContagionModel()
         parameter_list = []
         for i in range(start_from, end + 1):

@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 from numpy import testing
 from src.data_manipulation.data_manager import DataManager
-from src.fitters.fitter import Fitter
+from src.domain.fitter import Fitter
 
 
 class CalculateMTBIOWIDTest(unittest.TestCase):
