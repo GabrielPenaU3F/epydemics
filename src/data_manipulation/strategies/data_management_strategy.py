@@ -27,3 +27,9 @@ class MapacheArgManagementStrategy(DataManagementStrategy):
     def filter_rows(self, data, dataset_column, start, end):
         data[dataset_column] = data[dataset_column].cumsum(axis=None)
         return super().filter_rows(data, dataset_column, start, end)
+
+
+class CustomManagementStrategy(DataManagementStrategy):
+
+    def get_location_list(self, raw_data):
+        return raw_data['custom_location'].unique()

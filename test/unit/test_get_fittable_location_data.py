@@ -8,7 +8,7 @@ class GetFittableLocationDataTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        DataManager.load_dataset('owid')
+        DataManager.load_dataset(source='owid')
 
     def test_cases_from_first_5_days_from_argentina(self):
         expected = [1, 1, 1, 2, 8]

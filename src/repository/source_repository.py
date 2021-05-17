@@ -1,11 +1,12 @@
-from src.domain.data_source import OWIDDataSource, MapacheArgDataSource
+from src.domain.data_source import OWIDDataSource, MapacheArgDataSource, CustomDataSource
 
 
 class SourceRepository:
 
     sources = {
         'owid': OWIDDataSource(),
-        'mapache_arg': MapacheArgDataSource()
+        'mapache_arg': MapacheArgDataSource(),
+        'custom': CustomDataSource()
     }
 
     @classmethod

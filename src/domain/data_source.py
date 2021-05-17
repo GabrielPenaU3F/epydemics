@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from src.data_manipulation.strategies.data_management_strategy import OWIDManagementStrategy, MapacheArgManagementStrategy
+from src.data_manipulation.strategies.data_management_strategy import OWIDManagementStrategy, \
+    MapacheArgManagementStrategy, CustomManagementStrategy
 
 
 class DataSource(ABC):
@@ -66,3 +67,15 @@ class MapacheArgDataSource(DataSource):
         self.location_column_name = 'osm_admin_level_4'
         self.date_column_name = 'fecha'
         self.data_management_strategy = MapacheArgManagementStrategy()
+
+
+class CustomDataSource(DataSource):
+
+    def __init__(self):
+        self.source_url = None
+        self.dataset_titles = {'custom_data': 'Total cases'}
+        self.dataset_plot_ylabels = {'custom_data': 'Cumulative cases'}
+        self.default_dataset = 'custom_data'
+        self.location_column_name = 'custom_location'
+        self.date_column_name = 'custom_date'
+        self.data_management_strategy = CustomManagementStrategy()
