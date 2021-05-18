@@ -13,8 +13,9 @@ class ArgumentManager:
 
     @classmethod
     def validate_indexes(cls, actual_dataset_end, start_argument, end_argument):
-        if start_argument > actual_dataset_end or end_argument > actual_dataset_end:
-            raise InvalidArgumentException('Start and end arguments cannot exceed dataset length')
+        if end_argument is not None:
+            if start_argument > actual_dataset_end or end_argument > actual_dataset_end:
+                raise InvalidArgumentException('Start and end arguments cannot exceed dataset length')
 
     @classmethod
     def validate_dataset(cls, source, dataset):

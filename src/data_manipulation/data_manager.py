@@ -99,12 +99,12 @@ class DataManager:
         return location_data[[dataset]].iloc[s - 1][0]
 
     @classmethod
-    def get_raw_cumulative_data(cls, location_id, dataset='', start=1, end=-1):
+    def get_raw_cumulative_data(cls, location_id, dataset='', start=1, end=None):
         dataset = cls.choose_dataset(dataset)
         return cls.get_location_data(location_id, dataset, start, end)[dataset].values
 
     @classmethod
-    def get_raw_incidence_data(cls, location_id, dataset='', start=1, end=-1):
+    def get_raw_incidence_data(cls, location_id, dataset='', start=1, end=None):
         dataset = cls.choose_dataset(dataset)
         accumulated_events_prior_to_start = cls.calculate_accumulated_events_prior_to_start(location_id, dataset, start)
         cumulative_data = np.concatenate(
