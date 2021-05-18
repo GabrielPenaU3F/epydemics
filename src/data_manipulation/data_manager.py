@@ -43,7 +43,7 @@ class DataManager:
         return filter_strategy.get_location_list(cls.data.get_raw_data())
 
     @classmethod
-    def get_fittable_location_data(cls, location_id, dataset='', start=1, end=-1):
+    def get_fittable_location_data(cls, location_id, dataset='', start=1, end=None):
         data = cls.get_location_data(location_id, dataset, start, end)
         ready_data = cls.process_data_for_fitting(data, location_id, dataset, start)
         return ready_data

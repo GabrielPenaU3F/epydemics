@@ -14,8 +14,15 @@ class ArgumentManager:
     @classmethod
     def validate_indexes(cls, actual_dataset_end, start_argument, end_argument):
         if end_argument is not None:
-            if start_argument > actual_dataset_end or end_argument > actual_dataset_end:
-                raise InvalidArgumentException('Start and end arguments cannot exceed dataset length')
+
+            if end_argument > actual_dataset_end:
+                raise InvalidArgumentException('End argument cannot exceed dataset length')
+            elif start_argument > end_argument:
+                raise InvalidArgumentException('Start argument cannot exceed end argument')
+
+        elif start_argument > actual_dataset_end:
+            raise InvalidArgumentException('Start argument cannot exceed dataset length')
+
 
     @classmethod
     def validate_dataset(cls, source, dataset):
@@ -25,7 +32,8 @@ class ArgumentManager:
 
     @classmethod
     def validate_location(cls, raw_data, location_column_name, location_id):
-        if location_id not in raw_data[location_column_name].unique():
+        current_locations = raw_data[location_column_name].unique().tolist()
+        if location_id not in current_locations:
             raise InvalidArgumentException('The requested location was not found')
 
     @classmethod
