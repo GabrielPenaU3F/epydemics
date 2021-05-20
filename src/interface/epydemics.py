@@ -21,7 +21,7 @@ def show_data_from_location(location_id, dataset=''):
     console.print_data_from_location(source, location_id, dataset, location_data)
 
 
-def fit_contagion_model(location_id, dataset='', start=1, end=-1, x0=(0.1, 1), output=True):
+def fit_contagion_model(location_id, dataset='', start=1, end=None, x0=(0.1, 1), output=True):
     fit = Fitter.fit(location_id, dataset, start, end, x0)
 
     if output is True:
@@ -40,7 +40,7 @@ def analyze_model_parameters_over_time(location, dataset='', start=1, end=None, 
     return parameter_tuples
 
 
-def calculate_mtbi(location, dataset='', start=1, end=-1, start_from=30,
+def calculate_mtbi(location, dataset='', start=1, end=None, start_from=30,
                    fit_x0=(0.1, 1), unit='day', formula='exact_conditional', output=True):
     start_from = ArgumentManager.determine_start_from(start, start_from)
     mtbis = Fitter.calculate_mtbis(location, dataset, start, end, start_from, fit_x0, formula)

@@ -60,6 +60,25 @@ class CalculateMTBIStarwarsTest(unittest.TestCase):
                                                   formula='approx_conditional', output=False))
         testing.assert_array_almost_equal(mtbis, expected_mtbis, decimal=4)
 
+    def test_mtbi_coruscant_day_30_to_the_end_specifying_only_start(self):
+        expected_mtbis = np.array([0.0074, 0.0074, 0.0075, 0.0075, 0.0076, 0.0078,
+                                   0.0079, 0.0080, 0.0082, 0.0083, 0.0084])
+        mtbis = np.array(epydemics.calculate_mtbi('Coruscant', start=30, formula='approx_conditional', output=False))
+        testing.assert_array_almost_equal(mtbis, expected_mtbis, decimal=4)
+
+    def test_mtbi_coruscant_day_30_to_the_end_from_30_specifying_start_and_start_from(self):
+        expected_mtbis = np.array([0.0074, 0.0074, 0.0075, 0.0075, 0.0076, 0.0078,
+                                   0.0079, 0.0080, 0.0082, 0.0083, 0.0084])
+        mtbis = np.array(epydemics.calculate_mtbi('Coruscant', start=30, start_from=30,
+                                                  formula='approx_conditional', output=False))
+        testing.assert_array_almost_equal(mtbis, expected_mtbis, decimal=4)
+
+    def test_mtbi_coruscant_day_30_to_the_end_from_35_specifying_start_and_start_from(self):
+        expected_mtbis = np.array([0.0078, 0.0079, 0.0080, 0.0082, 0.0083, 0.0084])
+        mtbis = np.array(epydemics.calculate_mtbi('Coruscant', start=30, start_from=35,
+                                                  formula='approx_conditional', output=False))
+        testing.assert_array_almost_equal(mtbis, expected_mtbis, decimal=4)
+
 
 if __name__ == '__main__':
     unittest.main()
