@@ -13,14 +13,14 @@ class StartFromArgumentTests(unittest.TestCase):
 
     def test_start_from_must_be_30_if_start_and_start_from_are_not_specified(self):
         default_start = 1
-        default_start_from = -1
+        default_start_from = None
         start_from = ArgumentManager.determine_start_from(default_start, default_start_from)
         self.assertEqual(30, start_from)
 
     def test_start_from_must_be_40_if_start_is_10_and_start_from_is_not_specified(self):
-        default_start_from = -1
+        default_start_from = None
         start_from = ArgumentManager.determine_start_from(10, default_start_from)
-        self.assertEqual(40, start_from)
+        self.assertEqual(39, start_from)
 
     def test_start_from_must_be_40_if_start_is_not_specified_but_start_from_is_40(self):
         default_start = 1
