@@ -38,12 +38,8 @@ class ArgumentManager:
 
     @classmethod
     def determine_start_from(cls, start, start_from):
-
-        if start_from is None:
-            return start + 29
-        else:
-            if start_from < start:
-                raise InvalidArgumentException('start_from argument must not exceed start argument')
-            return start_from
+        if start_from < start:
+            raise InvalidArgumentException('start_from argument must not exceed start argument')
+        return start_from
 
 

@@ -31,7 +31,7 @@ def fit_contagion_model(location_id, dataset='', start=1, end=-1, x0=(0.1, 1), o
     return fit
 
 
-def analyze_model_parameters_over_time(location, dataset='', start=1, end=-1, start_from=-1,
+def analyze_model_parameters_over_time(location, dataset='', start=1, end=None, start_from=30,
                                        fit_x0=(0.1, 1), output=True):
     start_from = ArgumentManager.determine_start_from(start, start_from)
     parameter_tuples = Fitter.perform_range_fits(location, dataset, start, end, start_from, fit_x0)
@@ -40,7 +40,7 @@ def analyze_model_parameters_over_time(location, dataset='', start=1, end=-1, st
     return parameter_tuples
 
 
-def calculate_mtbi(location, dataset='', start=1, end=-1, start_from=-1,
+def calculate_mtbi(location, dataset='', start=1, end=-1, start_from=30,
                    fit_x0=(0.1, 1), unit='day', formula='exact_conditional', output=True):
     start_from = ArgumentManager.determine_start_from(start, start_from)
     mtbis = Fitter.calculate_mtbis(location, dataset, start, end, start_from, fit_x0, formula)
@@ -50,7 +50,7 @@ def calculate_mtbi(location, dataset='', start=1, end=-1, start_from=-1,
     return mtbis
 
 
-def calculate_mtbi_inverse(location, dataset='', start=1, end=-1, start_from=-1,
+def calculate_mtbi_inverse(location, dataset='', start=1, end=None, start_from=30,
                            fit_x0=(0.1, 1), unit='day', formula='exact_conditional',
                            output=True, real_data=True):
     start_from = ArgumentManager.determine_start_from(start, start_from)
