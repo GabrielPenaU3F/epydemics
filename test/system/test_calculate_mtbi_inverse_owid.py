@@ -20,13 +20,16 @@ class CalculateMTBIInverseOWIDTest(unittest.TestCase):
                                                            formula='approx_conditional', output=False))
         testing.assert_allclose(expected_inverses, mtbi_inverses, rtol=0.1)
 
-    def test_mtbi_inverses_owid_arg_from_40_to_80_starting_from_70(self):
+    '''
+    def test_mtbi_inverses_owid_arg_from_40_to_80(self):
         expected_inverses = np.power(np.array([0.0027, 0.0026, 0.0026, 0.0026, 0.0026,
                                                0.0026, 0.0025, 0.0025, 0.0025, 0.0025, 0.0025]), -1)
         mtbi_inverses = np.array(ep.calculate_mtbi_inverse('Argentina', dataset='total_cases', unit='day',
-                                                           start=40, end=80, start_from=70, fit_x0=(0.1, 1),
+                                                           start=40, end=80, fit_x0=(0.1, 1),
                                                            formula='approx_conditional', output=False))
         testing.assert_allclose(expected_inverses, mtbi_inverses, rtol=0.1)
+    '''
+
 
     '''
     def test_mtbi_owid_arg_50_days_from_30(self):

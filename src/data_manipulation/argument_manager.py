@@ -35,11 +35,3 @@ class ArgumentManager:
         current_locations = raw_data[location_column_name].unique().tolist()
         if location_id not in current_locations:
             raise InvalidArgumentException('The requested location was not found')
-
-    @classmethod
-    def determine_start_from(cls, start, start_from):
-        if start_from < start:
-            raise InvalidArgumentException('start_from argument must not exceed start argument')
-        return start_from
-
-
