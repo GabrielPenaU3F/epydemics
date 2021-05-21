@@ -77,19 +77,21 @@ class PlotManager:
         axes.legend()
         plt.show()
 
-    def plot_mtbi_inverses(self, mtbis, location, dataset, start_from, unit, real_data):
+    def plot_mtbi_inverses(self, mtbis, location, dataset, start, unit, real_data):
 
         converter = DaysConverter.get_instance()
         converted_mtbis = converter.convert_days_to(unit, mtbis)
         inverses = np.power(converted_mtbis, -1)
 
-        x_right_lim = start_from + len(inverses)
-        x = np.arange(start_from, x_right_lim)
+        x_left_lim = start - 1
+        x_right_lim = x_left_lim + len(inverses)
+        x = np.arange(x_left_lim, x_right_lim)
 
         fig, axes = plt.subplots()
         axes.plot(x, inverses, linewidth=1, color='#6F17A6', linestyle='-', label='MTBI inverses')
         if real_data is True:
-            data = DataManager.get_raw_incidence_data(location, dataset=dataset, start=start_from, end=x_right_lim-1)
+            data = DataManager.get_raw_incidence_data(location, dataset=dataset,
+                                                      start=x_left_lim, end=x_right_lim - 1)
             axes.plot(x, data, linewidth=1, color='#80BF60', linestyle='-', label='Incidence data')
 
         axes.set_title('MTBI inverses (' + location + ')')
