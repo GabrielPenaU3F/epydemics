@@ -20,23 +20,22 @@ class DataManager:
     def update_data(cls, source=None, filename=''):
         print('Updating data...')
         if source is not None:
-            ArgumentManager.validate_source(source)
-            filename = cls.choose_filename(filename, source)
-            cls.setup(source, cls.default_path, filename)
+            cls.download_data(source, cls.default_path, filename)
         else:
             sources = SourceRepository.list_sources()
+            sources.remove('custom')
             for source in sources:
-                filename = cls.choose_filename(filename, source)
-                cls.setup(source, cls.default_path, filename)
+                cls.download_data(source, cls.default_path, filename)
         print('Ready')
         return True
 
     @classmethod
-    def setup(cls, source_id, path, filename):
-        cls.current_data_source = SourceRepository.retrieve_data_source(source_id)
-        cls.data = FullDataset(source_id, pandas.read_csv(cls.current_data_source.get_url()))
+    def download_data(cls, source_id, path, filename):
+        ArgumentManager.validate_source(source_id)
+        filename = cls.choose_filename(filename, source_id)
+        data_source = SourceRepository.retrieve_data_source(source_id)
         full_path = path + filename
-        DataWriter.write_to_csv(cls.data.get_raw_data(), full_path)
+        DataWriter.write_to_csv(pandas.read_csv(data_source.get_url()), full_path)
 
     @classmethod
     def load_dataset(cls, source='owid', filename=''):
