@@ -33,7 +33,7 @@ def fit_contagion_model(location_id, dataset='', start=1, end=None, x0=(0.1, 1),
 
 def analyze_model_parameters_over_time(location, dataset='', start=1, end=None, start_from=30,
                                        fit_x0=(0.1, 1), output=True):
-    parameter_tuples = Fitter.perform_range_fits(location, dataset, start, end, start_from, fit_x0)
+    parameter_tuples = Fitter.fit_parameters_over_time(location, dataset, start, end, start_from, fit_x0)
     if output is True:
         plotter.plot_parameters_over_time(parameter_tuples, location, start_from)
     return parameter_tuples

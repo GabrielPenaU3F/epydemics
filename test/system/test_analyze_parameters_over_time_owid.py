@@ -13,7 +13,7 @@ class AnalyzeParametersOverTimeOWIDTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         DataManager.load_dataset()
-        cls.arg_until_40 = Fitter.perform_range_fits('Argentina', 'total_cases', 1, 40, 30, fit_x0=(0.1, 1))
+        cls.arg_until_40 = Fitter.fit_parameters_over_time('Argentina', 'total_cases', 1, 40, 30, fit_x0=(0.1, 1))
 
     def test_arg_until_40_parameters_over_time_rhos(self):
         param_tuples = self.__class__.arg_until_40
