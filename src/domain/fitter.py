@@ -3,17 +3,18 @@ from sklearn.metrics import r2_score
 from src.data_manipulation.data_manager import DataManager
 from src.data_manipulation.dataframe_slicer import DataframeSlicer
 from src.domain.fit import Fit
-from src.domain.models.contagion_model import ContagionModel
+from src.domain.models.model import ContagionModel
+from src.repository.model_repository import ModelRepository
 
 
 class Fitter:
 
     @classmethod
-    def fit(cls, location, dataset, start, end, x0):
+    def fit(cls, location, dataset, model, start, end, x0):
         source = DataManager.get_data_source()
         data = DataManager.get_fittable_location_data(location, dataset, start, end)
         dataset = DataManager.choose_dataset(dataset)
-        model = ContagionModel()
+        model = ModelRepository.retrieve_model(model)
         x = data.index.values
         y = data[dataset].values
         params = model.fit(x, y, x0)

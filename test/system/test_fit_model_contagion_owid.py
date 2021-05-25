@@ -4,7 +4,7 @@ from src.data_manipulation.data_manager import DataManager
 from src.domain.fitter import Fitter
 
 
-class FitContagionModelOWIDTests(unittest.TestCase):
+class FitModelContagionOWIDTests(unittest.TestCase):
 
     arg_early_fit = None
     arg_mitigation_fit = None
@@ -12,8 +12,10 @@ class FitContagionModelOWIDTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         DataManager.load_dataset()
-        cls.arg_early_fit = Fitter.fit('Argentina', 'total_cases', 1, 200, x0=(0.1, 1))
-        cls.arg_mitigation_fit = Fitter.fit('Argentina', 'total_cases', 200, 300, x0=(0.1, 1))
+        cls.arg_early_fit = Fitter.fit(location='Argentina', dataset='total_cases', model='contagion',
+                                       start=1, end=200, x0=(0.1, 1))
+        cls.arg_mitigation_fit = Fitter.fit(location='Argentina', dataset='total_cases', model='contagion',
+                                            start=200, end=300, x0=(0.1, 1))
 
     def test_argentina_early_stage_rho_parameter_should_be_0_dot_130(self):
         rho = self.__class__.arg_early_fit.get_params()[0]

@@ -4,7 +4,7 @@ from src.data_manipulation.data_manager import DataManager
 from src.domain.fitter import Fitter
 
 
-class FitContagionModelMapacheTests(unittest.TestCase):
+class FitModelContagionMapacheTests(unittest.TestCase):
 
     caba_early_fit = None
     caba_mitigation_fit = None
@@ -12,8 +12,10 @@ class FitContagionModelMapacheTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         DataManager.load_dataset('mapache_arg')
-        cls.caba_early_fit = Fitter.fit('CABA', dataset='', start=1, end=150, x0=(0.1, 1))
-        cls.caba_mitigation_fit = Fitter.fit('CABA', dataset='', start=150, end=260, x0=(0.1, 1))
+        cls.caba_early_fit = Fitter.fit(location='CABA', dataset='', model='contagion',
+                                        start=1, end=150, x0=(0.1, 1))
+        cls.caba_mitigation_fit = Fitter.fit(location='CABA', dataset='', model='contagion',
+                                             start=150, end=260, x0=(0.1, 1))
 
     def test_caba_early_stage_rho_parameter_should_be_0_dot_178(self):
         rho = self.__class__.caba_early_fit.get_params()[0]
@@ -38,6 +40,7 @@ class FitContagionModelMapacheTests(unittest.TestCase):
     def test_argentina_mitigation_stage_rsq_should_be_0_dot_989(self):
         rsq = self.__class__.caba_mitigation_fit.get_rsq()
         self.assertAlmostEqual(0.989, rsq, places=3)
+
 
 if __name__ == '__main__':
     unittest.main()

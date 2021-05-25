@@ -2,7 +2,7 @@ import numpy as np
 
 from src.data_manipulation.data_manager import DataManager
 from src.domain.fitter import Fitter
-from src.domain.models.contagion_model import ContagionModel
+from src.domain.models.model import ContagionModel
 
 DataManager.load_dataset(source='custom', filename='starwars_test_data.csv')
 data = DataManager.get_raw_cumulative_data('Coruscant', end=40)

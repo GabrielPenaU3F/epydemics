@@ -21,8 +21,8 @@ def show_data_from_location(location_id, dataset=''):
     console.print_data_from_location(source, location_id, dataset, location_data)
 
 
-def fit_contagion_model(location_id, dataset='', start=1, end=None, x0=(0.1, 1), output=True):
-    fit = Fitter.fit(location_id, dataset, start, end, x0)
+def fit_model(location_id, dataset='', model='contagion', start=1, end=None, x0=(0.1, 1), output=True):
+    fit = Fitter.fit(location_id, dataset, model,  start, end, x0)
 
     if output is True:
         console.show_fit_results(fit)
