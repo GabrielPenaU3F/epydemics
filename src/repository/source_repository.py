@@ -15,4 +15,4 @@ class SourceRepository:
 
     @classmethod
     def list_sources(cls):
-        return cls.sources.values()
+        return list(cls.sources.keys())

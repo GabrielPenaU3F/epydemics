@@ -17,11 +17,19 @@ class DataManager:
     default_path = str(get_project_root() + '\\resources\\data\\')
 
     @classmethod
-    def update_data(cls, source='owid', filename=''):
-        filename = cls.choose_filename(filename, source)
+    def update_data(cls, source=None, filename=''):
         print('Updating data...')
-        cls.setup(source, cls.default_path, filename)
+        if source is not None:
+            ArgumentManager.validate_source(source)
+            filename = cls.choose_filename(filename, source)
+            cls.setup(source, cls.default_path, filename)
+        else:
+            sources = SourceRepository.list_sources()
+            for source in sources:
+                filename = cls.choose_filename(filename, source)
+                cls.setup(source, cls.default_path, filename)
         print('Ready')
+        return True
 
     @classmethod
     def setup(cls, source_id, path, filename):

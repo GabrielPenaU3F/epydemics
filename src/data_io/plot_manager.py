@@ -77,11 +77,9 @@ class PlotManager:
         axes.legend()
         plt.show()
 
-    def plot_mtbi_inverses(self, mtbis, location, dataset, start, unit, real_data):
+    def plot_mtbi_inverses(self, mtbis, location, dataset, start, real_data):
 
-        converter = DaysConverter.get_instance()
-        converted_mtbis = converter.convert_days_to(unit, mtbis)
-        inverses = np.power(converted_mtbis, -1)
+        inverses = np.power(mtbis, -1)
 
         x_left_lim = start - 1
         x_right_lim = x_left_lim + len(inverses)
@@ -96,7 +94,7 @@ class PlotManager:
 
         axes.set_title('MTBI inverses (' + location + ')')
         self.config_plot_background(axes)
-        self.config_mtbi_plot_axis(axes, unit)
+        self.config_mtbi_plot_axis(axes, 'day')
         axes.legend()
         plt.show()
 

@@ -61,8 +61,11 @@ class MapacheArgDataSource(DataSource):
     def __init__(self):
         self.source_url = \
             'https://docs.google.com/spreadsheets/d/16-bnsDdmmgtSxdWbVMboIHo5FRuz76DBxsz_BbsEVWA/export?format=csv&id=16-bnsDdmmgtSxdWbVMboIHo5FRuz76DBxsz_BbsEVWA&gid=0'
-        self.dataset_titles = {'nue_casosconf_diff': 'Total cases'}
-        self.dataset_plot_ylabels = {'nue_casosconf_diff': 'Cumulative cases'}
+        self.dataset_titles = {'nue_casosconf_diff': 'Total cases',
+                               'nue_fallecidos_diff': 'Total deaths'}
+
+        self.dataset_plot_ylabels = {'nue_casosconf_diff': 'Cumulative cases',
+                                     'nue_fallecidos_diff': 'Cumulative deaths'}
         self.default_dataset = 'nue_casosconf_diff'
         self.location_column_name = 'osm_admin_level_4'
         self.date_column_name = 'fecha'

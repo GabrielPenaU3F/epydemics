@@ -1,4 +1,5 @@
 from src.exceptions.exceptions import InvalidArgumentException
+from src.repository.source_repository import SourceRepository
 
 
 class ArgumentManager:
@@ -35,3 +36,9 @@ class ArgumentManager:
         current_locations = raw_data[location_column_name].unique().tolist()
         if location_id not in current_locations:
             raise InvalidArgumentException('The requested location was not found')
+
+    @classmethod
+    def validate_source(cls, source):
+        if not SourceRepository.list_sources().__contains__(source):
+            raise InvalidArgumentException('The requested source is not supported')
+        return True
