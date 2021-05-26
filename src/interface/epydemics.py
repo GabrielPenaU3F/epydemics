@@ -55,3 +55,9 @@ def calculate_mtbi_inverse(location, dataset='', start=1, end=None, start_from=3
         plotter.plot_mtbi_inverses(mtbis, location, dataset, start + start_from, real_data)
     inverses = np.power(mtbis, -1)
     return inverses
+
+
+def show_incidence_spectrum(location, dataset='', start=1, end=None):
+    spectrum_mod = DataManager.get_raw_data_spectrum(location, dataset, start, end)
+    plotter.plot_incidence_spectrum(spectrum_mod, location)
+    return spectrum_mod

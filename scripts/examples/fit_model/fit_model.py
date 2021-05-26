@@ -32,7 +32,7 @@ DataManager.load_dataset('mapache_arg')
 # epydemics.fit_model('CABA')
 
 # Example 2.2: Fit the cases in CABA to the Goel-Okumoto model
-# epydemics.fit_model('CABA', model='goel_okumoto', start=200, end=260, x0=(1, 0.01))
+epydemics.fit_model('Córdoba', model='goel_okumoto', start=200, end=260, x0=(1, 0.01))
 
 # Example 2.3: Fit the cases in Córdoba to teh Delayed S-Shaped model
-epydemics.fit_model('Córdoba', model='delayed_s_shaped', end=270, x0=(1000, 0.001))
+# epydemics.fit_model('Córdoba', model='delayed_s_shaped', end=270, x0=(1000, 0.001))

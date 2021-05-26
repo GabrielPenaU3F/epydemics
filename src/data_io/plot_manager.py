@@ -98,6 +98,25 @@ class PlotManager:
         axes.legend()
         plt.show()
 
+    def plot_incidence_spectrum(self, spectrum_mod, location):
+        w = np.linspace(0, 2 * np.pi, len(spectrum_mod), endpoint=None)
+
+        fig, axes = plt.subplots()
+
+        axes.plot(w, spectrum_mod,  linewidth=1, color='#6F17A6', linestyle='-', label='Spectrum absolute value')
+        axes.set_title('Spectrum absolute value (' + location + ')')
+
+        xticks = [0, 0.5 * np.pi, np.pi, 1.5 * np.pi, 2 * np.pi]
+        xticklabels = ['0', r'$\pi$/2', r'$\pi$', r'3$\pi$/2', r'2$\pi$']
+
+        axes.ticklabel_format(useOffset=False, style='plain')
+        axes.set_xticks(xticks)
+        axes.set_xticklabels(xticklabels, fontsize=12)
+
+        self.config_plot_background(axes)
+        axes.legend()
+        plt.show()
+
     def config_plot_background(self, axes):
         axes.patch.set_facecolor("#ffffff")
         axes.patch.set_edgecolor('black')

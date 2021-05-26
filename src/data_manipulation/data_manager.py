@@ -125,3 +125,10 @@ class DataManager:
         if start > 1:
             accumulated_events_prior_to_start = cls.get_single_datum(location, dataset, start - 1)
         return accumulated_events_prior_to_start
+
+    @classmethod
+    def get_raw_data_spectrum(cls, location, dataset, start, end):
+        data = cls.get_raw_incidence_data(location, dataset, start, end)
+        spectrum = np.fft.fft(data)
+        spectrum_mod = np.abs(spectrum)
+        return spectrum_mod
