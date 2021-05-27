@@ -130,5 +130,4 @@ class DataManager:
     def get_raw_data_spectrum(cls, location, dataset, start, end):
         data = cls.get_raw_incidence_data(location, dataset, start, end)
         spectrum = np.fft.fft(data)
-        spectrum_mod = np.abs(spectrum)
-        return spectrum_mod
+        return spectrum

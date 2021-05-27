@@ -57,7 +57,9 @@ def calculate_mtbi_inverse(location, dataset='', start=1, end=None, start_from=3
     return inverses
 
 
-def show_incidence_spectrum(location, dataset='', start=1, end=None):
-    spectrum_mod = DataManager.get_raw_data_spectrum(location, dataset, start, end)
-    plotter.plot_incidence_spectrum(spectrum_mod, location)
-    return spectrum_mod
+def show_incidence_spectrum(location, dataset='', start=1, end=None, output=True):
+    spectrum = DataManager.get_raw_data_spectrum(location, dataset, start, end)
+    if output is True:
+        spectrum_mod = np.abs(spectrum)
+        plotter.plot_incidence_spectrum(spectrum_mod, location)
+    return spectrum
