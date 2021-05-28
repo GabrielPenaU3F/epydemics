@@ -3,4 +3,4 @@ import src.interface.epydemics as epydemics
 
 DataManager.load_dataset('owid')
 
-epydemics.show_incidence_spectrum('Argentina')
+epydemics.show_incidence_spectrum('Argentina', xscale='freq')

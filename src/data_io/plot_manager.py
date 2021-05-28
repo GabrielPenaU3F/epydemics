@@ -98,21 +98,20 @@ class PlotManager:
         axes.legend()
         plt.show()
 
-    def plot_incidence_spectrum(self, spectrum_mod, location):
-        w = np.linspace(0, 2 * np.pi, len(spectrum_mod), endpoint=None)
+    def plot_incidence_spectrum(self, spectrum_mod, location, xscale):
 
         fig, axes = plt.subplots()
+
+        spectrum_mod = spectrum_mod[:int(len(spectrum_mod)/2)]
+        if xscale == 'rad':
+            w = np.linspace(0, np.pi, len(spectrum_mod), endpoint=None)
+        elif xscale == 'freq':
+            w = np.linspace(0, 1/2, len(spectrum_mod), endpoint=None)
 
         axes.plot(w, spectrum_mod,  linewidth=1, color='#6F17A6', linestyle='-', label='Spectrum absolute value')
         axes.set_title('Spectrum absolute value (' + location + ')')
 
-        xticks = [0, 0.5 * np.pi, np.pi, 1.5 * np.pi, 2 * np.pi]
-        xticklabels = ['0', r'$\pi$/2', r'$\pi$', r'3$\pi$/2', r'2$\pi$']
-
-        axes.ticklabel_format(useOffset=False, style='plain')
-        axes.set_xticks(xticks)
-        axes.set_xticklabels(xticklabels, fontsize=12)
-
+        self.config_spectrum_plot_axis(axes, xscale)
         self.config_plot_background(axes)
         axes.legend()
         plt.show()
@@ -150,3 +149,17 @@ class PlotManager:
     def config_axis_plain_style(self, axes):
         axes.ticklabel_format(axis='x', style='plain')
         axes.ticklabel_format(axis='y', style='plain')
+
+    def config_spectrum_plot_axis(self, axes, xscale):
+        self.config_axis_plain_style(axes)
+        if xscale == 'rad':
+            xticks = [0, np.pi / 4, np.pi / 2, 3 * np.pi / 4, np.pi]
+            xticklabels = ['0', r'$\pi$/4', r'$\pi$/2', r'3$\pi$/4', r'$\pi$']
+            axes.set_xlabel('\u03C9 (rad/day)')
+        elif xscale == 'freq':
+            xticks = [0, 1/8, 1/4, 3/8, 1/2]
+            xticklabels = ['0', '1/8', '1/4', '3/8', '1/2']
+            axes.set_xlabel('f (1/day)')
+
+        axes.set_xticks(xticks)
+        axes.set_xticklabels(xticklabels, fontsize=10)
