@@ -11,7 +11,7 @@ from src.repository.model_repository import ModelRepository
 
 DataManager.load_dataset('owid')
 
-lugar = 'Argentina'
+lugar = 'Colombia'
 start = 370
 fig, axes = plt.subplots(2, 3)
 
@@ -55,11 +55,13 @@ ax_spectrum.legend()
 
 # Filtering with a least-squares bandstop FIR, adjusted to the high frequency peaks in Argentina
 
+
 fs = 1
 bands = [x/16 for x in range(0, 8)]
 gains = [1, 1, 0, 1, 0, 1, 1, 0]
 filter = signal.firls(25, bands, gains, fs=fs)
 filtered_inc = signal.filtfilt(filter, a=1, x=inc_data)
+
 
 '''
 # Filtering with a low-pass Butterworth, with wstop=1/8
@@ -78,6 +80,7 @@ ax_fspectrum.plot(w, filtered_spectrum, linewidth=1, color='#6F17A6', linestyle=
 pm.config_plot_background(ax_fspectrum)
 pm.config_spectrum_plot_axis(ax_fspectrum, xscale='freq')
 ax_fspectrum.legend()
+
 
 ax_fincidencia = axes[1, 1]
 ax_fincidencia.plot(x, filtered_inc, linewidth=1, color='#1174F7', linestyle='-', label='Filtered incidence')
