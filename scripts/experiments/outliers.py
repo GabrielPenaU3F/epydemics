@@ -39,10 +39,10 @@ ax_outlier = axes[1]
 model = ModelRepository.retrieve_model('contagion')
 real_data_with_outlier = real_data.copy()
 
-#for i in range(20, len(real_data)):
+# for i in range(20, len(real_data)):
 #    real_data_with_outlier[i] += 10**6
-real_data_with_outlier[20] = 10**6
-real_data_with_outlier[30] = 10
+# real_data_with_outlier[20] = 10**6
+# real_data_with_outlier[30] = 10
 # real_data_with_outlier[40] = 10**7
 
 params_out = model.fit(x, real_data_with_outlier, x0=(1, 0.5))
