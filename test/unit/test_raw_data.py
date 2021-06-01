@@ -42,6 +42,16 @@ class GetRawDataTest(unittest.TestCase):
         raw_data = DataManager.get_raw_incidence_data('Tatooine', start=65)
         testing.assert_array_equal(raw_data, expected)
 
+    def test_get_datum_1(self):
+        expected = 99
+        datum = DataManager.get_single_datum('Nar Shaddaa', 'custom_data', 1)
+        self.assertEqual(datum, expected)
+
+    def test_get_datum_10(self):
+        expected = 1027
+        datum = DataManager.get_single_datum('Nar Shaddaa', 'custom_data', 10)
+        self.assertEqual(datum, expected)
+
 
 if __name__ == '__main__':
     unittest.main()
