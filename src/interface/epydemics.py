@@ -57,6 +57,16 @@ def calculate_mtbi_inverse(location, dataset='', start=1, end=None, start_from=3
     return inverses
 
 
+def show_cumulative_data_curve(location, dataset='', start=1, end=None):
+    raw_data = DataManager.get_raw_cumulative_data(location, dataset, start, end)
+    plotter.plot_cumulative_data(raw_data, location, dataset)
+
+
+def show_daily_data_curve(location, dataset='', start=1, end=None):
+    raw_data = DataManager.get_raw_daily_data(location, dataset, start, end)
+    plotter.plot_daily_data(raw_data, location, dataset)
+
+
 def show_incidence_spectrum(location, dataset='', start=1, end=None, output=True, xscale='rad'):
     spectrum = DataManager.get_raw_data_spectrum(location, dataset, start, end)
     if output is True:

@@ -88,13 +88,37 @@ class PlotManager:
         fig, axes = plt.subplots()
         axes.plot(x, inverses, linewidth=1, color='#6F17A6', linestyle='-', label='MTBI inverses')
         if real_data is True:
-            data = DataManager.get_raw_incidence_data(location, dataset=dataset,
-                                                      start=x_left_lim, end=x_right_lim - 1)
+            data = DataManager.get_raw_daily_data(location, dataset=dataset,
+                                                  start=x_left_lim, end=x_right_lim - 1)
             axes.plot(x, data, linewidth=1, color='#80BF60', linestyle='-', label='Incidence data')
 
         axes.set_title('MTBI inverses (' + location + ')')
         self.config_plot_background(axes)
         self.config_mtbi_plot_axis(axes, 'day')
+        axes.legend()
+        plt.show()
+
+    def plot_cumulative_data(self, raw_data, location, dataset):
+        source = DataManager.get_data_source()
+        dataset = DataManager.choose_dataset(dataset)
+        title = source.get_dataset_datacurve_title(dataset, 'cumulative') + ' curve (' + location + ')'
+        label = source.get_dataset_datacurve_ylabel(dataset, 'cumulative')
+        self.plot_data(raw_data, title, label)
+
+    def plot_daily_data(self, raw_data, location, dataset):
+        source = DataManager.get_data_source()
+        dataset = DataManager.choose_dataset(dataset)
+        title = source.get_dataset_datacurve_title(dataset, 'daily') + ' curve (' + location + ')'
+        label = source.get_dataset_datacurve_ylabel(dataset, 'daily')
+        self.plot_data(raw_data, title, label)
+
+    def plot_data(self, raw_data, title, label):
+        x = np.arange(1, len(raw_data) + 1)
+        fig, axes = plt.subplots()
+        axes.plot(x, raw_data, linewidth=1, color='#6F17A6', linestyle='-', label=label)
+        axes.set_title(title)
+        self.config_plot_background(axes)
+        self.config_axis_plain_style(axes)
         axes.legend()
         plt.show()
 

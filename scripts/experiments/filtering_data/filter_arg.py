@@ -15,7 +15,7 @@ lugar = 'Colombia'
 start = 370
 fig, axes = plt.subplots(2, 3)
 
-inc_data = DataManager.get_raw_incidence_data(lugar, start=start)
+inc_data = DataManager.get_raw_daily_data(lugar, start=start)
 spectrum = ep.show_incidence_spectrum(lugar, start=start, xscale='freq', output=None)
 
 
@@ -55,22 +55,29 @@ ax_spectrum.legend()
 
 # Filtering with a least-squares bandstop FIR, adjusted to the high frequency peaks in Argentina
 
-
+'''
 fs = 1
 bands = [x/16 for x in range(0, 8)]
 gains = [1, 1, 0, 1, 0, 1, 1, 0]
 filter = signal.firls(25, bands, gains, fs=fs)
 filtered_inc = signal.filtfilt(filter, a=1, x=inc_data)
-
+'''
 
 '''
+# La respuesta del filtro
+freq, response = signal.freqz(filter)
+fig, ax_filter = plt.subplots()
+ax_filter.plot(0.5*freq/np.pi, np.abs(response))
+'''
+
+
 # Filtering with a low-pass Butterworth, with wstop=1/8
 
 fs = 1
 N, Wn = signal.buttord(wp=1/8-1/32, ws=1/8, gpass=1, gstop=10, fs=fs)
 filter_sos = signal.butter(N, Wn, btype='low', output='sos')
 filtered_inc = signal.sosfilt(filter_sos, x=inc_data)
-'''
+
 
 ax_fspectrum = axes[1, 2]
 filtered_spectrum = np.abs(np.fft.fft(filtered_inc))[:int(len(spectrum)/2)]
@@ -106,11 +113,5 @@ pm.config_axis_plain_style(ax_fmodelo)
 pm.config_plot_background(ax_fmodelo)
 ax_fmodelo.legend()
 
-'''
-La respuesta del filtro
-freq, response = signal.freqz(filter)
-fig, ax_filter = plt.subplots()
-ax_filter.plot(0.5*freq/np.pi, np.abs(response))
-'''
 
 plt.show()

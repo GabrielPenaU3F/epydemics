@@ -111,7 +111,7 @@ class DataManager:
         return cls.get_location_data(location_id, dataset, start, end)[dataset].values
 
     @classmethod
-    def get_raw_incidence_data(cls, location_id, dataset='', start=1, end=None):
+    def get_raw_daily_data(cls, location_id, dataset='', start=1, end=None):
         dataset = cls.choose_dataset(dataset)
         accumulated_events_prior_to_start = cls.calculate_accumulated_events_prior_to_start(location_id, dataset, start)
         cumulative_data = np.concatenate(
@@ -128,6 +128,6 @@ class DataManager:
 
     @classmethod
     def get_raw_data_spectrum(cls, location, dataset, start, end):
-        data = cls.get_raw_incidence_data(location, dataset, start, end)
+        data = cls.get_raw_daily_data(location, dataset, start, end)
         spectrum = np.fft.fft(data)
         return spectrum
