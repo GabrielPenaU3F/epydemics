@@ -62,11 +62,11 @@ class OWIDDataSource(DataSource):
                                      'total_deaths': 'Cumulative deaths'}
         self.dataset_datacurve_titles = {'cumulative_total_cases': 'Cumulative cases',
                                          'cumulative_total_deaths': 'Cumulative deaths',
-                                         'daily_total_cases': 'Incidence data',
+                                         'daily_total_cases': 'Daily cases',
                                          'daily_total_deaths': 'Daily deaths'}
         self.dataset_datacurve_ylabels = {'cumulative_total_cases': 'Cumulative cases',
                                          'cumulative_total_deaths': 'Cumulative deaths',
-                                         'daily_total_cases': 'Incidence',
+                                         'daily_total_cases': 'Infections',
                                          'daily_total_deaths': 'Deaths'}
         self.default_dataset = 'total_cases'
         self.location_column_name = 'location'
@@ -86,11 +86,11 @@ class MapacheArgDataSource(DataSource):
                                      'nue_fallecidos_diff': 'Cumulative deaths'}
         self.dataset_datacurve_titles = {'cumulative_nue_casosconf_diff': 'Cumulative cases',
                                          'cumulative_nue_fallecidos_diff': 'Cumulative deaths',
-                                         'daily_nue_casosconf_diff': 'Incidence data',
+                                         'daily_nue_casosconf_diff': 'Daily data',
                                          'daily_nue_fallecidos_diff': 'Daily deaths'}
         self.dataset_datacurve_ylabels = {'cumulative_nue_casosconf_diff': 'Cumulative cases',
                                          'cumulative_nue_fallecidos_diff': 'Cumulative deaths',
-                                         'daily_nue_casosconf_diff': 'Incidence',
+                                         'daily_nue_casosconf_diff': 'Infections',
                                          'daily_nue_fallecidos_diff': 'Deaths'}
         self.default_dataset = 'nue_casosconf_diff'
         self.location_column_name = 'osm_admin_level_4'
@@ -104,9 +104,9 @@ class CustomDataSource(DataSource):
         self.source_url = None
         self.dataset_titles = {'custom_data': 'Total cases'}
         self.dataset_datacurve_titles = {'cumulative_custom_data': 'Cumulative cases',
-                                         'daily_custom_data': 'Incidence data'}
+                                         'daily_custom_data': 'Daily cases'}
         self.dataset_datacurve_ylabels = {'cumulative_custom_data': 'Cumulative cases',
-                                          'daily_custom_data': 'Incidence'}
+                                          'daily_custom_data': 'Infections'}
         self.dataset_plot_ylabels = {'custom_data': 'Cumulative cases'}
         self.default_dataset = 'custom_data'
         self.location_column_name = 'custom_location'
