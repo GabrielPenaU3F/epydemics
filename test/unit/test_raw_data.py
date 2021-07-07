@@ -44,12 +44,12 @@ class GetRawDataTest(unittest.TestCase):
 
     def test_get_datum_1(self):
         expected = 99
-        datum = DataManager.get_single_datum('Nar Shaddaa', 'custom_data', 1)
+        datum = DataManager.get_single_datum('Nar Shaddaa', 1, dataset='custom_data')
         self.assertEqual(datum, expected)
 
     def test_get_datum_10(self):
         expected = 1027
-        datum = DataManager.get_single_datum('Nar Shaddaa', 'custom_data', 10)
+        datum = DataManager.get_single_datum('Nar Shaddaa', 10, dataset='custom_data')
         self.assertEqual(datum, expected)
 
 

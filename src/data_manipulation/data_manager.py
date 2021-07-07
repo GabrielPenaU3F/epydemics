@@ -100,7 +100,7 @@ class DataManager:
         return cls.current_data_source
 
     @classmethod
-    def get_single_datum(cls, location, dataset, s):
+    def get_single_datum(cls, location, s, dataset=''):
         dataset = cls.choose_dataset(dataset)
         location_data = cls.get_fittable_location_data(location, dataset)
         return location_data[[dataset]].iloc[s - 1][0]
@@ -123,7 +123,7 @@ class DataManager:
     def calculate_accumulated_events_prior_to_start(cls, location, dataset, start):
         accumulated_events_prior_to_start = 0
         if start > 1:
-            accumulated_events_prior_to_start = cls.get_single_datum(location, dataset, start - 1)
+            accumulated_events_prior_to_start = cls.get_single_datum(location, start - 1, dataset)
         return accumulated_events_prior_to_start
 
     @classmethod

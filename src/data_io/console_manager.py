@@ -1,6 +1,7 @@
 import numpy as np
 import pandas
 import src.utils.checking_utils as checker
+from src.data_manipulation.data_manager import DataManager
 from src.domain.unit_converter import DaysConverter
 
 
@@ -25,6 +26,7 @@ class ConsoleManager:
         print(locations)
 
     def print_data_from_location(self, source, location_id, dataset, location_dataframe):
+        dataset = DataManager.choose_dataset(dataset)
         date_column_title = 'Date'
         dataset_column_title = source.get_dataset_title(dataset)
         location_dataframe.columns = [date_column_title, dataset_column_title]

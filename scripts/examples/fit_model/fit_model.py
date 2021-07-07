@@ -5,7 +5,7 @@ import src.interface.epydemics as epydemics
 # DataManager.load_dataset(source='owid', filename='owid_dataset.csv')
 # DataManager.load_dataset('owid', 'owid_dataset.csv')
 # DataManager.load_dataset(source='owid')
-# DataManager.load_dataset('owid')
+DataManager.load_dataset('owid')
 # DataManager.load_dataset()
 
 # Example 1.1: This will fit the data from the indicated country, show the results via console and plot the lines
@@ -18,21 +18,21 @@ import src.interface.epydemics as epydemics
 # epydemics.fit_model('Argentina', end=200)
 # epydemics.fit_model('Argentina', start=200)
 # epydemics.fit_model('Argentina', start=200, end=300)
+epydemics.fit_model('Argentina', start=200, end=300)
 
-# You may want only the numbers or only the plots. This can be done too.
-# Example 1.6: No plots, just the fit data via console.
-# epydemics.fit_model('Argentina', plot=False)
-# Example 1.7: No console output, just the plots.
+
+# You may want to obtain the fit object, but not show the results. This can be done too.
+# Example 1.6: No console output, just the plots.
 # epydemics.fit_model('Argentina', output=False)
 
 # Example 2: now consider the Mapache Dataset from Argentina. Load it:
-DataManager.load_dataset('mapache_arg')
+# DataManager.load_dataset('mapache_arg')
 
 # Example 2.1: Fit the cases in CABA
 # epydemics.fit_model('CABA')
 
 # Example 2.2: Fit the cases in CABA to the Goel-Okumoto model
-epydemics.fit_model('Córdoba', model='goel_okumoto', start=200, end=260, x0=(1, 0.01))
+# epydemics.fit_model('Córdoba', model='goel_okumoto', start=200, end=260, x0=(1, 0.01))
 
 # Example 2.3: Fit the cases in Córdoba to teh Delayed S-Shaped model
 # epydemics.fit_model('Córdoba', model='delayed_s_shaped', end=270, x0=(1000, 0.001))
