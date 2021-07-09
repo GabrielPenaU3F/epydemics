@@ -11,8 +11,8 @@ from src.repository.model_repository import ModelRepository
 
 DataManager.load_dataset('owid')
 
-lugar = 'Colombia'
-start = 370
+lugar = 'Argentina'
+start = 1
 fig, axes = plt.subplots(2, 3)
 
 inc_data = DataManager.get_raw_daily_data(lugar, start=start)
@@ -37,8 +37,10 @@ pm.config_axis_plain_style(ax_modelo)
 pm.config_plot_background(ax_modelo)
 ax_modelo.legend()
 
+noisy_mins, _ = signal.find_peaks(-inc_data)
 ax_incidencia = axes[0, 1]
 ax_incidencia.plot(x, inc_data, linewidth=1, color='#1174F7', linestyle='-', label='Incidence')
+ax_incidencia.plot(noisy_mins, inc_data[noisy_mins], "x", color='red', markersize=7)
 pm.config_axis_plain_style(ax_incidencia)
 pm.config_plot_background(ax_incidencia)
 ax_incidencia.legend()
@@ -63,21 +65,16 @@ filter = signal.firls(25, bands, gains, fs=fs)
 filtered_inc = signal.filtfilt(filter, a=1, x=inc_data)
 '''
 
-'''
-# La respuesta del filtro
-freq, response = signal.freqz(filter)
-fig, ax_filter = plt.subplots()
-ax_filter.plot(0.5*freq/np.pi, np.abs(response))
-'''
 
-
-# Filtering with a low-pass Butterworth, with wstop=1/8
+# Filtering with a low-pass Butterworth
 
 fs = 1
-N, Wn = signal.buttord(wp=1/8-1/32, ws=1/8, gpass=1, gstop=10, fs=fs)
-filter_sos = signal.butter(N, Wn, btype='low', output='sos')
-filtered_inc = signal.sosfilt(filter_sos, x=inc_data)
+wp0 = (1/14) - 1/64
+ws0 = (1/14)
 
+N, Wn = signal.buttord(wp=wp0, ws=ws0, gpass=1, gstop=3, fs=fs)
+filter_sos = signal.butter(N, Wn, btype='low', output='sos')
+filtered_inc = signal.sosfiltfilt(filter_sos, x=inc_data)
 
 ax_fspectrum = axes[1, 2]
 filtered_spectrum = np.abs(np.fft.fft(filtered_inc))[:int(len(spectrum)/2)]
@@ -89,8 +86,10 @@ pm.config_spectrum_plot_axis(ax_fspectrum, xscale='freq')
 ax_fspectrum.legend()
 
 
+mins, _ = signal.find_peaks(-filtered_inc)
 ax_fincidencia = axes[1, 1]
 ax_fincidencia.plot(x, filtered_inc, linewidth=1, color='#1174F7', linestyle='-', label='Filtered incidence')
+ax_fincidencia.plot(mins, filtered_inc[mins], "x", color='red', markersize=7)
 pm.config_axis_plain_style(ax_fincidencia)
 pm.config_plot_background(ax_fincidencia)
 ax_fincidencia.legend()
@@ -113,5 +112,26 @@ pm.config_axis_plain_style(ax_fmodelo)
 pm.config_plot_background(ax_fmodelo)
 ax_fmodelo.legend()
 
+'''
+# La respuesta de los filtros
+
+# Filtro pasabanda
+
+freq, response = signal.freqz(filter)
+fig, ax_filter = plt.subplots()
+ax_filter.plot(0.5*freq/np.pi, np.abs(response))
+
+'''
+
+# Filtro Butterworth
+
+freq, response = signal.sosfreqz(filter_sos)
+
+fig, axes = plt.subplots()
+amps = np.abs(response)
+axes.plot(freq/np.pi, 20*np.log10(amps/np.max(amps)))
+pm.config_plot_background(axes)
+axes.set_xlabel('Frecuencia (0 - Nyquist)')
+axes.set_ylabel('Amplitud (dB)')
 
 plt.show()
