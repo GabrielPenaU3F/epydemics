@@ -7,7 +7,7 @@ from src.data_io.plot_manager import PlotManager
 
 DataManager.load_dataset('owid')
 
-lugar = 'Argentina'
+lugar = 'Brazil'
 
 inc_data = DataManager.get_raw_daily_data(lugar)
 x = np.arange(1, len(inc_data) + 1)
@@ -50,7 +50,7 @@ for i in range(1, len(axes)):
 
 # Apply n series MA filters of length L=7
 n = 7
-L = 7
+L = 14
 ma_kernel = np.ones(L) / L
 
 y = inc_data.copy()

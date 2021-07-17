@@ -90,13 +90,43 @@ class PlotManager:
         if real_data is True:
             data = DataManager.get_raw_daily_data(location, dataset=dataset,
                                                   start=x_left_lim, end=x_right_lim - 1)
-            axes.plot(x, data, linewidth=1, color='#80BF60', linestyle='-', label='Incidence data')
+            axes.plot(x, data, linewidth=1, color='#80BF60', linestyle='-', label='Daily data')
 
         axes.set_title('MTBI inverses (' + location + ')')
         self.config_plot_background(axes)
         self.config_mtbi_plot_axis(axes, 'day')
         axes.legend()
         plt.show()
+
+    def plot_fit_residuals(self, residuals, location, dataset):
+        source = DataManager.get_data_source()
+        dataset = DataManager.choose_dataset(dataset)
+        dataset_title = source.get_dataset_title(dataset)
+        title = dataset_title + ' in ' + location + ', fit residuals'
+        x = np.arange(1, len(residuals) + 1)
+
+        fig, axes = plt.subplots()
+        axes.plot(x, residuals, linewidth=1, color='#9A0619', linestyle='-', label='Residuals')
+        axes.set_title(title)
+        self.config_plot_background(axes)
+        self.config_fit_residuals_axis(axes)
+        axes.legend()
+
+        plt.show()
+
+    '''
+    def plot_residuals_over_time(self, residuals, location, start_from):
+        x_right_lim = start_from + len(residuals)
+        x = np.arange(start_from, x_right_lim)
+
+        fig, axes = plt.subplots()
+        axes.plot(x, residuals, linewidth=1, color='#9A0619', linestyle='-', label='Residuals')
+        axes.set_title('Fit residuals over time (' + location + ')')
+        self.config_plot_background(axes)
+        axes.legend()
+
+        plt.show()
+    '''
 
     def plot_cumulative_data(self, raw_data, location, dataset):
         source = DataManager.get_data_source()
@@ -152,8 +182,7 @@ class PlotManager:
         source = fit.get_source()
         axes.set_xlabel('t (days)')
         axes.set_ylabel(source.get_fit_plot_ylabel(dataset))
-        axes.ticklabel_format(axis='x', style='plain')
-        axes.ticklabel_format(axis='y', style='plain')
+        self.config_axis_plain_style(axes)
 
     def config_parameters_plot_axis(self, rho_axes, gamma_per_rho_axes):
 
@@ -187,3 +216,8 @@ class PlotManager:
 
         axes.set_xticks(xticks)
         axes.set_xticklabels(xticklabels, fontsize=10)
+
+    def config_fit_residuals_axis(self, axes):
+        axes.set_xlabel('t (days)')
+        axes.set_ylabel('Residuals')
+        self.config_axis_plain_style(axes)

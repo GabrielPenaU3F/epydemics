@@ -73,3 +73,11 @@ def show_incidence_spectrum(location, dataset='', start=1, end=None, output=True
         spectrum_mod = np.abs(spectrum)
         plotter.plot_incidence_spectrum(spectrum_mod, location, xscale)
     return spectrum
+
+
+def show_fit_residuals(location, dataset='', model='contagion', start=1, end=None,
+                       fit_x0=(0.1, 1), output=True, type='true'):
+    residuals = Fitter.compute_fit_residuals(location, dataset, model, start, end, fit_x0, type)
+    if output is True:
+        plotter.plot_fit_residuals(residuals, location, dataset)
+    return residuals

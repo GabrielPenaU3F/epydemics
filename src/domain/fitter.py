@@ -1,13 +1,17 @@
+import numpy as np
 from sklearn.metrics import r2_score
 
 from src.data_manipulation.data_manager import DataManager
 from src.data_manipulation.dataframe_slicer import DataframeSlicer
 from src.domain.fit import Fit
 from src.domain.models.model import ContagionModel
+from src.exceptions.exceptions import InvalidArgumentException
 from src.repository.model_repository import ModelRepository
 
 
 class Fitter:
+
+    residual_types = ['true', 'abs', 'square']
 
     @classmethod
     def fit(cls, location, dataset, model, start, end, x0):
@@ -24,9 +28,9 @@ class Fitter:
         return fit
 
     @classmethod
-    def fit_parameters_over_time(cls, location_name, dataset, start, end, start_from, fit_x0):
+    def fit_parameters_over_time(cls, location, dataset, start, end, start_from, fit_x0):
         dataset = DataManager.choose_dataset(dataset)
-        data = DataManager.get_fittable_location_data(location_name, dataset, start, end)
+        data = DataManager.get_fittable_location_data(location, dataset, start, end)
         new_end = len(data) + 1
         model = ContagionModel()
         parameter_list = []
@@ -66,3 +70,44 @@ class Fitter:
             return (1 + rho * s) / (gamma * k_minus_one)
         elif formula == 'approx_conditional':
             return (1 + rho * s) / (rho * ((1 + rho * s) ** gamma_per_rho - 1))
+
+    @classmethod
+    def compute_fit_residuals(cls, location, dataset, model, start, end, fit_x0, residual_type):
+        cls.validate_residual_type(residual_type)
+        fit = cls.fit(location, dataset, model, start, end, fit_x0)
+        y = fit.get_y_data()
+        mean_values = fit.get_explained_data()
+        residuals = cls.choose_residuals(y, mean_values, residual_type)
+        return residuals
+
+    '''
+    @classmethod
+    def compute_fit_residuals(cls, location, dataset, start, end, start_from, fit_x0):
+        dataset = DataManager.choose_dataset(dataset)
+        data = DataManager.get_fittable_location_data(location, dataset, start, end)
+        new_end = len(data) + 1
+        model = ContagionModel()
+        mean_values = []
+        for i in range(start_from, new_end):
+            params = cls.partial_fit(data, dataset, fit_x0, 1, i, model)
+            x = np.arange(1, new_end)
+            mean = model.mean_value_function(x, *params)
+            mean_values.append(mean)
+        residuals = np.array(mean_values) - data[dataset].values
+        return residuals
+    '''
+
+    @classmethod
+    def choose_residuals(cls, r, mean_values, residual_type):
+        integer_mean_values = np.rint(mean_values)
+        if residual_type == 'true':
+            return integer_mean_values - r
+        elif residual_type == 'abs':
+            return np.abs(integer_mean_values - r)
+        elif residual_type == 'square':
+            return (integer_mean_values - r) ** 2
+
+    @classmethod
+    def validate_residual_type(cls, residual_type):
+        if residual_type not in cls.residual_types:
+            raise InvalidArgumentException('The residual type is invalid')

@@ -11,7 +11,7 @@ from src.repository.model_repository import ModelRepository
 
 DataManager.load_dataset('owid')
 
-lugar = 'Argentina'
+lugar = 'Brazil'
 start = 1
 fig, axes = plt.subplots(2, 3)
 
@@ -69,8 +69,8 @@ filtered_inc = signal.filtfilt(filter, a=1, x=inc_data)
 # Filtering with a low-pass Butterworth
 
 fs = 1
-wp0 = (1/14) - 1/64
-ws0 = (1/14)
+wp0 = (1/30) - 1/64
+ws0 = (1/30)
 
 N, Wn = signal.buttord(wp=wp0, ws=ws0, gpass=1, gstop=3, fs=fs)
 filter_sos = signal.butter(N, Wn, btype='low', output='sos')
@@ -121,7 +121,7 @@ freq, response = signal.freqz(filter)
 fig, ax_filter = plt.subplots()
 ax_filter.plot(0.5*freq/np.pi, np.abs(response))
 
-'''
+
 
 # Filtro Butterworth
 
@@ -133,5 +133,7 @@ axes.plot(freq/np.pi, 20*np.log10(amps/np.max(amps)))
 pm.config_plot_background(axes)
 axes.set_xlabel('Frecuencia (0 - Nyquist)')
 axes.set_ylabel('Amplitud (dB)')
+
+'''
 
 plt.show()

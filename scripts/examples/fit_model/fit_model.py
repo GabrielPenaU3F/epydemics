@@ -15,10 +15,9 @@ DataManager.load_dataset('owid')
 # epydemics.fit_model('Argentina', dataset='total_deaths')
 
 # Examples 1.3-5: The fit may start or end at any fixed day
-# epydemics.fit_model('Argentina', end=200)
+epydemics.fit_model('Argentina', end=200)
 # epydemics.fit_model('Argentina', start=200)
 # epydemics.fit_model('Argentina', start=200, end=300)
-epydemics.fit_model('Argentina', start=200, end=300)
 
 
 # You may want to obtain the fit object, but not show the results. This can be done too.
