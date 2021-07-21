@@ -114,19 +114,18 @@ class PlotManager:
 
         plt.show()
 
-    '''
-    def plot_residuals_over_time(self, residuals, location, start_from):
+    def plot_last_residual_over_time(self, residuals, location, start_from):
         x_right_lim = start_from + len(residuals)
         x = np.arange(start_from, x_right_lim)
 
         fig, axes = plt.subplots()
-        axes.plot(x, residuals, linewidth=1, color='#9A0619', linestyle='-', label='Residuals')
+        axes.plot(x, residuals, linewidth=1, color='#9A0619', linestyle='-', label='Last residual over time')
         axes.set_title('Fit residuals over time (' + location + ')')
         self.config_plot_background(axes)
+        self.config_axis_plain_style(axes)
         axes.legend()
 
         plt.show()
-    '''
 
     def plot_cumulative_data(self, raw_data, location, dataset):
         source = DataManager.get_data_source()

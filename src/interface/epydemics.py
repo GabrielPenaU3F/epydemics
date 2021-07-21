@@ -81,3 +81,11 @@ def show_fit_residuals(location, dataset='', model='contagion', start=1, end=Non
     if output is True:
         plotter.plot_fit_residuals(residuals, location, dataset)
     return residuals
+
+
+def analyze_last_residual_over_time(location, dataset='', start=1, end=None, start_from=30,
+                                    fit_x0=(0.1, 1), output=True, type='true'):
+    residuals = Fitter.compute_last_residuals_over_time(location, dataset, start, end, start_from, fit_x0, type)
+    if output is True:
+        plotter.plot_last_residual_over_time(residuals, location, start_from)
+    return residuals

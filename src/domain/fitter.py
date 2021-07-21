@@ -80,9 +80,9 @@ class Fitter:
         residuals = cls.choose_residuals(y, mean_values, residual_type)
         return residuals
 
-    '''
     @classmethod
-    def compute_fit_residuals(cls, location, dataset, start, end, start_from, fit_x0):
+    def compute_last_residuals_over_time(cls, location, dataset, start, end, start_from, fit_x0, residual_type):
+        cls.validate_residual_type(residual_type)
         dataset = DataManager.choose_dataset(dataset)
         data = DataManager.get_fittable_location_data(location, dataset, start, end)
         new_end = len(data) + 1
@@ -90,12 +90,11 @@ class Fitter:
         mean_values = []
         for i in range(start_from, new_end):
             params = cls.partial_fit(data, dataset, fit_x0, 1, i, model)
-            x = np.arange(1, new_end)
-            mean = model.mean_value_function(x, *params)
-            mean_values.append(mean)
-        residuals = np.array(mean_values) - data[dataset].values
+            last_mean = model.mean_value_function(i, *params)
+            mean_values.append(last_mean)
+        y = data[dataset].values[start_from - 1:new_end]
+        residuals = cls.choose_residuals(y, np.array(mean_values), residual_type)
         return residuals
-    '''
 
     @classmethod
     def choose_residuals(cls, r, mean_values, residual_type):
