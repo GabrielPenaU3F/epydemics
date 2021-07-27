@@ -79,6 +79,16 @@ class CalculateMTBIStarwarsTest(unittest.TestCase):
                                                   formula='approx_conditional', output=False))
         testing.assert_array_almost_equal(mtbis, expected_mtbis, decimal=4)
 
+    def test_mtbi_coruscant_end_50_exact_conditional(self):
+        expected_mtbis = [0.0102, 0.0103, 0.0105, 0.0105, 0.0109, 0.0112, 0.0114, 0.0111]
+        mtbis = np.array(epydemics.calculate_mtbi('Coruscant', end=50, formula='exact_conditional', output=False))[:8]
+        testing.assert_array_almost_equal(mtbis, expected_mtbis, decimal=4)
+
+    def test_mtbi_coruscant_start_30_exact_conditional(self):
+        expected_mtbis = [0.0075, 0.0075, 0.0077, 0.0076, 0.0079, 0.0082, 0.0081, 0.0084]
+        mtbis = np.array(epydemics.calculate_mtbi('Coruscant', start=30, formula='exact_conditional', output=False))[:8]
+        testing.assert_array_almost_equal(mtbis, expected_mtbis, decimal=4)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -100,9 +100,11 @@ class DataManager:
         return cls.current_data_source
 
     @classmethod
-    def get_single_datum(cls, location, s, dataset=''):
+    def get_single_datum(cls, location, s, dataset='', start=1):
         dataset = cls.choose_dataset(dataset)
-        location_data = cls.get_fittable_location_data(location, dataset)
+        location_data = cls.get_fittable_location_data(location, dataset, start=start)
+        if start > 1:
+            return location_data[[dataset]].iloc[s - 1][0]
         return location_data[[dataset]].iloc[s - 1][0]
 
     @classmethod

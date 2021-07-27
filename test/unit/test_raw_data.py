@@ -45,12 +45,21 @@ class GetRawDataTest(unittest.TestCase):
     def test_get_datum_1(self):
         expected = 99
         datum = DataManager.get_single_datum('Nar Shaddaa', 1, dataset='custom_data')
-        self.assertEqual(datum, expected)
-
+        self.assertEqual(expected, datum)
     def test_get_datum_10(self):
         expected = 1027
         datum = DataManager.get_single_datum('Nar Shaddaa', 10, dataset='custom_data')
-        self.assertEqual(datum, expected)
+        self.assertEqual(expected, datum)
+
+    def test_get_single_datum_when_start_is_1(self):
+        expected = 1024
+        datum = DataManager.get_single_datum('Coruscant', 8, dataset='custom_data', start=1)
+        self.assertEqual(expected, datum)
+
+    def test_get_single_datum_when_start_is_not_1(self):
+        expected = 959
+        datum = DataManager.get_single_datum('Coruscant', 8, dataset='custom_data', start=4)
+        self.assertEqual(expected, datum)
 
 
 if __name__ == '__main__':

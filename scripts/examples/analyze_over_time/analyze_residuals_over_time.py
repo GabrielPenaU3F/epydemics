@@ -7,7 +7,7 @@ import src.interface.epydemics as epydemics
 DataManager.load_dataset('owid')
 
 # Example 1.1: This will plot the last residual M(t) - r versus time over a set of fits
-# epydemics.analyze_last_residual_over_time('Argentina')
+epydemics.analyze_last_residual_over_time('Argentina', end=200)
 
 # Example 1.2: You can also see the absolute residuals
 # epydemics.analyze_last_residual_over_time('Argentina', type='abs')

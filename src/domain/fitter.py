@@ -58,7 +58,7 @@ class Fitter:
             rho = params[0]
             gamma_per_rho = params[1]
             s = i
-            k_minus_one = DataManager.get_single_datum(location, s, dataset)
+            k_minus_one = DataManager.get_single_datum(location, s, dataset, start)
             mtbi = cls.calculate_conditional_mtbi(s, k_minus_one, rho, gamma_per_rho, formula)
             mtbis.append(mtbi)
         return mtbis
