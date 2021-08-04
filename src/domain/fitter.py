@@ -53,7 +53,8 @@ class Fitter:
         model = ContagionModel()
         mtbis = []
         for i in range(start_from, new_end):
-            params = cls.fit(data, dataset, fit_x0, 1, i, model)
+            sliced_data = DataframeSlicer.slice_rows_by_index(data, 1, i)
+            params = cls.fit(sliced_data, dataset, model, fit_x0, output='params')
             rho = params[0]
             gamma_per_rho = params[1]
             s = i
@@ -88,7 +89,8 @@ class Fitter:
         model = ContagionModel()
         mean_values = []
         for i in range(start_from, new_end):
-            params = cls.fit(data, dataset, fit_x0, 1, i, model)
+            sliced_data = DataframeSlicer.slice_rows_by_index(data, 1, i)
+            params = cls.fit(sliced_data, dataset, model, fit_x0, output='params')
             last_mean = model.mean_value_function(i, *params)
             mean_values.append(last_mean)
         y = data[dataset].values[start_from - 1:new_end]
