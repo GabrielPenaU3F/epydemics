@@ -14,37 +14,36 @@ class Fitter:
     residual_types = ['true', 'abs', 'square']
 
     @classmethod
-    def fit(cls, location, dataset, model, start, end, x0):
-        source = DataManager.get_data_source()
+    def fit_model(cls, location, dataset, model, start, end, x0):
         data = DataManager.get_fittable_location_data(location, dataset, start, end)
         dataset = DataManager.choose_dataset(dataset)
         model = ModelRepository.retrieve_model(model)
-        x = data.index.values
-        y = data[dataset].values
-        params = model.fit(x, y, x0)
-        explained = model.mean_value_function(x, *params)
-        rsq = r2_score(y, explained)
-        fit = Fit(source, location, dataset, x, y, explained, params, rsq)
+        fit = cls.fit(data, dataset, model, x0)
         return fit
 
     @classmethod
-    def fit_parameters_over_time(cls, location, dataset, start, end, start_from, fit_x0):
+    def fit_parameters_over_time(cls, location, dataset, start, end, start_from, fit_x0, output='full'):
         dataset = DataManager.choose_dataset(dataset)
         data = DataManager.get_fittable_location_data(location, dataset, start, end)
         new_end = len(data) + 1
         model = ContagionModel()
-        parameter_list = []
+        output_list = []
         for i in range(start_from, new_end):
-            parameter_list.append(cls.partial_fit(data, dataset, fit_x0, 1, i, model))
-        return parameter_list
+            sliced_data = DataframeSlicer.slice_rows_by_index(data, 1, i)
+            output_list.append(cls.fit(sliced_data, dataset, model, fit_x0, output))
+        return output_list
 
     @classmethod
-    def partial_fit(cls, data, dataset, fit_x0, fit_start, fit_end, model):
-        sliced_data = DataframeSlicer.slice_rows_by_index(data, fit_start, fit_end)
-        x = sliced_data.index.values
-        y = sliced_data[dataset].values
-        params = tuple(model.fit(x, y, x0=fit_x0))
-        return params
+    def fit(cls, data, dataset, model, fit_x0, output='full'):
+        x = data.index.values
+        y = data[dataset].values
+        params = model.fit(x, y, fit_x0)
+        out = tuple(params)
+        if output == 'full':
+            explained = model.mean_value_function(x, *params)
+            rsq = r2_score(y, explained)
+            out = Fit(x, y, explained, params, rsq)
+        return out
 
     @classmethod
     def calculate_mtbis(cls, location, dataset, start, end, start_from, fit_x0, formula):
@@ -54,7 +53,7 @@ class Fitter:
         model = ContagionModel()
         mtbis = []
         for i in range(start_from, new_end):
-            params = cls.partial_fit(data, dataset, fit_x0, 1, i, model)
+            params = cls.fit(data, dataset, fit_x0, 1, i, model)
             rho = params[0]
             gamma_per_rho = params[1]
             s = i
@@ -74,7 +73,7 @@ class Fitter:
     @classmethod
     def compute_fit_residuals(cls, location, dataset, model, start, end, fit_x0, residual_type):
         cls.validate_residual_type(residual_type)
-        fit = cls.fit(location, dataset, model, start, end, fit_x0)
+        fit = cls.fit_model(location, dataset, model, start, end, fit_x0)
         y = fit.get_y_data()
         mean_values = fit.get_explained_data()
         residuals = cls.choose_residuals(y, mean_values, residual_type)
@@ -89,7 +88,7 @@ class Fitter:
         model = ContagionModel()
         mean_values = []
         for i in range(start_from, new_end):
-            params = cls.partial_fit(data, dataset, fit_x0, 1, i, model)
+            params = cls.fit(data, dataset, fit_x0, 1, i, model)
             last_mean = model.mean_value_function(i, *params)
             mean_values.append(last_mean)
         y = data[dataset].values[start_from - 1:new_end]

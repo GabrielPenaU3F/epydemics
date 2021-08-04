@@ -102,7 +102,7 @@ class PlotManager:
         source = DataManager.get_data_source()
         dataset = DataManager.choose_dataset(dataset)
         dataset_title = source.get_dataset_title(dataset)
-        title = dataset_title + ' in ' + location + ', fit residuals'
+        title = dataset_title + ' in ' + location + ', fit_model residuals'
         x = np.arange(1, len(residuals) + 1)
 
         fig, axes = plt.subplots()
@@ -151,7 +151,7 @@ class PlotManager:
         axes.legend()
         plt.show()
 
-    def plot_incidence_spectrum(self, spectrum_mod, location, xscale):
+    def plot_daily_data_spectrum(self, spectrum_mod, location, xscale):
 
         fig, axes = plt.subplots()
 
@@ -204,6 +204,8 @@ class PlotManager:
 
     def config_spectrum_plot_axis(self, axes, xscale):
         self.config_axis_plain_style(axes)
+        xticks = None
+        xticklabels = None
         if xscale == 'rad':
             xticks = [0, np.pi / 4, np.pi / 2, 3 * np.pi / 4, np.pi]
             xticklabels = ['0', r'$\pi$/4', r'$\pi$/2', r'3$\pi$/4', r'$\pi$']
@@ -212,6 +214,8 @@ class PlotManager:
             xticks = [0, 1/8, 1/4, 3/8, 1/2]
             xticklabels = ['0', '1/8', '1/4', '3/8', '1/2']
             axes.set_xlabel('f (1/day)')
+        axes.set_xticks(xticks)
+        axes.set_xticklabels(xticklabels)
 
         axes.set_xticks(xticks)
         axes.set_xticklabels(xticklabels, fontsize=10)

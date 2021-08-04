@@ -18,8 +18,8 @@ class FitResidualsStarwarsTest(unittest.TestCase):
 
     def test_first_10_residuals_true(self):
         '''
-        data = self.__class__.fit.get_y_data()
-        mean_values = np.rint(self.__class__.fit.get_explained_data())
+        data = self.__class__.fit_model.get_y_data()
+        mean_values = np.rint(self.__class__.fit_model.get_explained_data())
         expected_residuals = [mean_values[i] - data[i] for i in range(10)]
         print(expected_residuals)
         '''
@@ -29,8 +29,8 @@ class FitResidualsStarwarsTest(unittest.TestCase):
 
     def test_residuals_5_to_15_abs(self):
         '''
-        data = self.__class__.fit.get_y_data()
-        mean_values = np.rint(self.__class__.fit.get_explained_data())
+        data = self.__class__.fit_model.get_y_data()
+        mean_values = np.rint(self.__class__.fit_model.get_explained_data())
         expected_residuals = [mean_values[i] - data[i] for i in range(4, 14)]
         print(expected_residuals)
         '''
@@ -40,8 +40,8 @@ class FitResidualsStarwarsTest(unittest.TestCase):
 
     def test_residuals_30_to_40_square(self):
         '''
-        data = self.__class__.fit.get_y_data()
-        mean_values = np.rint(self.__class__.fit.get_explained_data())
+        data = self.__class__.fit_model.get_y_data()
+        mean_values = np.rint(self.__class__.fit_model.get_explained_data())
         expected_residuals = [(mean_values[i] - data[i])**2 for i in range(29, 39)]
         print(expected_residuals)
         '''

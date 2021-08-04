@@ -7,10 +7,10 @@ import src.interface.epydemics as epydemics
 # Example 1.1: This will plot the model parameters versus time
 # epydemics.analyze_model_parameters_over_time('Argentina')
 
-# Example 1.2: You can also fit the number of deaths
+# Example 1.2: You can also fit_model the number of deaths
 # epydemics.analyze_model_parameters_over_time('Argentina', dataset='total_deaths')
 
-# Examples 1.3-5: The fit may start or end at any fixed day
+# Examples 1.3-5: The fit_model may start or end at any fixed day
 # epydemics.analyze_model_parameters_over_time('Argentina', end=200)
 # epydemics.analyze_model_parameters_over_time('Argentina', start=200)
 # epydemics.analyze_model_parameters_over_time('Argentina', start=200, end=300)

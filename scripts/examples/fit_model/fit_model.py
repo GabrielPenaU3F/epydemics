@@ -8,19 +8,19 @@ import src.interface.epydemics as epydemics
 DataManager.load_dataset('owid')
 # DataManager.load_dataset()
 
-# Example 1.1: This will fit the data from the indicated country, show the results via console and plot the lines
+# Example 1.1: This will fit_model the data from the indicated country, show the results via console and plot the lines
 # epydemics.fit_model('Argentina')
 
-# Example 1.2: You can also fit the number of deaths
+# Example 1.2: You can also fit_model the number of deaths
 # epydemics.fit_model('Argentina', dataset='total_deaths')
 
-# Examples 1.3-5: The fit may start or end at any fixed day
+# Examples 1.3-5: The fit_model may start or end at any fixed day
 epydemics.fit_model('Argentina', end=200)
 # epydemics.fit_model('Argentina', start=200)
 # epydemics.fit_model('Argentina', start=200, end=300)
 
 
-# You may want to obtain the fit object, but not show the results. This can be done too.
+# You may want to obtain the fit_model object, but not show the results. This can be done too.
 # Example 1.6: No console output, just the plots.
 # epydemics.fit_model('Argentina', output=False)
 

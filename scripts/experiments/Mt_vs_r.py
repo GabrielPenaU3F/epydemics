@@ -43,12 +43,12 @@ print('Maximums: ' + str(maxs))
 # end = 1 + maxs[0]
 
 # Second wave, initial stage
-start = 1 + mins[0]
-end = 1 + maxs[1]
+# start = 1 + mins[0]
+# end = 1 + maxs[1]
 
 # Third wave, initial stage
-# start = 1 + mins[1]
-# end = 1 + maxs[2]
+start = 1 + mins[1]
+end = 1 + maxs[2]
 
 start_from = 30
 

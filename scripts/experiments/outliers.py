@@ -45,7 +45,7 @@ real_data_with_outlier = real_data.copy()
 # real_data_with_outlier[30] = 10
 # real_data_with_outlier[40] = 10**7
 
-params_out = model.fit(x, real_data_with_outlier, x0=(1, 0.5))
+params_out = model.fit_model(x, real_data_with_outlier, x0=(1, 0.5))
 explained_outlier = model.mean_value_function(x, *params_out)
 rsq_outlier = r2_score(real_data_with_outlier, explained_outlier)
 ax_outlier.plot(x, real_data_with_outlier, linewidth=1, color='#263859', linestyle='--', label='Real data with outlier')

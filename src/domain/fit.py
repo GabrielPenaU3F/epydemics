@@ -1,20 +1,11 @@
 class Fit:
 
-    def __init__(self, source, location, dataset_type, x, y, explained, params, rsq):
-        self.source = source
-        self.location = location
-        self.dataset_type = dataset_type
+    def __init__(self, x, y, explained, params, rsq):
         self.x_data = x
         self.y_data = y
         self.explained = explained
         self.params = params
         self.rsq = rsq
-
-    def get_source(self):
-        return self.source
-
-    def get_dataset_type(self):
-        return self.dataset_type
 
     def get_explained_data(self):
         return self.explained
@@ -30,6 +21,3 @@ class Fit:
 
     def get_rsq(self):
         return self.rsq
-
-    def get_location(self):
-        return self.location

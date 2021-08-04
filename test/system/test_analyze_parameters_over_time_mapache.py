@@ -13,7 +13,8 @@ class AnalyzeParametersOverTimeMapacheTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         DataManager.load_dataset('mapache_arg')
-        cls.baires_until_40 = Fitter.fit_parameters_over_time('Buenos Aires', '', 1, 40, 30, fit_x0=(0.1, 1))
+        cls.baires_until_40 = Fitter.fit_parameters_over_time('Buenos Aires', '', 1, 40, 30, fit_x0=(0.1, 1),
+                                                              output='params')
 
     def test_baires_until_200_parameters_over_time_rhos(self):
         param_tuples = self.__class__.baires_until_40

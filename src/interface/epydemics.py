@@ -22,7 +22,7 @@ def show_data_from_location(location_id, dataset=''):
 
 
 def fit_model(location_id, dataset='', model='contagion', start=1, end=None, x0=(0.1, 1), output=True):
-    fit = Fitter.fit(location_id, dataset, model,  start, end, x0)
+    fit = Fitter.fit_model(location_id, dataset, model, start, end, x0)
 
     if output is True:
         console.show_fit_results(fit)
@@ -71,7 +71,7 @@ def show_incidence_spectrum(location, dataset='', start=1, end=None, output=True
     spectrum = DataManager.get_raw_data_spectrum(location, dataset, start, end)
     if output is True:
         spectrum_mod = np.abs(spectrum)
-        plotter.plot_incidence_spectrum(spectrum_mod, location, xscale)
+        plotter.plot_daily_data_spectrum(spectrum_mod, location, xscale)
     return spectrum
 
 

@@ -97,7 +97,7 @@ ax_fincidencia.legend()
 ax_fmodelo = axes[1, 0]
 filtered_cumdata = np.cumsum(filtered_inc)
 model = ModelRepository.retrieve_model('contagion')
-fparams = model.fit(x, filtered_cumdata, x0=(1, 0.5))
+fparams = model.fit_model(x, filtered_cumdata, x0=(1, 0.5))
 fexplained = model.mean_value_function(x, *fparams)
 frsq = r2_score(real_data, fexplained)
 

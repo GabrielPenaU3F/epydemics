@@ -12,10 +12,10 @@ class FitModelContagionMapacheTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         DataManager.load_dataset('mapache_arg')
-        cls.caba_early_fit = Fitter.fit(location='CABA', dataset='', model='contagion',
-                                        start=1, end=150, x0=(0.1, 1))
-        cls.caba_mitigation_fit = Fitter.fit(location='CABA', dataset='', model='contagion',
-                                             start=150, end=260, x0=(0.1, 1))
+        cls.caba_early_fit = Fitter.fit_model(location='CABA', dataset='', model='contagion',
+                                              start=1, end=150, x0=(0.1, 1))
+        cls.caba_mitigation_fit = Fitter.fit_model(location='CABA', dataset='', model='contagion',
+                                                   start=150, end=260, x0=(0.1, 1))
 
     def test_caba_early_stage_rho_parameter_should_be_0_dot_178(self):
         rho = self.__class__.caba_early_fit.get_params()[0]

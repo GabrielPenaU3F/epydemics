@@ -46,7 +46,7 @@ class ConsoleManager:
         print('\u03C1 (1/day):  ' + str(fit.get_params()[0]))
         print('\u03B3 / \u03C1:  ' + str(fit.get_params()[1]))
         print('-----------------------')
-        print('Goodness of fit:')
+        print('Goodness of fit_model:')
         print('R2:  ' + str(fit.get_rsq()))
         print('-----------------------')
 
