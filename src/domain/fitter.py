@@ -22,7 +22,7 @@ class Fitter:
         return fit
 
     @classmethod
-    def fit_parameters_over_time(cls, location, dataset, start, end, start_from, fit_x0, output='full'):
+    def fit_parameters_over_time(cls, location, dataset, start, end, start_from, fit_x0, output='params'):
         dataset = DataManager.choose_dataset(dataset)
         data = DataManager.get_fittable_location_data(location, dataset, start, end)
         new_end = len(data) + 1
