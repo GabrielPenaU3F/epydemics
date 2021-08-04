@@ -21,21 +21,21 @@ class PlotManager:
     def __init__(self):
         pass
 
-    def plot_fit_results(self, fit):
+    def plot_fit_results(self, fit, location, dataset):
+        source = DataManager.get_data_source()
+        dataset = DataManager.choose_dataset(dataset)
+
         x = fit.get_x_data()
         real_data = fit.get_y_data()
         explained = fit.get_explained_data()
-        dataset_type = fit.get_dataset_type()
-        location = fit.get_location()
-        source = fit.get_source()
-        title = source.get_dataset_title(dataset_type) + ' in ' + location
+        title = source.get_dataset_title(dataset) + ' in ' + location
 
         fig, axes = plt.subplots()
         axes.plot(x, real_data, linewidth=1, color='#263859', linestyle='--', label='Real data')
         axes.plot(x, explained, linewidth=1, color='#ca3e47', linestyle='-', label='Model prediction')
         axes.set_title(title)
         self.config_plot_background(axes)
-        self.config_fit_plot_axis(axes, fit)
+        self.config_fit_plot_axis(axes, fit, dataset)
         axes.legend()
 
         plt.show()
@@ -176,9 +176,8 @@ class PlotManager:
         axes.set_facecolor("#ffffff")
         axes.grid(color='black', linestyle='--', linewidth=0.5)
 
-    def config_fit_plot_axis(self, axes, fit):
-        dataset = fit.get_dataset_type()
-        source = fit.get_source()
+    def config_fit_plot_axis(self, axes, fit, dataset):
+        source = DataManager.get_data_source()
         axes.set_xlabel('t (days)')
         axes.set_ylabel(source.get_fit_plot_ylabel(dataset))
         self.config_axis_plain_style(axes)

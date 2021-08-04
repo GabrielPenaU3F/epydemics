@@ -36,11 +36,12 @@ class ConsoleManager:
         print(location_dataframe)
         print('-----------------------')
 
-    def show_fit_results(self, fit):
-        source = fit.get_source()
+    def show_fit_results(self, fit, location, dataset):
+        source = DataManager.get_data_source()
+        dataset = DataManager.choose_dataset(dataset)
         print('\n-----------------------')
-        print(source.get_dataset_title(fit.get_dataset_type()) + ' in ' +
-              fit.get_location())
+        print(source.get_dataset_title(dataset) + ' in ' +
+              location)
         print('-----------------------')
         print('Model parameters:')
         print('\u03C1 (1/day):  ' + str(fit.get_params()[0]))

@@ -21,12 +21,12 @@ def show_data_from_location(location_id, dataset=''):
     console.print_data_from_location(source, location_id, dataset, location_data)
 
 
-def fit_model(location_id, dataset='', model='contagion', start=1, end=None, x0=(0.1, 1), output=True):
-    fit = Fitter.fit_model(location_id, dataset, model, start, end, x0)
+def fit_model(location, dataset='', model='contagion', start=1, end=None, x0=(0.1, 1), output=True):
+    fit = Fitter.fit_model(location, dataset, model, start, end, x0)
 
     if output is True:
-        console.show_fit_results(fit)
-        plotter.plot_fit_results(fit)
+        console.show_fit_results(fit, location, dataset)
+        plotter.plot_fit_results(fit, location, dataset)
 
     return fit
 
