@@ -10,6 +10,7 @@ DataManager.load_dataset('owid')
 lugar = 'Argentina'
 
 inc_data = DataManager.get_raw_daily_data(lugar, end=515)
+# inc_data = DataManager.get_raw_daily_data(lugar, dataset='total_deaths', end=509)
 x = np.arange(1, len(inc_data) + 1)
 pm = PlotManager.get_instance()
 

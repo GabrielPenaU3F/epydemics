@@ -16,7 +16,7 @@ start = 1
 fig, axes = plt.subplots(2, 3)
 
 inc_data = DataManager.get_raw_daily_data(lugar, start=start)
-spectrum = ep.show_incidence_spectrum(lugar, start=start, xscale='freq', output=None)
+spectrum = ep.show_daily_data_spectrum(lugar, start=start, xscale='freq', output=None)
 
 
 ax_modelo = axes[0, 0]

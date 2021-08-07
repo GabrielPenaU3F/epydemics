@@ -32,15 +32,15 @@ def fit_model(location, dataset='', model='contagion', start=1, end=None, x0=(0.
 
 
 def analyze_model_parameters_over_time(location, dataset='', start=1, end=None, start_from=30,
-                                       fit_x0=(0.1, 1), output=True):
-    parameter_tuples = Fitter.fit_parameters_over_time(location, dataset, start, end, start_from, fit_x0, 'params')
+                                       fit_x0=(0.1, 1), output=True, fit_output='params'):
+    parameter_tuples = Fitter.fit_parameters_over_time(location, dataset, start, end, start_from, fit_x0, fit_output)
     if output is True:
         plotter.plot_parameters_over_time(parameter_tuples, location, start_from)
     return parameter_tuples
 
 
 def calculate_mtbi(location, dataset='', start=1, end=None, start_from=30,
-                   fit_x0=(0.1, 1), unit='day', formula='exact_conditional', output=True):
+                   fit_x0=(0.1, 1), unit='day', formula='approx_conditional', output=True):
     mtbis = Fitter.calculate_mtbis(location, dataset, start, end, start_from, fit_x0, formula)
     if output is True:
         console.show_minimum_status(mtbis, start_from, unit)
@@ -67,7 +67,7 @@ def show_daily_data_curve(location, dataset='', start=1, end=None):
     plotter.plot_daily_data(raw_data, location, dataset)
 
 
-def show_incidence_spectrum(location, dataset='', start=1, end=None, output=True, xscale='rad'):
+def show_daily_data_spectrum(location, dataset='', start=1, end=None, output=True, xscale='rad'):
     spectrum = DataManager.get_raw_data_spectrum(location, dataset, start, end)
     if output is True:
         spectrum_mod = np.abs(spectrum)

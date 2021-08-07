@@ -55,7 +55,7 @@ def plot_spectrum(spectrum_mod, xscale):
 
 DataManager.load_dataset('owid')
 
-ar_spectrum = np.abs(ep.show_incidence_spectrum('Argentina', end=515, output=False))
-br_spectrum = np.abs(ep.show_incidence_spectrum('Brazil', end=515, output=False))
+ar_spectrum = np.abs(ep.show_daily_data_spectrum('Argentina', end=515, output=False))
+br_spectrum = np.abs(ep.show_daily_data_spectrum('Brazil', end=515, output=False))
 plot_spectrum(ar_spectrum, xscale='freq')
 plot_spectrum(br_spectrum, xscale='freq')

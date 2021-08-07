@@ -183,7 +183,6 @@ class PlotManager:
         self.config_axis_plain_style(axes)
 
     def config_parameters_plot_axis(self, rho_axes, gamma_per_rho_axes):
-
         rho_axes.set_xlabel('t (days)')
         rho_axes.set_ylabel('\u03C1')
         self.config_axis_plain_style(rho_axes)
