@@ -8,7 +8,7 @@ from src.interface import epydemics as ep
 from scipy import signal as sg
 
 
-def plot_mtbis(mtbis, unit):
+def plot_mtbis(mtbis, start_from, unit):
     converter = DaysConverter.get_instance()
     converted_mtbis = converter.convert_days_to(unit, mtbis)
 
@@ -82,5 +82,5 @@ ep.show_data_from_location(location)
 #
 # mtbis = ep.calculate_mtbi(location, start=start, end=end, start_from=start_from,
 #                           output=False, formula='approx_conditional')
-# plot_mtbis(mtbis, 'sec')
+# plot_mtbis(mtbis, start_from, 'sec')
 
