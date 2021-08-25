@@ -9,13 +9,13 @@ DataManager.load_dataset('owid')
 
 lugar = 'Argentina'
 
-inc_data = DataManager.get_raw_daily_data(lugar, end=515)
-# inc_data = DataManager.get_raw_daily_data(lugar, dataset='total_deaths', end=509)
+# inc_data = DataManager.get_raw_daily_data(lugar, end=515)
+inc_data = DataManager.get_raw_daily_data(lugar, dataset='total_deaths', end=509)
 x = np.arange(1, len(inc_data) + 1)
 pm = PlotManager.get_instance()
 
-# Apply n series MA filters of length L=7
-n = 7
+# Apply n series MA filters of length L
+n = 9
 L = 7
 ma_kernel = np.ones(L) / L
 

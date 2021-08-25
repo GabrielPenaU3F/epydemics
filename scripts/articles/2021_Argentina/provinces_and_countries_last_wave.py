@@ -52,9 +52,11 @@ def find_maxs_and_mins(location, L, n):
     plt.show()
 
 
-DataManager.load_dataset('mapache_arg')
-location = 'Río Negro'
-ep.show_data_from_location(location)
+# DataManager.load_dataset('mapache_arg')
+# location = 'Río Negro'
+
+DataManager.load_dataset('owid')
+location = 'Uruguay'
 
 # Filtering
 # L = 12
@@ -67,18 +69,19 @@ ep.show_data_from_location(location)
 # end = 447
 
 # Last wave, mitigation stage
-# start_from = 10
-# start = 447
-# end = None
-#
-# fit_tuples = ep.analyze_model_parameters_over_time(location, start=start, end=end, start_from=start_from, output=False,
-#                                                    fit_output='full')
-# rsqs = []
-# for i in range(len(fit_tuples)):
-#     rsqs.append(fit_tuples[i].get_rsq())
-#
-# print('Minimum RSQ: ' + str(min(rsqs)))
-# print('Maximum RSQ: ' + str(max(rsqs)))
+start_from = 10
+start = 447
+end = None
+
+fit_tuples = ep.analyze_model_parameters_over_time(location, start=start, end=end, start_from=start_from, output=False,
+                                                   fit_output='full')
+rsqs = []
+for i in range(len(fit_tuples)):
+    rsqs.append(fit_tuples[i].get_rsq())
+
+print('Minimum RSQ: ' + str(np.min(rsqs)))
+print('Maximum RSQ: ' + str(np.max(rsqs)))
+print('Mean RSQ: ' + str(np.mean(rsqs)))
 #
 # mtbis = ep.calculate_mtbi(location, start=start, end=end, start_from=start_from,
 #                           output=False, formula='approx_conditional')

@@ -77,6 +77,25 @@ def plot_mtbi_inverses(mtbis, data):
     plt.show()
 
 
+def plot_mtbd_inverses(mtbds, data):
+
+    inverses = np.power(mtbds, -1)
+    x_right_lim = start_from + len(inverses)
+    x = np.arange(start_from, x_right_lim)
+
+    fig, axes = plt.subplots(figsize=(12, 8))
+    axes.plot(x, inverses, linewidth=1, color='#0008AC', linestyle='-', label='1/MTBD')
+    axes.plot(x, data, linewidth=1, color='#C70F0B', linestyle='-', label='Daily deaths')
+
+    pm = PlotManager()
+    pm.config_plot_background(axes)
+    pm.config_axis_plain_style(axes)
+    axes.set_xlabel('Time (days)', fontsize=20, labelpad=15)
+    axes.set_ylabel('Number of deaths', fontsize=20, labelpad=15)
+    axes.legend(loc='upper right', prop={'size': 20})
+    plt.show()
+
+
 DataManager.load_dataset('owid')
 
 country = 'Argentina'
@@ -101,36 +120,47 @@ dataset = 'total_cases'
 # end = 207
 
 # Deaths, first wave, mitigation stage
-dataset = 'total_deaths'
-start_from = 30
-start = 207
-end = 295
+# dataset = 'total_deaths'
+# start_from = 30
+# start = 207
+# end = 295
 
 # Fourth wave, initial stage
+# dataset = 'total_cases'
 # start_from = 10
 # start = 426
 # end = 449
 
 # Fourth wave, mitigation stage
+# dataset = 'total_cases'
 # start_from = 10
 # start = 449
 # end = 515
 
-data = DataManager.get_raw_daily_data('Argentina', start=start + start_from - 1, end=end)
+# Deaths, fourth wave, mitigation stage
+dataset = 'total_deaths'
+start_from = 10
+start = 458
+end = 509
 
-fit_tuples = ep.analyze_model_parameters_over_time(country, dataset=dataset, start=start, end=end,
-                                                   start_from=start_from, output=False, fit_output='full')
-rsqs = []
-param_tuples = []
-for i in range(len(fit_tuples)):
-    rsqs.append(fit_tuples[i].get_rsq())
-    param_tuples.append(fit_tuples[i].get_params())
+data = DataManager.get_raw_daily_data('Argentina', dataset=dataset, start=start + start_from - 1, end=end)
 
-print('Minimum RSQ: ' + str(min(rsqs)))
-print('Maximum RSQ: ' + str(max(rsqs)))
-plot_parameters_over_time(param_tuples, start_from)
 
-mtbis = ep.calculate_mtbi(country, dataset=dataset, start=start, end=end,
+# fit_tuples = ep.analyze_model_parameters_over_time(country, dataset=dataset, start=start, end=end,
+#                                                    start_from=start_from, output=False, fit_output='full')
+# rsqs = []
+# param_tuples = []
+# for i in range(len(fit_tuples)):
+#     rsqs.append(fit_tuples[i].get_rsq())
+#     param_tuples.append(fit_tuples[i].get_params())
+#
+# print('Minimum RSQ: ' + str(np.min(rsqs)))
+# print('Maximum RSQ: ' + str(np.max(rsqs)))
+# print('Mean RSQ: ' + str(np.mean(rsqs)))
+# plot_parameters_over_time(param_tuples, start_from)
+
+mtbes = ep.calculate_mtbi(country, dataset=dataset, start=start, end=end,
                           start_from=start_from, output=False, formula='approx_conditional')
-plot_mtbis(mtbis, 'sec')
-# plot_mtbi_inverses(mtbis, data)
+# plot_mtbis(mtbis, 'sec')
+# plot_mtbi_inverses(mtbes, data)
+plot_mtbd_inverses(mtbes, data)
