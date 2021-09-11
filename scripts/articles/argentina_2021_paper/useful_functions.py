@@ -1,6 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from scipy import signal as sg
+from scipy import stats as st
 from sklearn.metrics import r2_score
 
 from src.data_io.plot_manager import PlotManager
@@ -75,16 +76,50 @@ def calculate_mtbis_with_window(daily_data, window_len, start_from, filtering):
     return mtbis
 
 
-def plot_gamma_per_rho(x, gamma_per_rhos, filename, legend_loc):
-    fig, axes = plt.subplots(figsize=(12, 8))
-    axes.plot(x, gamma_per_rhos, linewidth=2, color='#61b15a', linestyle='-', label='\u03B3 / \u03C1')
+def config_regular_plot_structure(axes, legend_loc=None):
     pm = PlotManager()
     pm.config_plot_background(axes)
     pm.config_axis_plain_style(axes)
+    axes.tick_params(axis='both', which='major', labelsize=24)
+
+    if legend_loc is not None:
+        axes.legend(loc=legend_loc, prop={'size': 32})
+
+
+def config_scatterplot_vs_time_plot(axes, scatterplots, legend_loc):
+    config_regular_plot_structure(axes)
+    axes.legend(scatterplots, ('Mobility', 'Scaled MTBIs'), loc=legend_loc, prop={'size': 32})
+    axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
+
+
+def config_scatterplot_mtbi_vs_mobility(axes):
+    config_regular_plot_structure(axes)
+    axes.set_xlabel('Mobility percent', fontsize=32, labelpad=15)
+    axes.set_ylabel('MTBI', fontsize=32, labelpad=15)
+
+
+def config_spectrum_plot(axes, xscale):
+    xticks = None
+    xticklabels = None
+    if xscale == 'rad':
+        xticks = [0, np.pi / 4, np.pi / 2, 3 * np.pi / 4, np.pi]
+        xticklabels = ['0', r'$\pi$/4', r'$\pi$/2', r'3$\pi$/4', r'$\pi$']
+        axes.set_xlabel('\u03C9 (rad/day)', fontsize=32, labelpad=15)
+    elif xscale == 'freq':
+        xticks = [0, 1/7, 2/7, 1/2]
+        xticklabels = ['0', '1/7', '2/7', '1/2']
+        axes.set_xlabel('Frequency (1/day)', fontsize=32, labelpad=15)
+    axes.set_xticks(xticks)
+    axes.set_xticklabels(xticklabels, fontsize=14)
+    config_regular_plot_structure(axes, legend_loc='upper right')
+
+
+def plot_gamma_per_rho(x, gamma_per_rhos, filename, legend_loc):
+    fig, axes = plt.subplots(figsize=(12, 8))
+    config_regular_plot_structure(axes, legend_loc)
+    axes.plot(x, gamma_per_rhos, linewidth=2, color='#61b15a', linestyle='-', label='\u03B3 / \u03C1')
     axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
     axes.set_ylabel('\u03B3 / \u03C1', fontsize=32, labelpad=15)
-    axes.tick_params(axis='both', which='major', labelsize=24)
-    axes.legend(loc=legend_loc, prop={'size': 32})
     fig.tight_layout()
     plt.show()
 
@@ -94,14 +129,10 @@ def plot_gamma_per_rho(x, gamma_per_rhos, filename, legend_loc):
 
 def plot_rho(x, rhos, filename, legend_loc):
     fig, axes = plt.subplots(figsize=(12, 8))
+    config_regular_plot_structure(axes, legend_loc)
     axes.plot(x, rhos, linewidth=2, color='#db6400', linestyle='-', label='\u03C1')
-    pm = PlotManager()
-    pm.config_plot_background(axes)
-    pm.config_axis_plain_style(axes)
     axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
     axes.set_ylabel('\u03C1 (1/day)', fontsize=32, labelpad=15)
-    axes.tick_params(axis='both', which='major', labelsize=24)
-    axes.legend(loc=legend_loc, prop={'size': 32})
     fig.tight_layout()
     plt.show()
 
@@ -132,14 +163,10 @@ def plot_mtbis(mtbis, unit, x_start, filename=None, legend_loc='upper left', dat
         mtbe_title = 'MTBD'
 
     fig, axes = plt.subplots(figsize=(12, 8))
+    config_regular_plot_structure(axes, legend_loc)
     axes.plot(x, converted_mtbis, linewidth=2, color='#0008AC', linestyle='-', label=mtbe_title)
-    pm = PlotManager()
-    pm.config_plot_background(axes)
-    pm.config_axis_plain_style(axes)
     axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
     axes.set_ylabel(mtbe_title + ' (' + str(unit) + ')', fontsize=32, labelpad=15)
-    axes.tick_params(axis='both', which='major', labelsize=24)
-    axes.legend(loc=legend_loc, prop={'size': 32})
     fig.tight_layout()
     plt.show()
 
@@ -153,16 +180,11 @@ def plot_mtbi_inverses(inverses, data, x_start, mtbi_filename, mtbi_legend):
     x = np.arange(x_start, x_right_lim)
 
     fig, axes = plt.subplots(figsize=(12, 8))
+    config_regular_plot_structure(axes, mtbi_legend)
     axes.plot(x, inverses, linewidth=2, color='#0008AC', linestyle='-', label='1/MTBI')
     axes.plot(x, data, linewidth=2, color='#C70F0B', linestyle='-', label='Daily data')
-
-    pm = PlotManager()
-    pm.config_plot_background(axes)
-    pm.config_axis_plain_style(axes)
-    axes.tick_params(axis='both', which='major', labelsize=24)
     axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
     axes.set_ylabel('Number of cases', fontsize=32, labelpad=15)
-    axes.legend(loc=mtbi_legend, prop={'size': 32})
     fig.tight_layout()
     plt.show()
 
@@ -228,16 +250,12 @@ def plot_maxs_and_mins(y, filtering=False, n=7, L=7, filename=None):
     mins, _ = sg.find_peaks(-y)
     maxs, _ = sg.find_peaks(y)
     fig, axes = plt.subplots(figsize=(12, 8))
+    config_regular_plot_structure(axes, legend_loc='upper left')
     axes.plot(y, color='#6F17A6', linewidth=2)
     axes.scatter(mins, y[mins], marker='x', s=128, color='#193894', linewidths=3, label='Minimums')
     axes.scatter(maxs, y[maxs], marker='o', s=32, color='#B90F0F', linewidths=2,  label='Maximums')
-    pm = PlotManager()
-    pm.config_axis_plain_style(axes)
-    pm.config_plot_background(axes)
-    axes.tick_params(axis='both', which='major', labelsize=24)
     axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
     axes.set_ylabel('Number of cases', fontsize=32, labelpad=15)
-    axes.legend(loc='upper left', prop={'size': 32})
 
     print('Maximums: ' + str(maxs))
     print('Minimums: ' + str(mins))
@@ -247,26 +265,6 @@ def plot_maxs_and_mins(y, filtering=False, n=7, L=7, filename=None):
 
     if filename is not None:
         fig.savefig(filename)
-
-
-def config_spectrum_plot(axes, xscale):
-    pm = PlotManager()
-    pm.config_axis_plain_style(axes)
-    pm.config_plot_background(axes)
-    xticks = None
-    xticklabels = None
-    if xscale == 'rad':
-        xticks = [0, np.pi / 4, np.pi / 2, 3 * np.pi / 4, np.pi]
-        xticklabels = ['0', r'$\pi$/4', r'$\pi$/2', r'3$\pi$/4', r'$\pi$']
-        axes.set_xlabel('\u03C9 (rad/day)', fontsize=32, labelpad=15)
-    elif xscale == 'freq':
-        xticks = [0, 1/7, 2/7, 1/2]
-        xticklabels = ['0', '1/7', '2/7', '1/2']
-        axes.set_xlabel('Frequency (1/day)', fontsize=32, labelpad=15)
-    axes.set_xticks(xticks)
-    axes.set_xticklabels(xticklabels, fontsize=14)
-    axes.tick_params(axis='y', which='major', labelsize=24)
-    axes.legend(loc='upper right', prop={'size': 32})
 
 
 def plot_spectrum(spectrum_mod, xscale, filename=None):
@@ -290,18 +288,45 @@ def plot_spectrum(spectrum_mod, xscale, filename=None):
 
 
 def plot_daily_data(raw_data, label, filename=None):
-    pm = PlotManager()
     x = np.arange(1, len(raw_data) + 1)
     fig, axes = plt.subplots(figsize=(12, 8))
     axes.plot(x, raw_data, linewidth=2, color='#6F17A6', linestyle='-', label=label)
-    pm.config_plot_background(axes)
-    pm.config_axis_plain_style(axes)
-    axes.tick_params(axis='both', which='major', labelsize=24)
+    config_regular_plot_structure(axes, legend_loc='upper left')
     axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
     axes.set_ylabel('Number of cases', fontsize=32, labelpad=15)
-    axes.legend(loc='upper left', prop={'size': 32})
     fig.tight_layout()
     plt.show()
 
     if filename is not None:
         fig.savefig(filename)
+
+
+def show_mtbi_vs_mobility_scatterplots(mtbis, mobility, x_start, legend_loc='lower left'):
+
+    x_right_lim = x_start + len(mtbis)
+    x = np.arange(x_start, x_right_lim)
+
+    fig, axes = plt.subplots(1, 2, figsize=(18, 8))
+    ax_1 = axes[0]
+    ax_2 = axes[1]
+
+    scatter_1 = ax_1.scatter(x, mobility, label='Mobility')
+    scatter_2 = ax_1.scatter(x, mtbis, label='Scaled MTBIs')
+    ax_2.scatter(mobility, mtbis)
+
+    config_scatterplot_vs_time_plot(ax_1, (scatter_1, scatter_2), legend_loc)
+    config_scatterplot_mtbi_vs_mobility(ax_2)
+    fig.tight_layout()
+    plt.show()
+
+
+def show_correlation_coefficients(var_1, var_2):
+
+    r_pearson, pv_pearson = st.pearsonr(var_1, var_2)
+    r_spearman, pv_spearman = st.spearmanr(var_1, var_2)
+    t_kendall, pv_kendall = st.kendalltau(var_1, var_2)
+    decimals = 4
+
+    print('Pearson: r = ' + str(round(r_pearson, decimals)) + '    p-value: ' + '{:0.2e}'.format(pv_pearson))
+    print('Spearman: \u03C1 = ' + str(round(r_spearman, decimals)) + '    p-value: ' + '{:0.2e}'.format(pv_spearman))
+    print('Kendall: \u03C4 = ' + str(round(t_kendall, decimals)) + '    p-value: ' + '{:0.2e}'.format(pv_kendall))

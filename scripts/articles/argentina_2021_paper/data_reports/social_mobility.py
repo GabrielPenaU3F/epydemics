@@ -2,8 +2,8 @@ import numpy as np
 import pandas
 from matplotlib import pyplot as plt
 
+from scripts.articles.argentina_2021_paper.useful_functions import apply_ma_filter
 from src.data_io.plot_manager import PlotManager
-from useful_functions import apply_ma_filter
 
 
 filepath = 'E:/Universidad/Investigación/Coronavirus/Datos/movilidad_arg.csv'
