@@ -1,3 +1,4 @@
+import numpy as np
 import pandas
 
 from src.data_manipulation.data_manager import DataManager
@@ -10,9 +11,27 @@ DataManager.load_dataset('owid')
 filepath_ihme = 'E:/Universidad/Investigación/Coronavirus/Datos/movilidad_arg_ihme.csv'
 country = 'Argentina'
 dataset = 'total_cases'
-start_from = 30
-start = 1
-end = 229
+
+# Case 1
+start_from = 5
+start = 5
+end = 22
+
+# Case 2
+# start_from = 5
+# start = 280
+# end = 292
+
+# Case 3
+# start_from = 5
+# start = 435
+# end = 449
+
+# Case 4
+# start_from = 5
+# start = 450
+# end = 467
+
 
 mtbis = ep.calculate_mtbi(country, dataset=dataset, start=start, end=end, unit='sec',
                           start_from=start_from, output=False, formula='approx_conditional')

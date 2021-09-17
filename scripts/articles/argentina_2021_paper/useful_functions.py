@@ -86,12 +86,6 @@ def config_regular_plot_structure(axes, legend_loc=None):
         axes.legend(loc=legend_loc, prop={'size': 32})
 
 
-def config_scatterplot_vs_time_plot(axes, scatterplots, legend_loc):
-    config_regular_plot_structure(axes)
-    axes.legend(scatterplots, ('Mobility', 'Scaled MTBIs'), loc=legend_loc, prop={'size': 32})
-    axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
-
-
 def config_scatterplot_mtbi_vs_mobility(axes):
     config_regular_plot_structure(axes)
     axes.set_xlabel('Mobility percent', fontsize=32, labelpad=15)
@@ -301,21 +295,16 @@ def plot_daily_data(raw_data, label, filename=None):
         fig.savefig(filename)
 
 
-def show_mtbi_vs_mobility_scatterplots(mtbis, mobility, x_start, legend_loc='lower left'):
+def show_mtbi_vs_mobility_scatterplot(mtbis, mobility, x_start, legend_loc='lower left'):
 
     x_right_lim = x_start + len(mtbis)
     x = np.arange(x_start, x_right_lim)
 
-    fig, axes = plt.subplots(1, 2, figsize=(18, 8))
-    ax_1 = axes[0]
-    ax_2 = axes[1]
+    fig, axes = plt.subplots(figsize=(12, 8))
 
-    scatter_1 = ax_1.scatter(x, mobility, label='Mobility')
-    scatter_2 = ax_1.scatter(x, mtbis, label='Scaled MTBIs')
-    ax_2.scatter(mobility, mtbis)
+    axes.scatter(mobility, mtbis)
 
-    config_scatterplot_vs_time_plot(ax_1, (scatter_1, scatter_2), legend_loc)
-    config_scatterplot_mtbi_vs_mobility(ax_2)
+    config_scatterplot_mtbi_vs_mobility(axes)
     fig.tight_layout()
     plt.show()
 
