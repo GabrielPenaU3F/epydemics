@@ -41,16 +41,16 @@ def analyze_model_parameters_over_time(location, dataset='', start=1, end=None, 
 
 def calculate_mtbi(location, dataset='', start=1, end=None, start_from=30,
                    fit_x0=(0.1, 1), unit='day', formula='approx_conditional', output=True):
-    mtbis = Fitter.calculate_mtbis(location, dataset, start, end, start_from, fit_x0, formula)
+    mtbis = Fitter.calculate_mtbis(location, dataset, start, end, start_from, unit, fit_x0, formula)
     if output is True:
         console.show_minimum_status(mtbis, start_from, unit)
         plotter.plot_mtbis(mtbis, location, start_from, unit)
     return mtbis
 
 
-def calculate_mtbi_inverse(location, dataset='', start=1, end=None, start_from=30, fit_x0=(0.1, 1),
+def calculate_mtbi_inverse(location, dataset='', start=1, end=None, start_from=30, mtbi_unit='sec', fit_x0=(0.1, 1),
                            formula='exact_conditional', output=True, real_data=True):
-    mtbis = Fitter.calculate_mtbis(location, dataset, start, end, start_from, fit_x0, formula)
+    mtbis = Fitter.calculate_mtbis(location, dataset, start, end, start_from, mtbi_unit, fit_x0, formula)
     if output is True:
         plotter.plot_mtbi_inverses(mtbis, location, dataset, start + start_from, real_data)
     inverses = np.power(mtbis, -1)

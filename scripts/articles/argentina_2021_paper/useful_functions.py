@@ -50,7 +50,7 @@ def perform_fits_with_window(daily_data, window_len, start_from, filtering=True)
     return output_list
 
 
-def calculate_mtbis_with_window(daily_data, window_len, start_from, filtering):
+def calculate_mtbis_with_window(daily_data, window_len, start_from, mtbi_unit, filtering):
 
     y = daily_data.copy()
     if filtering:
@@ -73,6 +73,7 @@ def calculate_mtbis_with_window(daily_data, window_len, start_from, filtering):
         mtbi = (1 + rho * s) / (rho * ((1 + rho * s) ** gamma_per_rho - 1))
         mtbis.append(mtbi)
 
+    mtbis = DaysConverter.get_instance().convert_days_to(mtbi_unit, mtbis)
     return mtbis
 
 
@@ -110,10 +111,10 @@ def config_spectrum_plot(axes, xscale):
 
 def plot_gamma_per_rho(x, gamma_per_rhos, filename, legend_loc):
     fig, axes = plt.subplots(figsize=(12, 8))
-    config_regular_plot_structure(axes, legend_loc)
     axes.plot(x, gamma_per_rhos, linewidth=2, color='#61b15a', linestyle='-', label='\u03B3 / \u03C1')
     axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
     axes.set_ylabel('\u03B3 / \u03C1', fontsize=32, labelpad=15)
+    config_regular_plot_structure(axes, legend_loc)
     fig.tight_layout()
     plt.show()
 
@@ -123,10 +124,10 @@ def plot_gamma_per_rho(x, gamma_per_rhos, filename, legend_loc):
 
 def plot_rho(x, rhos, filename, legend_loc):
     fig, axes = plt.subplots(figsize=(12, 8))
-    config_regular_plot_structure(axes, legend_loc)
     axes.plot(x, rhos, linewidth=2, color='#db6400', linestyle='-', label='\u03C1')
     axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
     axes.set_ylabel('\u03C1 (1/day)', fontsize=32, labelpad=15)
+    config_regular_plot_structure(axes, legend_loc)
     fig.tight_layout()
     plt.show()
 
@@ -145,8 +146,6 @@ def plot_parameters_over_time(parameter_tuples, x_start, rho_filename=None, gpr_
 
 
 def plot_mtbis(mtbis, unit, x_start, filename=None, legend_loc='upper left', dataset='total_cases'):
-    converter = DaysConverter.get_instance()
-    converted_mtbis = converter.convert_days_to(unit, mtbis)
 
     x_right_lim = x_start + len(mtbis)
     x = np.arange(x_start, x_right_lim)
@@ -157,10 +156,10 @@ def plot_mtbis(mtbis, unit, x_start, filename=None, legend_loc='upper left', dat
         mtbe_title = 'MTBD'
 
     fig, axes = plt.subplots(figsize=(12, 8))
-    config_regular_plot_structure(axes, legend_loc)
-    axes.plot(x, converted_mtbis, linewidth=2, color='#0008AC', linestyle='-', label=mtbe_title)
+    axes.plot(x, mtbis, linewidth=2, color='#0008AC', linestyle='-', label=mtbe_title)
     axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
     axes.set_ylabel(mtbe_title + ' (' + str(unit) + ')', fontsize=32, labelpad=15)
+    config_regular_plot_structure(axes, legend_loc)
     fig.tight_layout()
     plt.show()
 
@@ -174,11 +173,11 @@ def plot_mtbi_inverses(inverses, data, x_start, mtbi_filename, mtbi_legend):
     x = np.arange(x_start, x_right_lim)
 
     fig, axes = plt.subplots(figsize=(12, 8))
-    config_regular_plot_structure(axes, mtbi_legend)
     axes.plot(x, inverses, linewidth=2, color='#0008AC', linestyle='-', label='1/MTBI')
     axes.plot(x, data, linewidth=2, color='#C70F0B', linestyle='-', label='Daily data')
     axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
     axes.set_ylabel('Number of cases', fontsize=32, labelpad=15)
+    config_regular_plot_structure(axes, mtbi_legend)
     fig.tight_layout()
     plt.show()
 
@@ -186,7 +185,7 @@ def plot_mtbi_inverses(inverses, data, x_start, mtbi_filename, mtbi_legend):
         fig.savefig(mtbi_filename)
 
 
-def plot_indicators(location, dataset, start, end, start_from,
+def plot_indicators(location, dataset, start, end, start_from, mtbi_unit,
                     rho_filename, gpr_filename, rho_legend, gpr_legend, mtbi_filename, mtbi_legend):
 
     fit_tuples = ep.analyze_model_parameters_over_time(location, dataset=dataset, start=start, end=end,
@@ -199,16 +198,16 @@ def plot_indicators(location, dataset, start, end, start_from,
 
     plot_parameters_over_time(param_tuples, start + start_from - 1, rho_filename, gpr_filename, rho_legend, gpr_legend)
 
-    mtbes = ep.calculate_mtbi(location, dataset=dataset, start=start, end=end,
+    mtbes = ep.calculate_mtbi(location, dataset=dataset, start=start, end=end, unit=mtbi_unit,
                               start_from=start_from, output=False, formula='approx_conditional')
-    plot_mtbis(mtbes, 'sec', start + start_from - 1, mtbi_filename, mtbi_legend, dataset)
+    plot_mtbis(mtbes, mtbi_unit, start + start_from - 1, mtbi_filename, mtbi_legend, dataset)
 
     print('Minimum RSQ: ' + str(np.min(rsqs)))
     print('Maximum RSQ: ' + str(np.max(rsqs)))
     print('Mean RSQ: ' + str(np.mean(rsqs)))
 
 
-def plot_indicators_with_window(location, dataset, start, end, start_from, window_len,
+def plot_indicators_with_window(location, dataset, start, end, start_from, window_len, mtbi_unit,
                                 rho_filename, gpr_filename, rho_legend, gpr_legend, mtbi_filename, mtbi_legend):
 
     daily_data = DataManager.get_raw_daily_data(location, dataset, start, end)
@@ -219,19 +218,19 @@ def plot_indicators_with_window(location, dataset, start, end, start_from, windo
 
     plot_parameters_over_time(param_tuples, start + start_from - 1, rho_filename, gpr_filename, rho_legend, gpr_legend)
 
-    mtbes = calculate_mtbis_with_window(daily_data, window_len, start_from, filtering=False)
+    mtbes = calculate_mtbis_with_window(daily_data, window_len, start_from, mtbi_unit, filtering=False)
 
-    plot_mtbis(mtbes, 'sec', start + start_from - 1, mtbi_filename, mtbi_legend, dataset)
+    plot_mtbis(mtbes, mtbi_unit, start + start_from - 1, mtbi_filename, mtbi_legend, dataset)
 
     print('Minimum RSQ: ' + str(np.min(rsqs)))
     print('Maximum RSQ: ' + str(np.max(rsqs)))
     print('Mean RSQ: ' + str(np.mean(rsqs)))
 
 
-def plot_mtbi_inverse_vs_data(location, dataset, start, end, start_from, mtbi_filename, mtbi_legend):
+def plot_mtbi_inverse_vs_data(location, dataset, start, end, start_from, mtbi_unit, mtbi_filename, mtbi_legend):
     daily_data = DataManager.get_raw_daily_data(location, dataset, start + start_from - 1, end)
     mtbes = ep.calculate_mtbi(location, dataset=dataset, start=start, end=end,
-                              start_from=start_from, output=False, formula='approx_conditional')
+                              start_from=start_from, unit=mtbi_unit, output=False, formula='approx_conditional')
     inverses = np.power(mtbes, -1)
     plot_mtbi_inverses(inverses, daily_data, start + start_from - 1, mtbi_filename, mtbi_legend)
 
@@ -319,3 +318,19 @@ def show_correlation_coefficients(var_1, var_2):
     print('Pearson: r = ' + str(round(r_pearson, decimals)) + '    p-value: ' + '{:0.2e}'.format(pv_pearson))
     print('Spearman: \u03C1 = ' + str(round(r_spearman, decimals)) + '    p-value: ' + '{:0.2e}'.format(pv_spearman))
     print('Kendall: \u03C4 = ' + str(round(t_kendall, decimals)) + '    p-value: ' + '{:0.2e}'.format(pv_kendall))
+
+
+def show_mtbi_curve_regression(mtbis, explained, x_start):
+    x = np.arange(x_start, x_start + len(mtbis))
+    fig, axes = plt.subplots(figsize=(12, 8))
+    axes.plot(x, mtbis, linewidth=2, color='#6F17A6', linestyle='-', label='Real MTBI')
+    axes.plot(x, explained, linewidth=2, color='#0008AC', linestyle='-', label='Regression')
+    config_regular_plot_structure(axes, legend_loc='upper right')
+    axes.ticklabel_format(axis='y', style='sci')
+    axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
+    axes.set_ylabel('MTBI (sec)', fontsize=32, labelpad=15)
+    fig.tight_layout()
+
+    rsq = r2_score(mtbis, explained)
+    print('R2 = ' + str(rsq))
+    plt.show()

@@ -2,7 +2,6 @@ import numpy as np
 import pandas
 import src.utils.checking_utils as checker
 from src.data_manipulation.data_manager import DataManager
-from src.domain.unit_converter import DaysConverter
 
 
 class ConsoleManager:
@@ -52,7 +51,6 @@ class ConsoleManager:
         print('-----------------------')
 
     def show_minimum_status(self, mtbis, start_from, unit):
-        mtbis = DaysConverter.get_instance().convert_days_to(unit, mtbis)
         if checker.check_if_minimum_was_reached(mtbis):
             status = 'REACHED'
         else:

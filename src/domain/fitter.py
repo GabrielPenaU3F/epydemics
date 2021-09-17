@@ -5,6 +5,7 @@ from src.data_manipulation.data_manager import DataManager
 from src.data_manipulation.dataframe_slicer import DataframeSlicer
 from src.domain.fit import Fit
 from src.domain.models.model import ContagionModel
+from src.domain.unit_converter import DaysConverter
 from src.exceptions.exceptions import InvalidArgumentException
 from src.repository.model_repository import ModelRepository
 
@@ -46,7 +47,7 @@ class Fitter:
         return out
 
     @classmethod
-    def calculate_mtbis(cls, location, dataset, start, end, start_from, fit_x0, formula):
+    def calculate_mtbis(cls, location, dataset, start, end, start_from, unit, fit_x0, formula):
         dataset = DataManager.choose_dataset(dataset)
         data = DataManager.get_fittable_location_data(location, dataset, start, end)
         new_end = len(data) + 1
@@ -61,6 +62,7 @@ class Fitter:
             k_minus_one = DataManager.get_single_datum(location, s, dataset, start)
             mtbi = cls.calculate_conditional_mtbi(s, k_minus_one, rho, gamma_per_rho, formula)
             mtbis.append(mtbi)
+        mtbis = DaysConverter.get_instance().convert_days_to(unit, mtbis)
         return mtbis
 
     @classmethod
