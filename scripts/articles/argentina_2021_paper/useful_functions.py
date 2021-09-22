@@ -319,18 +319,3 @@ def show_correlation_coefficients(var_1, var_2):
     print('Spearman: \u03C1 = ' + str(round(r_spearman, decimals)) + '    p-value: ' + '{:0.2e}'.format(pv_spearman))
     print('Kendall: \u03C4 = ' + str(round(t_kendall, decimals)) + '    p-value: ' + '{:0.2e}'.format(pv_kendall))
 
-
-def show_mtbi_curve_regression(mtbis, explained, x_start):
-    x = np.arange(x_start, x_start + len(mtbis))
-    fig, axes = plt.subplots(figsize=(12, 8))
-    axes.plot(x, mtbis, linewidth=2, color='#6F17A6', linestyle='-', label='Real MTBI')
-    axes.plot(x, explained, linewidth=2, color='#0008AC', linestyle='-', label='Regression')
-    config_regular_plot_structure(axes, legend_loc='upper right')
-    axes.ticklabel_format(axis='y', style='sci')
-    axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
-    axes.set_ylabel('MTBI (sec)', fontsize=32, labelpad=15)
-    fig.tight_layout()
-
-    rsq = r2_score(mtbis, explained)
-    print('R2 = ' + str(rsq))
-    plt.show()
