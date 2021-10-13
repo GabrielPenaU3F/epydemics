@@ -29,6 +29,30 @@ class RegressionsTests(unittest.TestCase):
         reg = self.__class__.regression_manager.linear_regression(mtbis_test, 5, 3, output='full')
         testing.assert_almost_equal(reg.predict(), 838.6780, decimal=4)
 
+    def test_mtbi_lasso_regression_coefficients(self):
+        mtbis = ep.calculate_mtbi('Coruscant', unit='sec', output=False)
+        expected_coefs = np.array([1244.4663, 0.2251, 0, -0.7317])
+        actual_coefs, score = self.__class__.regression_manager.lasso_regression(mtbis, 5, 3, alpha=0.2)
+        testing.assert_array_almost_equal(actual_coefs, expected_coefs, decimal=4)
+
+    def test_mtbi_lasso_regression_prediction(self):
+        mtbis = ep.calculate_mtbi('Coruscant', unit='sec', output=False)
+        mtbis_test = mtbis[0:30]
+        reg = self.__class__.regression_manager.lasso_regression(mtbis_test, 5, 3, alpha=0.2, output='full')
+        testing.assert_almost_equal(reg.predict(), 838.7207, decimal=4)
+
+    def test_mtbi_ridge_regression_coefficients(self):
+        mtbis = ep.calculate_mtbi('Coruscant', unit='sec', output=False)
+        expected_coefs = np.array([1251.4475, 0.3610, -0.1354, -0.7406])
+        actual_coefs, score = self.__class__.regression_manager.ridge_regression(mtbis, 5, 3, alpha=0.2)
+        testing.assert_array_almost_equal(actual_coefs, expected_coefs, decimal=4)
+
+    def test_mtbi_ridge_regression_prediction(self):
+        mtbis = ep.calculate_mtbi('Coruscant', unit='sec', output=False)
+        mtbis_test = mtbis[0:30]
+        reg = self.__class__.regression_manager.ridge_regression(mtbis_test, 5, 3, alpha=0.2, output='full')
+        testing.assert_almost_equal(reg.predict(), 838.6769, decimal=4)
+
 
 if __name__ == '__main__':
     unittest.main()
