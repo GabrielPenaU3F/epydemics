@@ -40,3 +40,8 @@ class CustomRegression:
 
     def get_response_var(self):
         return self.response_var
+
+    def get_coefficients(self):
+        coefs = self.regression.coef_
+        intercept = self.regression.intercept_
+        return np.insert(coefs, 0, intercept)
