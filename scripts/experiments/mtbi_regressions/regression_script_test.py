@@ -1,7 +1,7 @@
 import numpy as np
 from scipy import optimize as opt
 
-from scripts.experiments.mtbi_regressions.regression_functions import poly_function
+from scripts.experiments.mtbi_simple_regressions.regression_functions import poly_function
 
 np.random.seed(123)
 

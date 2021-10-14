@@ -5,7 +5,7 @@ from scipy import optimize as opt
 from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.metrics import r2_score
 
-from scripts.experiments.mtbi_regressions.regression_functions import exponential_function, poly_function
+from scripts.experiments.mtbi_simple_regressions.regression_functions import exponential_function, poly_function
 from scripts.experiments.useful_functions import config_regular_plot_structure
 from src.data_manipulation.data_manager import DataManager
 from src.interface import epydemics as ep
