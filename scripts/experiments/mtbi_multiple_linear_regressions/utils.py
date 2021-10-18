@@ -48,3 +48,15 @@ def heatmap(points, title):
     cbar = ax.collections[0].colorbar
     cbar.ax.tick_params(labelsize=18, direction='in', width=0)
     plt.show()
+
+
+def coef_barplot(coefs):
+    fig, ax = plt.subplots(figsize=(9, 8))
+    coefs = np.array(list(map(float, coefs)))
+    labels = [r'$a_' + str(i) + '$' for i in range(len(coefs))]
+    ax.bar(labels, coefs, bottom=0, color='#000285', width=0.3)
+    ax.axhline(0, linewidth=1.5, color='black')
+    ax.set_title('Regression coefficients', fontsize=32, pad=18)
+    ax.tick_params(axis='both', labelsize=18)
+    ax.set_xlabel('Coefficient', fontsize=24, labelpad=15)
+    plt.show()

@@ -1,6 +1,6 @@
 import numpy as np
 
-from scripts.experiments.mtbi_multiple_linear_regressions.utils import scatterplot_m_K, heatmap
+from scripts.experiments.mtbi_multiple_linear_regressions.utils import scatterplot_m_K, heatmap, coef_barplot
 from src.data_manipulation.data_manager import DataManager
 from src.domain.regression_manager import RegressionManager
 from src.interface import epydemics as ep
@@ -123,6 +123,7 @@ rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f'
 points.append(np.array([7, 6, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=6 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
+coef_barplot(coefficients)
 
 reg = RegressionManager().linear_regression(mtbis, 7, 4, output='full')
 prediction = round(reg.predict(), 4)
