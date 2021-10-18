@@ -38,12 +38,13 @@ def heatmap(points, title):
     df.sort_index(axis=1, inplace=True)
 
     fig, ax = plt.subplots(figsize=(7, 8))
-    sns.heatmap(df, linewidths=0.2, fmt='.4f', annot=True, annot_kws={'fontsize': 16}, cmap='flare', ax=ax)
+    sns.heatmap(df, linewidths=0.2, fmt='.4f', annot=True, annot_kws={'fontsize': 16},
+                cmap='flare', ax=ax)
     ax.invert_yaxis()
     ax.tick_params(axis='both', labelsize=18)
     ax.set_xlabel('m', fontsize=24, labelpad=15)
     ax.set_ylabel('K', fontsize=24, labelpad=15)
     ax.set_title(title, fontsize=32, pad=18)
     cbar = ax.collections[0].colorbar
-    cbar.ax.tick_params(labelsize=18)
+    cbar.ax.tick_params(labelsize=18, direction='in', width=0)
     plt.show()
