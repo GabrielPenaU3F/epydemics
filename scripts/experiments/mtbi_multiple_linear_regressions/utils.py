@@ -67,7 +67,7 @@ def coef_barplot(coefs):
 
 
 def three_heatmaps(points_1, alpha_1, points_2, alpha_2, points_3, alpha_3, title):
-    fig, axes = plt.subplots(1, 3, figsize=(16, 10))
+    fig, axes = plt.subplots(1, 3, figsize=(20, 10), constrained_layout=True)
     fig.suptitle(title, fontsize=32)
     create_heatmap(axes[0], points_1, '\u03B1 = ' + str(alpha_1))
     create_heatmap(axes[1], points_2, '\u03B1 = ' + str(alpha_2))
