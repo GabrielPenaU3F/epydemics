@@ -29,7 +29,7 @@ def scatterplot_m_K(points):
     plt.show()
 
 
-def heatmap(points, title):
+def create_heatmap(ax, points, title):
     df = pandas.DataFrame(points, columns=['x', 'y', 'z'])
     df = df.pivot(columns='x', index='y', values='z')
     df.index = df.index.astype(int)
@@ -37,7 +37,6 @@ def heatmap(points, title):
     df.sort_index(inplace=True)
     df.sort_index(axis=1, inplace=True)
 
-    fig, ax = plt.subplots(figsize=(7, 8))
     sns.heatmap(df, linewidths=0.2, fmt='.4f', annot=True, annot_kws={'fontsize': 16},
                 cmap='flare', ax=ax)
     ax.invert_yaxis()
@@ -47,6 +46,11 @@ def heatmap(points, title):
     ax.set_title(title, fontsize=32, pad=18)
     cbar = ax.collections[0].colorbar
     cbar.ax.tick_params(labelsize=18, direction='in', width=0)
+
+
+def heatmap(points, title):
+    fig, ax = plt.subplots(figsize=(7, 8))
+    create_heatmap(ax, points, title)
     plt.show()
 
 
@@ -59,4 +63,13 @@ def coef_barplot(coefs):
     ax.set_title('Regression coefficients', fontsize=32, pad=18)
     ax.tick_params(axis='both', labelsize=18)
     ax.set_xlabel('Coefficient', fontsize=24, labelpad=15)
+    plt.show()
+
+
+def three_heatmaps(points_1, alpha_1, points_2, alpha_2, points_3, alpha_3, title):
+    fig, axes = plt.subplots(1, 3, figsize=(16, 10))
+    fig.suptitle(title, fontsize=32)
+    create_heatmap(axes[0], points_1, '\u03B1 = ' + str(alpha_1))
+    create_heatmap(axes[1], points_2, '\u03B1 = ' + str(alpha_2))
+    create_heatmap(axes[2], points_3, '\u03B1 = ' + str(alpha_3))
     plt.show()
