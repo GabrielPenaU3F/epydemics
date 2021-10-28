@@ -1,6 +1,6 @@
 import numpy as np
 
-from scripts.experiments.mtbi_multiple_linear_regressions.utils import three_heatmaps
+from scripts.experiments.mtbi_multiple_linear_regressions.utils import three_heatmaps, coef_barplot
 from src.data_manipulation.data_manager import DataManager
 from src.domain.regression_manager import RegressionManager
 from src.interface import epydemics as ep
@@ -24,39 +24,39 @@ real_mtbi = mtbis[199]
 
 points = []
 alpha_1 = 0.4
-print('\n Experiment 1.2: Ridge regression (\u03B1 = ' + str(alpha_1) + ') - Real MTBI = ' + str(round(mtbis[199], 4)) + '\n')
+print('\n Experiment 2.2: Ridge regression (\u03B1 = ' + str(alpha_1) + ') - Real MTBI = ' + str(round(real_mtbi, 4)) + '\n')
 
 # m = 30
 
-reg = RegressionManager().ridge_regression(mtbis, 30, 16, alpha=alpha_1, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 30, 16, alpha=alpha_1, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 16, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=30, K=16 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 30, 8, alpha=alpha_1, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 30, 8, alpha=alpha_1, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 8, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=30, K=8 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 30, 6, alpha=alpha_1, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 30, 6, alpha=alpha_1, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 6, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=30, K=6 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 30, 4, alpha=alpha_1, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 30, 4, alpha=alpha_1, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 4, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=30, K=4 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 30, 2, alpha=alpha_1, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 30, 2, alpha=alpha_1, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 2, rel_err]))
@@ -66,35 +66,35 @@ print('m=30, K=2 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' +
 # m = 15
 print('\n')
 
-reg = RegressionManager().ridge_regression(mtbis, 15, 16, alpha=alpha_1, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 15, 16, alpha=alpha_1, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 16, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=15, K=16 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 15, 8, alpha=alpha_1, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 15, 8, alpha=alpha_1, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 8, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=15, K=8 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 15, 6, alpha=alpha_1, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 15, 6, alpha=alpha_1, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 6, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=15, K=6 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 15, 4, alpha=alpha_1, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 15, 4, alpha=alpha_1, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 4, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=15, K=4 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 15, 2, alpha=alpha_1, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 15, 2, alpha=alpha_1, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 2, rel_err]))
@@ -104,35 +104,35 @@ print('m=15, K=2 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' +
 # m = 7
 print('\n')
 
-reg = RegressionManager().ridge_regression(mtbis, 7, 16, alpha=alpha_1, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 7, 16, alpha=alpha_1, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 16, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=16 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 7, 8, alpha=alpha_1, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 7, 8, alpha=alpha_1, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 8, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=8 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 7, 6, alpha=alpha_1, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 7, 6, alpha=alpha_1, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 6, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=6 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 7, 4, alpha=alpha_1, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 7, 4, alpha=alpha_1, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 4, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=4 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 7, 2, alpha=alpha_1, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 7, 2, alpha=alpha_1, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 2, rel_err]))
@@ -145,39 +145,40 @@ points_1_20 = np.array(points)
 
 points = []
 alpha_2 = 0.1
-print('\n Experiment 1.21: Ridge regression (\u03B1 = ' + str(alpha_2) + ') - Real MTBI = ' + str(round(mtbis[199], 4)) + '\n')
+print('\n Experiment 2.21: Ridge regression (\u03B1 = ' + str(alpha_2) + ') - Real MTBI = ' + str(round(real_mtbi, 4)) + '\n')
 
 # m = 30
 
-reg = RegressionManager().ridge_regression(mtbis, 30, 16, alpha=alpha_2, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 30, 16, alpha=alpha_2, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 16, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=30, K=16 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
+coef_barplot(coefficients)
 
-reg = RegressionManager().ridge_regression(mtbis, 30, 8, alpha=alpha_2, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 30, 8, alpha=alpha_2, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 8, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=30, K=8 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 30, 6, alpha=alpha_2, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 30, 6, alpha=alpha_2, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 6, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=30, K=6 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 30, 4, alpha=alpha_2, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 30, 4, alpha=alpha_2, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 4, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=30, K=4 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 30, 2, alpha=alpha_2, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 30, 2, alpha=alpha_2, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 2, rel_err]))
@@ -187,35 +188,35 @@ print('m=30, K=2 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' +
 # m = 15
 print('\n')
 
-reg = RegressionManager().ridge_regression(mtbis, 15, 16, alpha=alpha_2, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 15, 16, alpha=alpha_2, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 16, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=15, K=16 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 15, 8, alpha=alpha_2, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 15, 8, alpha=alpha_2, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 8, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=15, K=8 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 15, 6, alpha=alpha_2, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 15, 6, alpha=alpha_2, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 6, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=15, K=6 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 15, 4, alpha=alpha_2, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 15, 4, alpha=alpha_2, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 4, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=15, K=4 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 15, 2, alpha=alpha_2, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 15, 2, alpha=alpha_2, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 2, rel_err]))
@@ -225,35 +226,35 @@ print('m=15, K=2 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' +
 # m = 7
 print('\n')
 
-reg = RegressionManager().ridge_regression(mtbis, 7, 16, alpha=alpha_2, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 7, 16, alpha=alpha_2, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 16, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=16 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 7, 8, alpha=alpha_2, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 7, 8, alpha=alpha_2, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 8, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=8 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 7, 6, alpha=alpha_2, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 7, 6, alpha=alpha_2, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 6, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=6 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 7, 4, alpha=alpha_2, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 7, 4, alpha=alpha_2, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 4, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=4 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 7, 2, alpha=alpha_2, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 7, 2, alpha=alpha_2, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 2, rel_err]))
@@ -266,39 +267,39 @@ points_1_21 = np.array(points)
 
 points = []
 alpha_3 = 0.01
-print('\n Experiment 1.22: Ridge regression (\u03B1 = ' + str(alpha_3) + ') - Real MTBI = ' + str(round(mtbis[199], 4)) + '\n')
+print('\n Experiment 2.22: Ridge regression (\u03B1 = ' + str(alpha_3) + ') - Real MTBI = ' + str(round(real_mtbi, 4)) + '\n')
 
 # m = 30
 
-reg = RegressionManager().ridge_regression(mtbis, 30, 16, alpha=alpha_3, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 30, 16, alpha=alpha_3, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 16, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=30, K=16 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 30, 8, alpha=alpha_3, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 30, 8, alpha=alpha_3, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 8, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=30, K=8 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 30, 6, alpha=alpha_3, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 30, 6, alpha=alpha_3, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 6, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=30, K=6 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 30, 4, alpha=alpha_3, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 30, 4, alpha=alpha_3, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 4, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=30, K=4 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 30, 2, alpha=alpha_3, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 30, 2, alpha=alpha_3, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 2, rel_err]))
@@ -308,35 +309,35 @@ print('m=30, K=2 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' +
 # m = 15
 print('\n')
 
-reg = RegressionManager().ridge_regression(mtbis, 15, 16, alpha=alpha_3, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 15, 16, alpha=alpha_3, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 16, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=15, K=16 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 15, 8, alpha=alpha_3, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 15, 8, alpha=alpha_3, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 8, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=15, K=8 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 15, 6, alpha=alpha_3, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 15, 6, alpha=alpha_3, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 6, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=15, K=6 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 15, 4, alpha=alpha_3, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 15, 4, alpha=alpha_3, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 4, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=15, K=4 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 15, 2, alpha=alpha_3, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 15, 2, alpha=alpha_3, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 2, rel_err]))
@@ -346,35 +347,35 @@ print('m=15, K=2 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' +
 # m = 7
 print('\n')
 
-reg = RegressionManager().ridge_regression(mtbis, 7, 16, alpha=alpha_3, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 7, 16, alpha=alpha_3, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 16, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=16 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 7, 8, alpha=alpha_3, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 7, 8, alpha=alpha_3, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 8, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=8 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 7, 6, alpha=alpha_3, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 7, 6, alpha=alpha_3, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 6, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=6 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 7, 4, alpha=alpha_3, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 7, 4, alpha=alpha_3, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 4, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=4 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().ridge_regression(mtbis, 7, 2, alpha=alpha_3, output='full')
+reg = RegressionManager().ridge_regression(mtbis_train, 7, 2, alpha=alpha_3, output='full', affine=False)
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 2, rel_err]))

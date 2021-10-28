@@ -8,9 +8,9 @@ class RegressionManager:
 
     # m is the number of data to consider, i.e., the number of rows in the Y matrix
     # K is the order of the filter, i.e., K + 1 is the number of coefficients
-    def linear_regression(self, data, m, K, output='coef'):
+    def linear_regression(self, data, m, K, output='coef', affine=True):
         X, y = self.build_regression_matrices(data, m, K)
-        lreg = LinearRegression().fit(X, y)
+        lreg = LinearRegression(fit_intercept=affine).fit(X, y)
         return self.do_regression('linear', lreg, data, X, y, output)
 
     def do_regression(self, type, reg, data, X, y, output):
@@ -21,14 +21,14 @@ class RegressionManager:
             score = reg.score(X, y)
             return coefs, score
 
-    def lasso_regression(self, data, m, K, alpha, output='coef'):
+    def lasso_regression(self, data, m, K, alpha, output='coef', affine=True):
         X, y = self.build_regression_matrices(data, m, K)
-        lasreg = Lasso(alpha).fit(X, y)
+        lasreg = Lasso(alpha, fit_intercept=affine).fit(X, y)
         return self.do_regression('lasso', lasreg, data, X, y, output)
 
-    def ridge_regression(self, data, m, K, alpha, output='coef'):
+    def ridge_regression(self, data, m, K, alpha, output='coef', affine=True):
         X, y = self.build_regression_matrices(data, m, K)
-        rreg = Ridge(alpha).fit(X, y)
+        rreg = Ridge(alpha, fit_intercept=affine).fit(X, y)
         return self.do_regression('ridge', rreg, data, X, y, output)
 
     def build_regression_matrices(self, data, m, K):

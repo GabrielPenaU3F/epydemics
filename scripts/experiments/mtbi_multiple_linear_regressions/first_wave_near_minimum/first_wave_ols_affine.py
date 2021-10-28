@@ -21,41 +21,42 @@ mtbis_train = mtbis[120:199]
 # -----------------
 real_mtbi = mtbis[199]
 
-print('Experiment 1.0: Ordinary least squares - Real MTBI = ' + str(round(real_mtbi, 4)) + '\n')
+print('Experiment 3.0: Ordinary least squares - Real MTBI = ' + str(round(real_mtbi, 4)) + '\n')
 
 # m = 30
 
 points = []
 
-reg = RegressionManager().linear_regression(mtbis, 30, 16, output='full')
+reg = RegressionManager().linear_regression(mtbis_train, 30, 16, output='full')
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 16, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=30, K=16 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().linear_regression(mtbis, 30, 8, output='full')
+reg = RegressionManager().linear_regression(mtbis_train, 30, 8, output='full')
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 8, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=30, K=8 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().linear_regression(mtbis, 30, 6, output='full')
+reg = RegressionManager().linear_regression(mtbis_train, 30, 6, output='full')
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 6, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=30, K=6 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
+coef_barplot(coefficients)
 
-reg = RegressionManager().linear_regression(mtbis, 30, 4, output='full')
+reg = RegressionManager().linear_regression(mtbis_train, 30, 4, output='full')
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 4, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=30, K=4 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().linear_regression(mtbis, 30, 2, output='full')
+reg = RegressionManager().linear_regression(mtbis_train, 30, 2, output='full')
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([30, 2, rel_err]))
@@ -65,35 +66,35 @@ print('m=30, K=2 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' +
 # m = 15
 print('\n')
 
-reg = RegressionManager().linear_regression(mtbis, 15, 16, output='full')
+reg = RegressionManager().linear_regression(mtbis_train, 15, 16, output='full')
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 16, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=15, K=16 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().linear_regression(mtbis, 15, 8, output='full')
+reg = RegressionManager().linear_regression(mtbis_train, 15, 8, output='full')
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 8, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=15, K=8 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().linear_regression(mtbis, 15, 6, output='full')
+reg = RegressionManager().linear_regression(mtbis_train, 15, 6, output='full')
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 6, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=15, K=6 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().linear_regression(mtbis, 15, 4, output='full')
+reg = RegressionManager().linear_regression(mtbis_train, 15, 4, output='full')
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 4, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=15, K=4 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().linear_regression(mtbis, 15, 2, output='full')
+reg = RegressionManager().linear_regression(mtbis_train, 15, 2, output='full')
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([15, 2, rel_err]))
@@ -103,36 +104,35 @@ print('m=15, K=2 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' +
 # m = 7
 print('\n')
 
-reg = RegressionManager().linear_regression(mtbis, 7, 16, output='full')
+reg = RegressionManager().linear_regression(mtbis_train, 7, 16, output='full')
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 16, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=16 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().linear_regression(mtbis, 7, 8, output='full')
+reg = RegressionManager().linear_regression(mtbis_train, 7, 8, output='full')
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 8, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=8 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().linear_regression(mtbis, 7, 6, output='full')
+reg = RegressionManager().linear_regression(mtbis_train, 7, 6, output='full')
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 6, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=6 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
-coef_barplot(coefficients)
 
-reg = RegressionManager().linear_regression(mtbis, 7, 4, output='full')
+reg = RegressionManager().linear_regression(mtbis_train, 7, 4, output='full')
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 4, rel_err]))
 coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=4 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
-reg = RegressionManager().linear_regression(mtbis, 7, 2, output='full')
+reg = RegressionManager().linear_regression(mtbis_train, 7, 2, output='full')
 prediction = round(reg.predict(), 4)
 rel_err = float(str(format(100 * np.abs(prediction - real_mtbi)/real_mtbi, '.4f')))
 points.append(np.array([7, 2, rel_err]))
@@ -140,6 +140,6 @@ coefficients = [format(coef, '.4f') for coef in reg.get_coefficients()]
 print('m=7, K=2 - Coefficients: ' + str(coefficients) + ' - Predicted MTBI: ' + str(prediction))
 
 points = np.array(points)
-# scatterplot_m_K(points)
+
 heatmap(points, 'Relative error (%)')
 
