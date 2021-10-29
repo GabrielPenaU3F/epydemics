@@ -2,6 +2,8 @@ import numpy as np
 import pandas
 import seaborn as sns
 from matplotlib import pyplot as plt
+from scipy import stats as st
+from statsmodels.stats import diagnostic as diag
 
 
 def decode_points(points):
@@ -73,3 +75,11 @@ def three_heatmaps(points_1, alpha_1, points_2, alpha_2, points_3, alpha_3, titl
     create_heatmap(axes[1], points_2, '\u03B1 = ' + str(alpha_2))
     create_heatmap(axes[2], points_3, '\u03B1 = ' + str(alpha_3))
     plt.show()
+
+
+def test_normality_dagostino_pearson(data):
+    return st.normaltest(data)
+
+
+def test_normality_lilliefors(data):
+    return diag.lilliefors(data)

@@ -45,3 +45,13 @@ class CustomRegression:
         coefs = self.regression.coef_
         intercept = self.regression.intercept_
         return np.insert(coefs, 0, intercept)
+
+    def calculate_residuals(self):
+        coefs = np.array(self.get_coefficients())
+        residuals = []
+        observed_values = self.response_var
+        data_matrix = self.regression_vars
+        data_matrix = np.hstack((np.ones(len(data_matrix)).reshape(-1, 1), data_matrix))
+        for i in range(len(observed_values)):
+            residuals.append(observed_values[i] - np.dot(coefs, data_matrix[i]))
+        return np.array(residuals)
