@@ -83,3 +83,10 @@ def test_normality_dagostino_pearson(data):
 
 def test_normality_lilliefors(data):
     return diag.lilliefors(data)
+
+
+def confidence_interval(data, alpha, dist='norm'):
+    if dist == 't':
+        return st.t.interval(1 - alpha, len(data) - 1, loc=np.mean(data), scale=st.sem(data))
+    elif dist == 'norm':
+        return st.norm.interval(1 - alpha, loc=np.mean(data), scale=st.sem(data))

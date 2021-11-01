@@ -1,7 +1,7 @@
 import numpy as np
 
 from scripts.experiments.mtbi_multiple_linear_regressions.utils import scatterplot_m_K, heatmap, coef_barplot, \
-    test_normality_dagostino_pearson, test_normality_lilliefors
+    test_normality_dagostino_pearson, test_normality_lilliefors, confidence_interval
 from src.data_manipulation.data_manager import DataManager
 from src.domain.regression_manager import RegressionManager
 from src.interface import epydemics as ep
@@ -41,3 +41,7 @@ print('\nLilliefors (Kolmogorov-Smirnov) test for normal goodness of fit')
 statistic, pv = test_normality_lilliefors(residuals)
 print('Statistic: ' + str(statistic))
 print('p-value: ' + str(pv))
+
+lim_inf, lim_sup = confidence_interval(residuals, 0.01, 't')
+
+print('\n99% Confidence interval: (' + str(lim_inf) + ', ' + str(lim_sup) + ')')
