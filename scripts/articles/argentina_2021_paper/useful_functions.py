@@ -294,6 +294,53 @@ def plot_daily_data(raw_data, label, filename=None):
         fig.savefig(filename)
 
 
+def plot_residual_variances(t_axis, vars):
+    fig, axes = plt.subplots(figsize=(12, 8))
+    axes.plot(t_axis, vars, linewidth=2, color='#000275', label='Variance of the residuals')
+    config_regular_plot_structure(axes, legend_loc='upper right')
+    axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
+    axes.set_ylabel('Variance', fontsize=32, labelpad=15)
+    fig.tight_layout()
+    plt.show()
+
+
+def plot_pvalues(t_axis, pvalues, alpha):
+    fig, axes = plt.subplots(figsize=(12, 8))
+    significance_line = np.full_like(t_axis, alpha, dtype=np.double)
+    axes.plot(t_axis, pvalues, linewidth=2, color='#089107', label='P-value')
+    axes.plot(t_axis, significance_line, color='#CA2A00', linestyle='--', linewidth=3,
+              label=(str(alpha) + ' significance level'))
+    config_regular_plot_structure(axes, legend_loc='upper left')
+    axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
+    axes.set_ylabel('Probability', fontsize=32, labelpad=15)
+    fig.tight_layout()
+    plt.show()
+
+
+def plot_confidence_intervals(t_axis, confidence_intervals, alpha):
+    lim_infs = [interval[0] for interval in confidence_intervals]
+    lim_sups = [interval[1] for interval in confidence_intervals]
+    fig, axes = plt.subplots(figsize=(12, 8))
+    axes.fill_between(x=t_axis, y1=lim_infs, y2=lim_sups, alpha=0.5, color='#155CCF',
+                      label=(str(alpha) + ' confidence interval'))
+    config_regular_plot_structure(axes, legend_loc='upper right')
+    axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
+    axes.set_ylabel('Residuals range', fontsize=32, labelpad=15)
+    fig.tight_layout()
+    plt.show()
+
+
+def plot_prediction_errors(t_axis, prediction_errors):
+    fig, axes = plt.subplots(figsize=(12, 8))
+    axes.plot(t_axis, prediction_errors, linewidth=2, color='#650782', label='1-day prediction errors')
+    config_regular_plot_structure(axes, legend_loc='upper right')
+    axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
+    axes.set_ylabel('Error magnitude', fontsize=32, labelpad=15)
+    fig.tight_layout()
+    plt.show()
+
+
+
 def show_mtbi_vs_mobility_scatterplot(mtbis, mobility, x_start, legend_loc='lower left'):
 
     x_right_lim = x_start + len(mtbis)
@@ -319,3 +366,24 @@ def show_correlation_coefficients(var_1, var_2):
     print('Spearman: \u03C1 = ' + str(round(r_spearman, decimals)) + '    p-value: ' + '{:0.2e}'.format(pv_spearman))
     print('Kendall: \u03C4 = ' + str(round(t_kendall, decimals)) + '    p-value: ' + '{:0.2e}'.format(pv_kendall))
 
+
+def show_regression_coefficients(coefs):
+    fig, axes = plt.subplots(figsize=(12, 8))
+    coefs = np.array(coefs)
+    labels = [r'$a_{' + str(i) + '}$' for i in range(1, len(coefs) + 1)]
+    config_coeffs_barplot_structure(axes)
+    axes.bar(labels, coefs, bottom=0, color='#000285', width=0.3)
+    axes.axhline(0, linewidth=1.5, color='black')
+    axes.set_title('Regression coefficients', fontsize=32, pad=18)
+    axes.set_xlabel('Coefficient', fontsize=32, labelpad=15)
+    fig.tight_layout()
+    plt.show()
+
+
+def config_coeffs_barplot_structure(axes):
+    axes.patch.set_facecolor("#ffffff")
+    axes.patch.set_edgecolor('black')
+    axes.patch.set_linewidth('1')
+    axes.set_facecolor("#ffffff")
+    axes.tick_params(axis='both', which='major', labelsize=24)
+    axes.axhline(0, linewidth=1.5, color='black')
