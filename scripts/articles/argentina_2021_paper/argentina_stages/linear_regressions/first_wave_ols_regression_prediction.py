@@ -36,4 +36,7 @@ for t in t_axis:
     err = abs(mtbis[t_actual] - reg.predict()) / mtbis[t_actual]
     prediction_errors.append(err)
 
+print('Mean: ' + str(np.mean(prediction_errors)))
+print('Variance: ' + str(np.var(prediction_errors, ddof=1)))
 plot_prediction_errors(t_axis, prediction_errors)
+

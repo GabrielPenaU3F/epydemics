@@ -133,3 +133,20 @@ class DataManager:
         data = cls.get_raw_daily_data(location, dataset, start, end)
         spectrum = np.fft.fft(data)
         return spectrum
+
+    @classmethod
+    def get_raw_daily_data_without_holes(cls, location, dataset, start, end, mode='array'):
+        location_df = cls.get_location_data(location, dataset, start, end)
+        location_df.fecha = pandas.to_datetime(location_df.fecha, infer_datetime_format=True, dayfirst=True)
+        location_df = location_df.reset_index().set_index('fecha', drop=False)
+        idx = pandas.date_range(min(location_df.fecha), max(location_df.fecha))
+        values = np.concatenate((np.array([0]), location_df[dataset].values))
+        values_diff = np.diff(values)
+        location_df[dataset] = values_diff
+        location_df = location_df.reindex(idx, fill_value=0)
+        new_index = np.arange(1, len(location_df) + 1)
+        location_df['index'] = new_index
+        if mode == 'dataframe':
+            return location_df
+        elif mode == 'array':
+            return location_df[dataset].values.astype('int32')

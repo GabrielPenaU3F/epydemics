@@ -78,7 +78,7 @@ def calculate_mtbis_with_window(daily_data, window_len, start_from, mtbi_unit, f
 
 
 def config_regular_plot_structure(axes, legend_loc=None):
-    pm = PlotManager()
+    pm = PlotManager.get_instance()
     pm.config_plot_background(axes)
     pm.config_axis_plain_style(axes)
     axes.tick_params(axis='both', which='major', labelsize=24)
@@ -86,6 +86,18 @@ def config_regular_plot_structure(axes, legend_loc=None):
     if legend_loc is not None:
         axes.legend(loc=legend_loc, prop={'size': 32})
 
+
+def config_dual_plot_structure(axes_left, left_legend_loc, axes_right, right_legend_loc):
+    pm = PlotManager.get_instance()
+    pm.config_plot_background(axes_left)
+    pm.config_axis_plain_style(axes_left)
+    pm.config_plot_background(axes_right)
+    pm.config_axis_plain_style(axes_right)
+    axes_left.tick_params(axis='both', which='major', labelsize=24)
+    axes_right.tick_params(axis='both', which='major', labelsize=24)
+
+    axes_left.legend(loc=left_legend_loc, prop={'size': 26})
+    axes_right.legend(loc=right_legend_loc, prop={'size': 26})
 
 def config_scatterplot_mtbi_vs_mobility(axes):
     config_regular_plot_structure(axes)
@@ -167,16 +179,28 @@ def plot_mtbis(mtbis, unit, x_start, filename=None, legend_loc='upper left', dat
         fig.savefig(filename)
 
 
-def plot_mtbi_inverses(inverses, data, x_start, mtbi_filename, mtbi_legend):
+def plot_mtbi_inverses(inverses, data, dataset, x_start, mtbi_filename, mtbi_legend):
 
     x_right_lim = x_start + len(inverses)
     x = np.arange(x_start, x_right_lim)
 
+    estimated_label = ''
+    data_label = ''
+    yax_label = ''
+    if dataset == 'total_cases':
+        estimated_label = '1/MTBI'
+        data_label = 'Reported cases'
+        yax_label = 'Number of cases'
+    elif dataset == 'total_deaths':
+        estimated_label = '1/MTBD'
+        data_label = 'Reported deaths'
+        yax_label = 'Number of deaths'
+
     fig, axes = plt.subplots(figsize=(12, 8))
-    axes.plot(x, inverses, linewidth=2, color='#0008AC', linestyle='-', label='1/MTBI')
-    axes.plot(x, data, linewidth=2, color='#C70F0B', linestyle='-', label='Daily data')
+    axes.plot(x, inverses, linewidth=2, color='#0008AC', linestyle='-', label=estimated_label)
+    axes.plot(x, data, linewidth=2, color='#C70F0B', linestyle='-', label=data_label)
     axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
-    axes.set_ylabel('Number of cases', fontsize=32, labelpad=15)
+    axes.set_ylabel(yax_label, fontsize=32, labelpad=15)
     config_regular_plot_structure(axes, mtbi_legend)
     fig.tight_layout()
     plt.show()
@@ -232,7 +256,7 @@ def plot_mtbi_inverse_vs_data(location, dataset, start, end, start_from, mtbi_un
     mtbes = ep.calculate_mtbi(location, dataset=dataset, start=start, end=end,
                               start_from=start_from, unit=mtbi_unit, output=False, formula='approx_conditional')
     inverses = np.power(mtbes, -1)
-    plot_mtbi_inverses(inverses, daily_data, start + start_from - 1, mtbi_filename, mtbi_legend)
+    plot_mtbi_inverses(inverses, daily_data, dataset, start + start_from - 1, mtbi_filename, mtbi_legend)
 
 
 def plot_maxs_and_mins(y, filtering=False, n=7, L=7, filename=None):
@@ -284,9 +308,38 @@ def plot_daily_data(raw_data, label, filename=None):
     x = np.arange(1, len(raw_data) + 1)
     fig, axes = plt.subplots(figsize=(12, 8))
     axes.plot(x, raw_data, linewidth=2, color='#6F17A6', linestyle='-', label=label)
-    config_regular_plot_structure(axes, legend_loc='upper left')
     axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
     axes.set_ylabel('Number of cases', fontsize=32, labelpad=15)
+    fig.tight_layout()
+    plt.show()
+
+    if filename is not None:
+        fig.savefig(filename)
+
+
+def plot_daily_cases_vs_deaths(x, cases, mins_cases, maxs_cases,
+                               deaths, mins_deaths, maxs_deaths,
+                               filename=None):
+
+    fig, axes_left = plt.subplots(figsize=(12, 8))
+
+    # Cases plot
+
+    axes_left.plot(x, cases, color='#193894', linewidth=2, label='Daily cases')
+    axes_left.plot(1 + mins_cases, cases[mins_cases], "x", color='#193894', markersize=7)
+    axes_left.plot(1 + maxs_cases, cases[maxs_cases], "o", color='#193894', markersize=7)
+    axes_left.set_xlabel('Time (days)', fontsize=32, labelpad=15)
+    axes_left.set_ylabel('Number of cases', fontsize=32, labelpad=15)
+
+    # Deaths plot
+
+    axes_right = axes_left.twinx()
+    axes_right.plot(x, deaths, color='#B90F0F', linewidth=2, label='Daily deaths')
+    axes_right.plot(1 + mins_deaths, deaths[mins_deaths], "x", color='#B90F0F', markersize=7)
+    axes_right.plot(1 + maxs_deaths, deaths[maxs_deaths], "o", color='#B90F0F', markersize=7)
+    axes_right.set_ylabel('Number of deaths', fontsize=32, labelpad=15)
+
+    config_dual_plot_structure(axes_left, 'upper left', axes_right, 'lower right')
     fig.tight_layout()
     plt.show()
 
@@ -338,7 +391,6 @@ def plot_prediction_errors(t_axis, prediction_errors):
     axes.set_ylabel('Error magnitude', fontsize=32, labelpad=15)
     fig.tight_layout()
     plt.show()
-
 
 
 def show_mtbi_vs_mobility_scatterplot(mtbis, mobility, x_start, legend_loc='lower left'):

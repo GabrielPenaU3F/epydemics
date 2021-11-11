@@ -11,7 +11,7 @@ dataset = 'total_deaths'
 start_from = 10
 start = 458
 end = 509
-mtbi_unit = 'sec'
+mtbi_unit = 'day'
 mtbi_filename = 'E:/Universidad/Investigación/Coronavirus/Python/script_outputs/ar_deaths_3w_mitigation_mtbi_inverse_vs_data.pdf'
 mtbi_legend = 'upper right'
 

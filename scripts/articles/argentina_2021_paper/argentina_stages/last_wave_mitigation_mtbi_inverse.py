@@ -8,7 +8,7 @@ dataset = 'total_cases'
 start_from = 10
 start = 449
 end = 514
-mtbi_unit = 'sec'
+mtbi_unit = 'day'
 mtbi_filename = 'E:/Universidad/Investigación/Coronavirus/Python/script_outputs/ar_4w_mitigation_mtbi_inverse_vs_data.pdf'
 mtbi_legend = 'upper right'
 
