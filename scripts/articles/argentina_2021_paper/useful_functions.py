@@ -383,12 +383,22 @@ def plot_confidence_intervals(t_axis, confidence_intervals, alpha):
     plt.show()
 
 
-def plot_prediction_errors(t_axis, prediction_errors):
+def plot_mtbi_prediction_errors(t_axis, prediction_errors):
     fig, axes = plt.subplots(figsize=(12, 8))
-    axes.plot(t_axis, prediction_errors, linewidth=2, color='#650782', label='1-day prediction errors')
+    axes.plot(t_axis, prediction_errors, linewidth=2, color='#650782', label='1-day MTBI prediction errors')
     config_regular_plot_structure(axes, legend_loc='upper right')
     axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
-    axes.set_ylabel('Error magnitude', fontsize=32, labelpad=15)
+    axes.set_ylabel('Relative error magnitude', fontsize=32, labelpad=15)
+    fig.tight_layout()
+    plt.show()
+
+
+def plot_cases_prediction_errors(t_axis, prediction_errors):
+    fig, axes = plt.subplots(figsize=(12, 8))
+    axes.plot(t_axis, prediction_errors, linewidth=2, color='#650782', label='1-day cases prediction errors')
+    config_regular_plot_structure(axes, legend_loc='upper right')
+    axes.set_xlabel('Time (days)', fontsize=32, labelpad=15)
+    axes.set_ylabel('Relative error magnitude', fontsize=32, labelpad=15)
     fig.tight_layout()
     plt.show()
 
