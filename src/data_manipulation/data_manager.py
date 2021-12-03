@@ -150,3 +150,13 @@ class DataManager:
             return location_df
         elif mode == 'array':
             return location_df[dataset].values.astype('int32')
+
+    @classmethod
+    def get_data_from_continent(cls, continent_id):
+        data = cls.data.get_raw_data().copy()
+        return data[data['continent'] == continent_id]
+
+    @classmethod
+    def get_data_from_country(cls, country_id):
+        data = cls.data.get_raw_data().copy()
+        return data[data['location'] == country_id]
