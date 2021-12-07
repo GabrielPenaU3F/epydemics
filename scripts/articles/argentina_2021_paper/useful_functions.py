@@ -99,6 +99,7 @@ def config_dual_plot_structure(axes_left, left_legend_loc, axes_right, right_leg
     axes_left.legend(loc=left_legend_loc, prop={'size': 26})
     axes_right.legend(loc=right_legend_loc, prop={'size': 26})
 
+
 def config_scatterplot_mtbi_vs_mobility(axes):
     config_regular_plot_structure(axes)
     axes.set_xlabel('Mobility percent', fontsize=32, labelpad=15)

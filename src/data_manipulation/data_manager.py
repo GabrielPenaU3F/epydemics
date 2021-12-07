@@ -1,5 +1,6 @@
 import numpy as np
 import pandas
+import pandas as pd
 
 from src.data_manipulation.argument_manager import ArgumentManager
 from src.data_io.data_writer import DataWriter
@@ -113,13 +114,30 @@ class DataManager:
         return cls.get_location_data(location_id, dataset, start, end)[dataset].values
 
     @classmethod
-    def get_raw_daily_data(cls, location_id, dataset='', start=1, end=None):
+    def get_raw_dates(cls, location_id, dataset, start, end):
+        source = cls.current_data_source
+        dataset = cls.choose_dataset(dataset)
+        location_column_name = source.get_location_column_name()
+        date_column_name = source.get_date_column_name()
+        data = cls.data.get_raw_data().copy()
+        location_data = data[data[location_column_name] == location_id]
+        location_data = location_data[pandas.notnull(location_data[dataset])]
+        dates = location_data[date_column_name].values
+        return dates[start - 1:end]
+
+    @classmethod
+    def get_raw_daily_data(cls, location_id, dataset='', start=1, end=None, dates=False):
         dataset = cls.choose_dataset(dataset)
         accumulated_events_prior_to_start = cls.calculate_accumulated_events_prior_to_start(location_id, dataset, start)
         cumulative_data = np.concatenate(
             ([accumulated_events_prior_to_start], cls.get_raw_cumulative_data(location_id, dataset, start, end))
         )
-        return np.diff(cumulative_data)
+        daily_data = np.diff(cumulative_data)
+        if dates is True:
+            date_data = cls.get_raw_dates(location_id, dataset, start, end)
+            output_df = pd.DataFrame({'date': date_data, 'daily_data': daily_data})
+            return output_df
+        return daily_data
 
     @classmethod
     def calculate_accumulated_events_prior_to_start(cls, location, dataset, start):

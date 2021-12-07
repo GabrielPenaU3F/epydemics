@@ -64,7 +64,7 @@ def show_cumulative_data_curve(location, dataset='', start=1, end=None):
 
 def show_daily_data_curve(location, dataset='', start=1, end=None):
     raw_data = DataManager.get_raw_daily_data(location, dataset, start, end)
-    plotter.plot_daily_data(raw_data, location, dataset)
+    plotter.plot_daily_data_and_filtered_curve(raw_data, location, dataset)
 
 
 def show_daily_data_spectrum(location, dataset='', start=1, end=None, output=True, xscale='rad'):
