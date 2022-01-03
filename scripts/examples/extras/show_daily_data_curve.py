@@ -6,8 +6,8 @@ import src.interface.epydemics as epydemics
 
 DataManager.load_dataset('owid')
 
-# Plots the incidence curve from Germany
-epydemics.show_daily_data_curve('Germany')
+# Plots the daily cases curve from Argentina
+epydemics.show_daily_data_curve('Argentina')
 
 # Daily deaths curve can also be shown
-epydemics.show_daily_data_curve('Germany', dataset='total_deaths')
+# epydemics.show_daily_data_curve('Germany', dataset='total_deaths')

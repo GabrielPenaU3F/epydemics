@@ -140,27 +140,22 @@ def plot_rhos(x, rhos_nowindow, rhos_window, rho_legend, rho_filename, tick_inte
 
 
 def plot_gprs(x, gprs_nowindow, gprs_window, gpr_legend, gpr_filename, tick_interval):
-    fig, axes_left = plt.subplots(figsize=(12, 8))
-    axes_right = axes_left.twinx()
-    config_dual_plot_structure(axes_left, axes_right, tick_interval=tick_interval)
+    fig, axes = plt.subplots(figsize=(12, 8))
+    config_date_plot_structure(axes, tick_interval=tick_interval)
 
     # No window
-    line1 = axes_left.plot(x, gprs_nowindow, color='#1D8024', linewidth=2, label='Full stage history')
-    axes_left.set_xlabel('Date', fontsize=32, labelpad=15)
-    axes_left.set_ylabel('\u03B3 / \u03C1', fontsize=32, labelpad=15)
+    axes.plot(x, gprs_nowindow, color='#1D8024', linewidth=2, label='Full stage history')
+    axes.set_xlabel('Date', fontsize=32, labelpad=15)
+    axes.set_ylabel('\u03B3 / \u03C1', fontsize=32, labelpad=15)
 
     # Window
-    line2 = axes_right.plot(x, gprs_window, color='#B80000', linewidth=2, label='Time window')
-    axes_right.set_ylabel('\u03B3 / \u03C1', fontsize=32, labelpad=15)
+    axes.plot(x, gprs_window, color='#B80000', linewidth=2, label='Time window')
+    axes.set_ylabel('\u03B3 / \u03C1', fontsize=32, labelpad=15)
 
-    axes_left.ticklabel_format(axis='y', style='sci', scilimits=(-3, 3), useMathText=True)
-    axes_left.yaxis.get_offset_text().set_fontsize(24)
-    axes_right.ticklabel_format(axis='y', style='sci', scilimits=(-3, 3), useMathText=True)
-    axes_right.yaxis.get_offset_text().set_fontsize(24)
+    axes.ticklabel_format(axis='y', style='sci', scilimits=(-3, 3), useMathText=True)
+    axes.yaxis.get_offset_text().set_fontsize(24)
 
-    lines = line1 + line2
-    labels = [l.get_label() for l in lines]
-    axes_left.legend(lines, labels, loc=gpr_legend, prop={'size': 24})
+    axes.legend(loc=gpr_legend, prop={'size': 24})
     fig.tight_layout()
     plt.show()
 
@@ -169,31 +164,26 @@ def plot_gprs(x, gprs_nowindow, gprs_window, gpr_legend, gpr_filename, tick_inte
 
 
 def plot_mtbes(x, mtbes_nowindow, mtbes_window, mtbe_legend, mtbe_filename, tick_interval, unit, dataset='total_cases'):
-    fig, axes_left = plt.subplots(figsize=(12, 8))
-    axes_right = axes_left.twinx()
-    config_dual_plot_structure(axes_left, axes_right, tick_interval=tick_interval)
+    fig, axes = plt.subplots(figsize=(12, 8))
+    config_date_plot_structure(axes, tick_interval=tick_interval)
 
     ylabel = 'MTBI (' + str(unit) + ')'
     if dataset == 'total_deaths':
         'MTBD (' + str(unit) + ')'
 
     # No window
-    line1 = axes_left.plot(x, mtbes_nowindow, color='#1D8024', linewidth=2, label='Full stage history')
-    axes_left.set_xlabel('Date', fontsize=32, labelpad=15)
-    axes_left.set_ylabel(ylabel, fontsize=32, labelpad=15)
+    axes.plot(x, mtbes_nowindow, color='#1D8024', linewidth=2, label='Full stage history')
+    axes.set_xlabel('Date', fontsize=32, labelpad=15)
+    axes.set_ylabel(ylabel, fontsize=32, labelpad=15)
 
     # Window
-    line2 = axes_right.plot(x, mtbes_window, color='#B80000', linewidth=2, label='Time window')
-    axes_right.set_ylabel(ylabel, fontsize=32, labelpad=15)
+    axes.plot(x, mtbes_window, color='#B80000', linewidth=2, label='Time window')
+    axes.set_ylabel(ylabel, fontsize=32, labelpad=15)
 
-    axes_left.ticklabel_format(axis='y', style='sci', scilimits=(-3, 3), useMathText=True)
-    axes_left.yaxis.get_offset_text().set_fontsize(24)
-    axes_right.ticklabel_format(axis='y', style='sci', scilimits=(-3, 3), useMathText=True)
-    axes_right.yaxis.get_offset_text().set_fontsize(24)
+    axes.ticklabel_format(axis='y', style='sci', scilimits=(-3, 3), useMathText=True)
+    axes.yaxis.get_offset_text().set_fontsize(24)
 
-    lines = line1 + line2
-    labels = [l.get_label() for l in lines]
-    axes_left.legend(lines, labels, loc=mtbe_legend, prop={'size': 24})
+    axes.legend(loc=mtbe_legend, prop={'size': 24})
     fig.tight_layout()
     plt.show()
 
