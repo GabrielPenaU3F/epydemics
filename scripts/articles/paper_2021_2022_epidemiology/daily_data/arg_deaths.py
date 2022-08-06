@@ -6,7 +6,9 @@ DataManager.load_dataset('owid')
 location = 'Argentina'
 dataset = 'total_deaths'
 ylabel = 'Daily number of deaths'
-end = 633
+# end = 633
+# Updated February 3 2022
+end = 697
 n = 7
 L = 7
 legend_loc = 'upper left'

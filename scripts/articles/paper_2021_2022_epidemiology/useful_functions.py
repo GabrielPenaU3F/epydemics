@@ -30,7 +30,7 @@ def plot_daily_data_and_filtered_curve(dataframe, ylabel, filename=None, n=7, L=
     plt.show()
 
     if filename is not None:
-        fig.savefig(filename)
+        fig.savefig(filename, dpi=600)
 
 
 def plot_spectrum(spectrum_mod, xscale, filename=None, legend_loc=None):
@@ -51,7 +51,7 @@ def plot_spectrum(spectrum_mod, xscale, filename=None, legend_loc=None):
     plt.show()
 
     if filename is not None:
-        fig.savefig(filename)
+        fig.savefig(filename, dpi=600)
 
 
 def plot_daily_cases_vs_deaths(dates, cases, mins_cases, maxs_cases,
@@ -88,7 +88,7 @@ def plot_daily_cases_vs_deaths(dates, cases, mins_cases, maxs_cases,
     plt.show()
 
     if filename is not None:
-        fig.savefig(filename)
+        fig.savefig(filename, dpi=600)
 
 
 def plot_indicators_with_and_without_window(country, dataset, start, end, start_from,
@@ -136,7 +136,7 @@ def plot_rhos(x, rhos_nowindow, rhos_window, rho_legend, rho_filename, tick_inte
     plt.show()
 
     if rho_filename is not None:
-        fig.savefig(rho_filename)
+        fig.savefig(rho_filename, dpi=600)
 
 
 def plot_gprs(x, gprs_nowindow, gprs_window, gpr_legend, gpr_filename, tick_interval):
@@ -160,7 +160,7 @@ def plot_gprs(x, gprs_nowindow, gprs_window, gpr_legend, gpr_filename, tick_inte
     plt.show()
 
     if gpr_filename is not None:
-        fig.savefig(gpr_filename)
+        fig.savefig(gpr_filename, dpi=600)
 
 
 def plot_mtbes(x, mtbes_nowindow, mtbes_window, mtbe_legend, mtbe_filename, tick_interval, unit, dataset='total_cases'):
@@ -188,7 +188,7 @@ def plot_mtbes(x, mtbes_nowindow, mtbes_window, mtbe_legend, mtbe_filename, tick
     plt.show()
 
     if mtbe_filename is not None:
-        fig.savefig(mtbe_filename)
+        fig.savefig(mtbe_filename, dpi=600)
 
 
 def get_fits_with_window(daily_data, start_from, window_len):

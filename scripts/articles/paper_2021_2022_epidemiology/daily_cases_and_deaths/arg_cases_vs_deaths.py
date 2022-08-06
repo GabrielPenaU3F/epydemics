@@ -8,8 +8,12 @@ from src.data_manipulation.data_manager import DataManager
 DataManager.load_dataset('owid')
 
 lugar = 'Argentina'
-cases_end = 638
-deaths_end = 633
+# cases_end = 638
+# deaths_end = 633
+
+# Updated February 3 2022
+cases_end = 702
+deaths_end = 697
 
 cases_dataframe = DataManager.get_raw_daily_data(lugar, dataset='total_cases', end=cases_end, dates=True)
 cases_data = cases_dataframe['daily_data'].values

@@ -1,6 +1,5 @@
 import numpy as np
 
-from src.data_manipulation.argument_manager import ArgumentManager
 from src.data_io.console_manager import ConsoleManager
 from src.data_manipulation.data_manager import DataManager
 from src.data_io.plot_manager import PlotManager

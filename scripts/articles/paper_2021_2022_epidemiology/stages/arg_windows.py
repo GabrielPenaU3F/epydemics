@@ -17,6 +17,7 @@ start_from = 45
 start = 1
 end = 229
 mtbi_unit = 'sec'
+filename = 'E:/Universidad/Investigación/Coronavirus/Python/script_outputs/arg_avg_mtbi.pdf'
 
 dataframe = DataManager.get_raw_daily_data(country, dataset, start, end, dates=True)
 dates = dataframe['date']
@@ -55,5 +56,8 @@ axes.fill_between(x, lower_bound, upper_bound, facecolor='#D17373', alpha=0.3, l
 
 axes.legend(prop={'size': 24})
 fig.tight_layout()
+
+fig.savefig(filename, dpi=600)
+
 plt.show()
 

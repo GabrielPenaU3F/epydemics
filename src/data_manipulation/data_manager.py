@@ -178,3 +178,7 @@ class DataManager:
     def get_data_from_country(cls, country_id):
         data = cls.data.get_raw_data().copy()
         return data[data['location'] == country_id]
+
+    @classmethod
+    def get_full_data(cls):
+        return cls.data.get_raw_data().copy()
