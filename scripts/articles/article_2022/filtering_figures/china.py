@@ -1,11 +1,14 @@
 import numpy as np
 import matplotlib.dates as mdates
 import pandas as pd
-from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt, rc
 
 from scripts.articles.argentina_2021_paper.useful_functions import apply_ma_filter
 from scripts.experiments.countries_feature_selection.codigo_original_2021.useful_functions import find_peak_location, \
     get_full_dataframe
+
+rc('font', **{'family': 'serif', 'serif': ['Arial']})
+plt.rcParams['pdf.fonttype'] = 42
 
 full_df = get_full_dataframe()
 df = full_df[full_df['location'] == 'China']
@@ -47,12 +50,12 @@ axes.set_xticklabels(f, rotation=70, ha='center')
 # Finish plot formatting
 axes.yaxis.get_offset_text().set_fontsize(16)
 axes.set_ylabel('Number of cases', fontsize=14)
-axes.set_title('China', fontsize=20)
+axes.set_title('China', fontsize=20, pad=15)
 axes.grid(linewidth=0.3)
 axes.legend(loc='upper left', fontsize=16)
 fig.tight_layout()
 plt.show()
 
 fig_filename = \
-    'E:/Universidad/Investigación/Coronavirus/SeleccionAtributos/resources/results/figs_publication/fig_china_filtering.png'
+    'E:/Universidad/Investigación/Coronavirus/SeleccionAtributos/resources/results/figs_publication/fig_china_filtering.pdf'
 fig.savefig(fig_filename)

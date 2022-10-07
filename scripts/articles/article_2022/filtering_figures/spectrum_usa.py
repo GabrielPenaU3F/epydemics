@@ -1,7 +1,10 @@
 import numpy as np
-from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt, rc
 
 from scripts.experiments.countries_feature_selection.codigo_original_2021.useful_functions import get_full_dataframe
+
+rc('font', **{'family': 'serif', 'serif': ['Arial']})
+plt.rcParams['pdf.fonttype'] = 42
 
 full_df = get_full_dataframe()
 df = full_df[full_df['location'] == 'United States']
@@ -22,12 +25,12 @@ axes.set_xlabel('Frequency (1/day)', fontsize=14, labelpad=15)
 axes.set_xticks(xticks)
 axes.set_xticklabels(xticklabels)
 axes.yaxis.get_offset_text().set_fontsize(16)
-axes.set_title('United States (spectrum)', fontsize=20)
+axes.set_title('United States (spectrum)', fontsize=20, pad=15)
 axes.grid(linewidth=0.3)
 axes.legend(loc='upper right', fontsize=16)
 fig.tight_layout()
 plt.show()
 
 fig_filename = \
-    'E:/Universidad/Investigación/Coronavirus/SeleccionAtributos/resources/results/figs_publication/fig_usa_spectrum.png'
+    'E:/Universidad/Investigación/Coronavirus/SeleccionAtributos/resources/results/figs_publication/fig_usa_spectrum.pdf'
 fig.savefig(fig_filename)
