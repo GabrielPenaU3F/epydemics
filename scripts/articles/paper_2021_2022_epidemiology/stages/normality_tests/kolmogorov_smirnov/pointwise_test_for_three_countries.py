@@ -145,6 +145,14 @@ arg_kcolors = ['red' if kbool is True else 'green' for kbool in reject_bool_arg]
 ger_kcolors = ['red' if kbool is True else 'green' for kbool in reject_bool_ger]
 usa_kcolors = ['red' if kbool is True else 'green' for kbool in reject_bool_usa]
 
+arg_failure_n = reject_bool_arg.count(True)
+ger_failure_n = reject_bool_ger.count(True)
+usa_failure_n = reject_bool_usa.count(True)
+
+print('Argentina: ' + str(arg_failure_n) + ' out of ' + str(len(reject_bool_arg)))
+print('Germany: ' + str(ger_failure_n) + ' out of ' + str(len(reject_bool_ger)))
+print('USA: ' + str(usa_failure_n) + ' out of ' + str(len(reject_bool_usa)))
+
 legend_elements = [Line2D([0], [0], marker='o', color='w', label='Can reject normality',
                           markerfacecolor='r', markersize=15),
                    Line2D([0], [0], marker='o', color='w', label='Cannot reject normality',
@@ -157,7 +165,8 @@ axes.scatter(x_ger, twos, c=ger_kcolors)
 axes.scatter(x_usa, threes, c=usa_kcolors)
 
 axes.set_yticks([1, 2, 3])
-axes.set_yticklabels(['Argentina', 'Germany', 'USA'], fontdict={'fontsize': 32})
+axes.set_yticklabels(['Argentina', 'Germany', 'USA'], rotation=55, va='center',
+                     fontdict={'fontsize': 24})
 axes.set_xlabel('Day', fontsize=32, labelpad=15)
 axes.legend(handles=legend_elements, prop={'size': 24}, loc='upper right')
 fig.savefig(filename_test, dpi=600)
