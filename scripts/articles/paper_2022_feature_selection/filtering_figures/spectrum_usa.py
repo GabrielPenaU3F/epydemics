@@ -22,6 +22,7 @@ axes.plot(f, spectrum, linestyle='-', linewidth=1, color='#6F17A6', label='Spect
 xticks = [0, 1/7, 2/7, 3/7, 1/2]
 xticklabels = ['0', '1/7', '2/7', '3/7', '1/2']
 axes.set_xlabel('Frequency (1/day)', fontsize=14, labelpad=15)
+axes.set_ylabel('Amplitude', fontsize=14, labelpad=15)
 axes.set_xticks(xticks)
 axes.set_xticklabels(xticklabels)
 axes.yaxis.get_offset_text().set_fontsize(16)
