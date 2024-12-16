@@ -168,7 +168,7 @@ class PlotManager:
     def config_plot_background(self, axes):
         axes.patch.set_facecolor("#ffffff")
         axes.patch.set_edgecolor('black')
-        axes.patch.set_linewidth('1')
+        axes.patch.set_linewidth(1)
         axes.set_facecolor("#ffffff")
         axes.grid(color='black', linestyle='--', linewidth=0.5)
 
