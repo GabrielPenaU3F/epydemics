@@ -9,7 +9,7 @@ DataManager.load_dataset('owid')
 # DataManager.load_dataset()
 
 # Example 1.1: This will fit_model the data from the indicated country, show the results via console and plot the lines
-fit = epydemics.fit_model('Argentina')
+epydemics.fit_model('Argentina')
 
 # Example 1.2: You can also fit_model the number of deaths
 # epydemics.fit_model('Argentina', dataset='total_deaths')

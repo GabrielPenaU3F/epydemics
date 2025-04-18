@@ -1,4 +1,4 @@
-from src.domain.models.model import ContagionModel, VeronicaSShapedModel
+from src.domain.models.model import ContagionModel, VeronicaSShapedModel, PenaSigmoidModel
 from src.domain.models.model import DelayedSShapedModel
 from src.domain.models.model import GoelOkumotoModel
 
@@ -9,7 +9,8 @@ class ModelRepository:
         'contagion': ContagionModel(),
         'goel_okumoto': GoelOkumotoModel(),
         'delayed_s_shaped': DelayedSShapedModel(),
-        'veronica_s_shaped': VeronicaSShapedModel()
+        'veronica_s_shaped': VeronicaSShapedModel(),
+        'pena_sigmoid': PenaSigmoidModel()
     }
 
     @classmethod

@@ -15,11 +15,11 @@ class Fitter:
     residual_types = ['true', 'abs', 'square']
 
     @classmethod
-    def fit_model(cls, location, dataset, model, start, end, x0):
+    def fit_model(cls, location, dataset, model, start, end, x0, pretrain):
         data = DataManager.get_fittable_location_data(location, dataset, start, end)
         dataset = DataManager.choose_dataset(dataset)
         model = ModelRepository.retrieve_model(model)
-        fit = cls.fit(data, dataset, model, x0)
+        fit = cls.fit(data, dataset, model, x0, pretrain)
         return fit
 
     @classmethod
@@ -35,10 +35,14 @@ class Fitter:
         return output_list
 
     @classmethod
-    def fit(cls, data, dataset, model, fit_x0, output='full'):
+    def fit(cls, data, dataset, model, fit_x0, pretrain, output='full'):
         x = data.index.values
         y = data[dataset].values
-        params = model.fit(x, y, fit_x0)
+        if pretrain:
+            lm_x0 = model.pretrain(x, y)
+        else:
+            lm_x0 = fit_x0
+        params = model.fit(x, y, lm_x0)
         out = tuple(params)
         if output == 'full':
             explained = model.mean_value_function(x, *params)

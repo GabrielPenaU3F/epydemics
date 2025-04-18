@@ -10,4 +10,4 @@ DataManager.load_dataset('owid')
 epydemics.show_cumulative_data_curve('Germany')
 
 # Deaths curve can also be shown
-epydemics.show_cumulative_data_curve('Germany', dataset='total_deaths')
+# epydemics.show_cumulative_data_curve('Germany', dataset='total_deaths')
